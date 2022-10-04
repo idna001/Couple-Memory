@@ -23,3 +23,14 @@ button:hover {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
 }
+
+@media screen and (max-width: 600px) {
+  .card-grid {
+    margin-top: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+  }
+}

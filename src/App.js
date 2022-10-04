@@ -66,6 +66,7 @@ function App() {
         shuffledCards()
     }, [])
 
+
 return (
 
     <div className="App">
@@ -83,6 +84,10 @@ return (
                     ))}
                 </div>
         <p>Turns: {turns}</p>
+
+        <div id="views">
+            <p>This memory got <span id="visits"></span> views.</p>
+        </div>
         </div>
          );
 }
