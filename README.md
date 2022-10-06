@@ -3,7 +3,7 @@
 ## Open Tasks:
 
 - [ ] Mobile Viewport fix
-- [ ] Add Pictures display always new ones, by restart the game
+- [ ] Displaying always new Pictures, by restart the game
 - [ ] Saving the Highscore in Local Storage
 - [ ] Add winning Alert Message with a celebrating sound
 
