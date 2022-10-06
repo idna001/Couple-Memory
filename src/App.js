@@ -3,7 +3,7 @@ import './App.css'
 import SingleCard from "./components/SingleCard";
 
 const cardImages = [
-    { "src": "/img/IMG_0816.jpg", matched: false},
+    { "src": "/img/IMG_0816.JPG", matched: false},
     { "src": "/img/IMG_2256.jpg", matched: false },
     { "src": "/img/IMG_3493.jpg", matched: false },
     { "src": "/img/IMG_3946.jpg", matched: false },

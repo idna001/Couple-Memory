@@ -8,16 +8,31 @@
     border-radius: 6px;
 }
 
+.card .front-container {
+    display: flex;
+}
+
 .card .front {
     transform: rotateY(90deg);
+    object-fit: scale-down;
+    background-color: fff;
     position: absolute;
 }
+
+.front-background {
+    object-fit: cover;
+    width: 200px !important;
+    border: none !important;
+    filter: blur(2px);
+}
+
 .flipped .front {
     transform: rotateY(0deg);
  }
 
 .card .back {
     transition: all ease-in  0.2s;
+    object-fit: cover;
     transition-delay: 0.2s;
 }
 .flipped .back {
