@@ -1,11 +1,11 @@
 # Improve a Memory in react js
 
-Open Tasks:
+## Open Tasks:
 
-Mobile Viewport fix
-[] Add Pictures display always new ones, by restart the game
-[]Saving the Highscore in Local Storage
-[]Add winning Alert Message with a celebrating sound
+- [ ] Mobile Viewport fix
+- [ ] Add Pictures display always new ones, by restart the game
+- [ ] Saving the Highscore in Local Storage
+- [ ] Add winning Alert Message with a celebrating sound
 
 
 ### `npm start`
@@ -17,7 +17,7 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 
-### How to test your Change
+## How to test your Change
 
 First local while developing
 Create a PR
