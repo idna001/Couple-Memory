@@ -12,9 +12,7 @@
 }
 
 .card .front {
-    /*
     transform: rotateY(90deg);
-    */
     object-fit: scale-down;
     background-color: fff;
     position: absolute;
