@@ -2,7 +2,6 @@
     position: relative;
 }
 .card img {
-    width: 100%;
     display: block;
     border: 2px solid #fff;
     border-radius: 6px;
@@ -18,10 +17,27 @@
     background-color: fff;
     position: absolute;
 }
-
+@media screen and (max-width: 800px) {
+    .card .front {
+        object-fit: unset;
+        position: absolute;
+    }
+    .front-background {
+        object-fit: scale-down;
+        border: unset !important;
+        filter: unset;
+        display: none;
+    }
+    .card img {
+        display: block;
+        border: 2px solid #fff;
+        border-radius: 6px;
+        width: 100px;
+    }
+}
 .front-background {
     object-fit: cover;
-    width: 200px !important;
+    width: 200px;
     border: none !important;
     filter: blur(2px);
 }
