@@ -7,7 +7,11 @@
 - [ ] Displaying always new Pictures, by restarting the game
 - [x] Saving the Highscore in Local Storage [@bijanRegmi](https://github.com/BijanRegmi)
 - [x] Add winning Alert Message with a celebrating sound [@needl3](https://github.com/needl3)
-
+- [ ] Add a sound by finding a match 
+- [ ] Count the time and show it next to the highscore, and in the Higscore Alert from [@needl3](https://github.com/needl3)
+- [ ] Build a Begin animation
+- [ ] Button that makes a Screenshot of the Highscore to share it with friends
+- [ ] An other Feature or Bug PR thats not here listed, but necessary
 
 ### `npm start`
 
@@ -20,11 +24,11 @@ You will also see any lint errors in the console.
 
 ## How to test your Change
 
-First local while developing
-Create a PR
-Use the Vercel Link to your Change 
-Test mobile and Desktop Viewport
-Invite a Contributor to review your Change and merge it
+- First local while developing
+- Create a PR
+- Use the Vercel Link to your Change 
+- Test mobile and Desktop Viewport
+- Invite a Contributor to review your Change and merge it
 
 Have fun while celebrating Hacktober
  
