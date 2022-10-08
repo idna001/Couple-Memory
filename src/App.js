@@ -11,6 +11,7 @@ const cardImages = [
     {"src": "/img/IMG_4808.jpg", matched: false },
     { "src": "/img/IMG_6324.jpg", matched: false }
 ]
+//this is function App 
 function App() {
     const [cards, setCards] = useState([])
     const [turns, setTurns] =useState(0)
