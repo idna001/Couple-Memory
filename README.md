@@ -4,7 +4,7 @@
 
 - [x] Mobile Viewport fix
 - [ ] Displaying always new Pictures, by restarting the game
-- [ ] Saving the Highscore in Local Storage
+- [x] Saving the Highscore in Local Storage
 - [ ] Add winning Alert Message with a celebrating sound
 
 
