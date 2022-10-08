@@ -1,0 +1,24 @@
+.celebration-notification{
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 99;
+    color: aqua;
+    font-size: 3rem;
+    width: 100%;
+    background-color: #000000CC;
+    animation: fade 1s linear;
+}
+.celebration-notification > p > span{
+    color: greenyellow;
+    font-size: 4rem;
+}
+@keyframes fade {
+    0%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
+    
+}
