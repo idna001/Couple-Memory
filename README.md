@@ -6,7 +6,7 @@
 - [x] Mobile Viewport fix 
 - [ ] Displaying always new Pictures, by restarting the game
 - [x] Saving the Highscore in Local Storage [@bijanRegmi](https://github.com/BijanRegmi)
-- [ ] Add winning Alert Message with a celebrating sound
+- [x] Add winning Alert Message with a celebrating sound [@needl3](https://github.com/needl3)
 
 
 ### `npm start`
@@ -32,3 +32,6 @@ Lets Hack!
 
 
 Feel free to make PR and complete the readme with your changes
+
+## Credits
+Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=6826">Pixabay</a>

@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import './App.css'
 import SingleCard from "./components/SingleCard";
+import Celebration from "./components/Celebration";
 
 const cardImages = [
     { "src": "/img/IMG_0816.JPG", matched: false},
@@ -18,6 +19,7 @@ function App() {
     const [disabled, setDisabled] = useState(false)
     const [highScore, setHighScore] = useState(0)
     const [matched, setMatched] = useState(0)
+    const [celebrationStatus, setCelebrationStatus] = useState(false)
 
     //shuffle
     const shuffledCards = () => {
@@ -30,6 +32,7 @@ function App() {
         setCards(shuffledCards)
         setTurns(0)
         setMatched(0)
+        setCelebrationStatus(false)
     }
 
     const handleChoice = (card) => {
@@ -73,6 +76,11 @@ function App() {
             if (m_highscore === null || turns < Number(m_highscore)){
                 // New highscore
                 window.localStorage.setItem("highscore", turns)
+                new Audio("celebration.mp3").play()
+                setCelebrationStatus(true)
+                setTimeout(()=>{
+                    setCelebrationStatus(false)
+                }, 4500)
                 setHighScore(turns)
             }
         }
@@ -87,8 +95,8 @@ function App() {
 
 
 return (
-
     <div className="App">
+        {celebrationStatus && <Celebration highscore={highScore}/>}
         <h1>A&A Match</h1>
         <button onClick={shuffledCards}>New Game</button>
 
