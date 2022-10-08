@@ -16,6 +16,8 @@ function App() {
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
     const [disabled, setDisabled] = useState(false)
+    const [highScore, setHighScore] = useState(0)
+    const [matched, setMatched] = useState(0)
 
     //shuffle
     const shuffledCards = () => {
@@ -27,6 +29,7 @@ function App() {
         setChoiceTwo(null)
         setCards(shuffledCards)
         setTurns(0)
+        setMatched(0)
     }
 
     const handleChoice = (card) => {
@@ -49,6 +52,7 @@ function App() {
                     })
                 })
              resetTurn()
+                setMatched(prevMatched => prevMatched + 2)
             } else {
                 setTimeout(() => resetTurn(), 1000)
             }
@@ -62,8 +66,23 @@ function App() {
         setDisabled(false)
     }
 
+    useEffect(()=>{
+        if (matched === cards.length && turns){
+            // Game over
+            const m_highscore = window.localStorage.getItem("highscore")
+            if (m_highscore === null || turns < Number(m_highscore)){
+                // New highscore
+                window.localStorage.setItem("highscore", turns)
+                setHighScore(turns)
+            }
+        }
+    }, [matched])
+
     useEffect(() => {
         shuffledCards()
+        // Load highscore value from localstorage
+        const m_highscore = window.localStorage.getItem("highscore") || 0
+		setHighScore(m_highscore)
     }, [])
 
 
@@ -84,6 +103,7 @@ return (
                     ))}
                 </div>
         <p>Turns: {turns}</p>
+        <p>HighScore: {highScore}</p>
 
         <div id="views">
             <p>This memory got <span id="visits"></span> views.</p>
