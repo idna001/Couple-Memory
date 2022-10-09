@@ -76,11 +76,14 @@ function App() {
             if (m_highscore === null || turns < Number(m_highscore)){
                 // New highscore
                 window.localStorage.setItem("highscore", turns)
-                new Audio("celebration.mp3").play()
+                const soundEffect = new Audio();
+                soundEffect.autoplay = true;
+                soundEffect.src = "celebration.mp3"
+                soundEffect.play()
                 setCelebrationStatus(true)
                 setTimeout(()=>{
                     setCelebrationStatus(false)
-                }, 4500)
+                }, 5000)
                 setHighScore(turns)
             }
         }
