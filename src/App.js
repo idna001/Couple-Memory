@@ -68,6 +68,10 @@ function App() {
         setTurns(prevTurns => prevTurns + 1)
         setDisabled(false)
     }
+    const soundEffect = new Audio();
+    soundEffect.autoplay = true;
+    soundEffect.src = "data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
+
 
     useEffect(()=>{
         if (matched === cards.length && turns){
@@ -76,14 +80,12 @@ function App() {
             if (m_highscore === null || turns < Number(m_highscore)){
                 // New highscore
                 window.localStorage.setItem("highscore", turns)
-                const soundEffect = new Audio();
-                soundEffect.autoplay = true;
                 soundEffect.src = "celebration.mp3"
                 soundEffect.play()
                 setCelebrationStatus(true)
                 setTimeout(()=>{
                     setCelebrationStatus(false)
-                }, 5000)
+                }, 1500)
                 setHighScore(turns)
             }
         }
