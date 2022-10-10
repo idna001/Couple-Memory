@@ -85,7 +85,7 @@ function App() {
                 setCelebrationStatus(true)
                 setTimeout(()=>{
                     setCelebrationStatus(false)
-                }, 1200)
+                }, 999)
                 setHighScore(turns)
             }
         }
