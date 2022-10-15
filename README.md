@@ -8,7 +8,7 @@
 - [x] Saving the Highscore in Local Storage [@bijanRegmi](https://github.com/BijanRegmi)
 - [x] Add winning Alert Message with a celebrating sound [@needl3](https://github.com/needl3)
 - [ ] Add a sound by finding a match 
-- [ ] Count the time and show it next to the highscore, and in the Higscore Alert from [@needl3](https://github.com/needl3)
+- [x] Count the time and show it next to the highscore, and in the Higscore Alert from [@needl3](https://github.com/needl3)
 - [ ] Build a Begin animation
 - [ ] Button that makes a Screenshot of the Highscore to share it with friends
 - [ ] An other Feature or Bug PR thats not here listed, but necessary
