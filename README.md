@@ -7,7 +7,7 @@
 - [ ] Displaying always new Pictures, by restarting the game
 - [x] Saving the Highscore in Local Storage [@bijanRegmi](https://github.com/BijanRegmi)
 - [x] Add winning Alert Message with a celebrating sound [@needl3](https://github.com/needl3)
-- [ ] Add a sound by finding a match 
+- [x] Add a sound by finding a match [@needl3](https://github.com/needl3)
 - [x] Count the time and show it next to the highscore, and in the Higscore Alert from [@needl3](https://github.com/needl3)
 - [ ] Build a Begin animation
 - [ ] Button that makes a Screenshot of the Highscore to share it with friends
@@ -38,4 +38,6 @@ Lets Hack!
 Feel free to make PR and complete the readme with your changes
 
 ## Credits
-Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=6826">Pixabay</a>
+Sound Effect from
+<a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=6826">Pixabay</a>
+<a href="https://mixkit.co">Mixkit</a>

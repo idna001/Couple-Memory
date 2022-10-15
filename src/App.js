@@ -59,6 +59,8 @@ function App() {
         if (choiceOne && choiceTwo) {
             setDisabled(true)
             if (choiceOne.src === choiceTwo.src) {
+                soundEffect.src="match.wav"
+                soundEffect.play()
                 setCards(prevCards => {
                     return prevCards.map(card => {
                         if (card.src === choiceOne.src) {
@@ -72,8 +74,13 @@ function App() {
              resetTurn()
                 setMatched(prevMatched => prevMatched + 2)
             } else {
+                soundEffect.src = "fail.wav"
+                soundEffect.play()
                 setTimeout(() => resetTurn(), 1000)
             }
+        }else if(choiceOne){
+            soundEffect.src = "swap.wav"
+            soundEffect.play()
         }
     }, [choiceOne, choiceTwo])
 
