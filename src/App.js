@@ -20,6 +20,8 @@ function App() {
     const [highScore, setHighScore] = useState(0)
     const [matched, setMatched] = useState(0)
     const [celebrationStatus, setCelebrationStatus] = useState(false)
+    const [elapsedTime, setTime] = useState(undefined)
+    const [intervalId, setIntervalId] = useState(undefined)
 
     //shuffle
     const shuffledCards = () => {
@@ -33,17 +35,32 @@ function App() {
         setTurns(0)
         setMatched(0)
         setCelebrationStatus(false)
+        setTime(undefined)
+        clearInterval(intervalId)
     }
 
     const handleChoice = (card) => {
         choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
+        if(elapsedTime === undefined)   handleTime(true)
     }
-
+    const handleTime = (start) => {
+        if(start){
+            setIntervalId(
+                setInterval(async () => {
+                    setTime(elapsedTime => elapsedTime+1 || 0)
+                }, 1000)
+            )
+        }else{
+            clearInterval(intervalId)
+        }
+    }
     useEffect(() => {
 
         if (choiceOne && choiceTwo) {
             setDisabled(true)
             if (choiceOne.src === choiceTwo.src) {
+                soundEffect.src="match.wav"
+                soundEffect.play()
                 setCards(prevCards => {
                     return prevCards.map(card => {
                         if (card.src === choiceOne.src) {
@@ -57,8 +74,13 @@ function App() {
              resetTurn()
                 setMatched(prevMatched => prevMatched + 2)
             } else {
+                soundEffect.src = "fail.wav"
+                soundEffect.play()
                 setTimeout(() => resetTurn(), 1000)
             }
+        }else if(choiceOne){
+            soundEffect.src = "swap.wav"
+            soundEffect.play()
         }
     }, [choiceOne, choiceTwo])
 
@@ -75,15 +97,13 @@ function App() {
         if (matched === cards.length && turns){
             // Game over
             const m_highscore = window.localStorage.getItem("highscore")
+            handleTime(false)
             if (m_highscore === null || turns < Number(m_highscore)){
                 // New highscore
                 window.localStorage.setItem("highscore", turns)
                 soundEffect.src = "celebration.mp3"
                 soundEffect.play()
                 setCelebrationStatus(true)
-                setTimeout(()=>{
-                    setCelebrationStatus(false)
-                }, 999)
                 setHighScore(turns)
             }
         }
@@ -96,10 +116,9 @@ function App() {
 		setHighScore(m_highscore)
     }, [])
 
-
 return (
     <div className="App">
-        {celebrationStatus && <Celebration highscore={highScore}/>}
+        {celebrationStatus && <Celebration highscore={highScore} time={elapsedTime}/>}
         <h1>A&A Match</h1>
         <button onClick={shuffledCards}>New Game</button>
 
@@ -115,6 +134,7 @@ return (
                 </div>
         <p>Turns: {turns}</p>
         <p>HighScore: {highScore}</p>
+        <p>Time Elapsed: {elapsedTime || "Not started"}</p>
 
         <div id="views">
             <p>This memory got <span id="visits"></span> views.</p>
