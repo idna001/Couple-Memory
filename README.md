@@ -4,6 +4,7 @@
 
 - [x] Fix Distorted images [@D3nn7](https://github.com/D3nn7)
 - [x] Mobile Viewport fix 
+- [ ] Fix Winning message on Mobile, it doesnt show since enabling sound
 - [ ] Displaying always new Pictures, by restarting the game
 - [x] Saving the Highscore in Local Storage [@bijanRegmi](https://github.com/BijanRegmi)
 - [x] Add winning Alert Message with a celebrating sound [@needl3](https://github.com/needl3)
