@@ -8,7 +8,7 @@ const cardImages = [
     { "src": "/img/IMG_2256.jpg", matched: false },
     { "src": "/img/IMG_3493.jpg", matched: false },
     { "src": "/img/IMG_3946.jpg", matched: false },
-    {"src": "/img/IMG_4808.jpg", matched: false },
+    { "src": "/img/IMG_4808.jpg", matched: false },
     { "src": "/img/IMG_6324.jpg", matched: false }
 ]
 function App() {
@@ -59,7 +59,7 @@ function App() {
         if (choiceOne && choiceTwo) {
             setDisabled(true)
             if (choiceOne.src === choiceTwo.src) {
-                soundEffect.src="match.wav"
+                soundEffect.src="audio/match.wav"
                 soundEffect.play()
                 setCards(prevCards => {
                     return prevCards.map(card => {
@@ -74,12 +74,12 @@ function App() {
              resetTurn()
                 setMatched(prevMatched => prevMatched + 2)
             } else {
-                soundEffect.src = "fail.wav"
+                soundEffect.src = "audio/fail.wav"
                 soundEffect.play()
                 setTimeout(() => resetTurn(), 1000)
             }
         }else if(choiceOne){
-            soundEffect.src = "swap.wav"
+            soundEffect.src = "audio/swap.wav"
             soundEffect.play()
         }
     }, [choiceOne, choiceTwo])
@@ -101,7 +101,7 @@ function App() {
             if (m_highscore === null || turns < Number(m_highscore)){
                 // New highscore
                 window.localStorage.setItem("highscore", turns)
-                soundEffect.src = "celebration.mp3"
+                soundEffect.src = "audio/celebration.mp3"
                 soundEffect.play()
                 setCelebrationStatus(true)
                 setHighScore(turns)
