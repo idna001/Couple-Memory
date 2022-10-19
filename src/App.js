@@ -14,14 +14,20 @@ const cardImages = [
 function App() {
     const [cards, setCards] = useState([])
     const [turns, setTurns] =useState(0)
+
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
     const [disabled, setDisabled] = useState(false)
-    const [highScore, setHighScore] = useState(0)
     const [matched, setMatched] = useState(0)
-    const [celebrationStatus, setCelebrationStatus] = useState(false)
+
+
+    const [highScore, setHighScore] = useState(0)
+    const [fastest_run, setFastestRun] = useState(0)
+
     const [elapsedTime, setTime] = useState(undefined)
     const [intervalId, setIntervalId] = useState(undefined)
+
+    const [celebrationStatus, setCelebrationStatus] = useState(false)
 
     //shuffle
     const shuffledCards = () => {
@@ -35,7 +41,7 @@ function App() {
         setTurns(0)
         setMatched(0)
         setCelebrationStatus(false)
-        setTime(undefined)
+        setTime(0)
         clearInterval(intervalId)
     }
 
@@ -96,29 +102,37 @@ function App() {
     useEffect(()=>{
         if (matched === cards.length && turns){
             // Game over
-            const m_highscore = window.localStorage.getItem("highscore")
+            const m_highscore = window.localStorage.getItem("highScore")
+            const m_fastest_run = window.localStorage.getItem("fastest_run")
+
             handleTime(false)
-            if (m_highscore === null || turns < Number(m_highscore)){
-                // New highscore
-                window.localStorage.setItem("highscore", turns)
+            if (m_highscore === null || turns < Number(m_highscore) && elapsedTime < Number(m_fastest_run) ){
+                // New highScore
+                window.localStorage.setItem("highScore", turns)
+                window.localStorage.setItem("fastest_run", elapsedTime)
                 soundEffect.src = "audio/celebration.mp3"
                 soundEffect.play()
                 setCelebrationStatus(true)
                 setHighScore(turns)
+                setFastestRun(elapsedTime)
+
             }
         }
     }, [matched])
 
     useEffect(() => {
         shuffledCards()
-        // Load highscore value from localstorage
-        const m_highscore = window.localStorage.getItem("highscore") || 0
+        // Load highScore value from localstorage
+        const m_highscore = window.localStorage.getItem("highScore") || 0
 		setHighScore(m_highscore)
-    }, [])
+
+        const m_fastest_run = window.localStorage.getItem("fastest_run") || 0
+        setFastestRun(m_fastest_run)
+}, [])
 
 return (
     <div className="App">
-        {celebrationStatus && <Celebration highscore={highScore} time={elapsedTime}/>}
+        {celebrationStatus && <Celebration highscore={highScore} elapsedTime={elapsedTime}/>}
         <h1>A&A Match</h1>
         <button onClick={shuffledCards}>New Game</button>
 
@@ -133,7 +147,7 @@ return (
                     ))}
                 </div>
         <p>Turns: {turns}</p>
-        <p>HighScore: {highScore}</p>
+        <p>HighScore: {highScore} by {fastest_run}</p>
         <p>Time Elapsed: {elapsedTime || "Not started"}</p>
 
         <div id="views">
