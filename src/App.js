@@ -18,6 +18,7 @@ function App() {
     const [choiceTwo, setChoiceTwo] = useState(null)
     const [disabled, setDisabled] = useState(false)
     const [highScore, setHighScore] = useState(0)
+    const [fastest_run, setFastestRun] = useState(0)
     const [matched, setMatched] = useState(0)
     const [celebrationStatus, setCelebrationStatus] = useState(false)
     const [elapsedTime, setTime] = useState(undefined)
@@ -35,7 +36,7 @@ function App() {
         setTurns(0)
         setMatched(0)
         setCelebrationStatus(false)
-        setTime(undefined)
+        setTime(0)
         clearInterval(intervalId)
     }
 
@@ -97,14 +98,19 @@ function App() {
         if (matched === cards.length && turns){
             // Game over
             const m_highscore = window.localStorage.getItem("highscore")
+            const fastest_run = window.localStorage.getItem("elapsedTime")
+
             handleTime(false)
-            if (m_highscore === null || turns < Number(m_highscore)){
+            if (m_highscore === null || turns < Number(m_highscore) && elapsedTime < Number(fastest_run) ){
                 // New highscore
                 window.localStorage.setItem("highscore", turns)
+                window.localStorage.setItem("fastest_run", elapsedTime)
                 soundEffect.src = "audio/celebration.mp3"
                 soundEffect.play()
                 setCelebrationStatus(true)
                 setHighScore(turns)
+                setFastestRun(elapsedTime)
+
             }
         }
     }, [matched])
@@ -114,7 +120,10 @@ function App() {
         // Load highscore value from localstorage
         const m_highscore = window.localStorage.getItem("highscore") || 0
 		setHighScore(m_highscore)
-    }, [])
+
+        const  fastest_run = window.localStorage.getItem("elapsedTime") || 0
+        setTime(fastest_run)
+}, [])
 
 return (
     <div className="App">
@@ -133,7 +142,7 @@ return (
                     ))}
                 </div>
         <p>Turns: {turns}</p>
-        <p>HighScore: {highScore}</p>
+        <p>HighScore: {highScore} by {elapsedTime}</p>
         <p>Time Elapsed: {elapsedTime || "Not started"}</p>
 
         <div id="views">
