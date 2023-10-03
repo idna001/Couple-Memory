@@ -1,4 +1,4 @@
-<h1 style="color: #01b0f2; text-align:center"">Hacktoberfest 2023</h1>
+<h1 style="color: #01b0f2; text-align:center">Hacktoberfest 2023</h1>
 
 <h1 style="color: #01b0f2; text-align:center">Improve a Memory in react js</h1>
 
