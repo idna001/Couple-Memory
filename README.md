@@ -6,15 +6,16 @@
 
 - [x] Fix Distorted images [@D3nn7](https://github.com/D3nn7)
 - [x] Mobile Viewport fix 
-- [ ] Fix Winning message on Mobile, it doesnt show since enabling sound
-- [ ] Displaying always new Pictures, by restarting the game
+- [ ] Display always new Pictures, when restarting the game
 - [x] Saving the Highscore in Local Storage [@bijanRegmi](https://github.com/BijanRegmi)
 - [x] Add winning Alert Message with a celebrating sound [@needl3](https://github.com/needl3)
 - [x] Add a sound by finding a match [@needl3](https://github.com/needl3)
 - [x] Count the time and show it next to the highscore, and in the Higscore Alert from [@needl3](https://github.com/needl3)
-- [ ] Build a Begin animation
-- [ ] Button that makes a Screenshot of the Highscore to share it with friends
-- [ ] An other Feature or Bug PR thats not here listed, but necessary
+- [ ] Build a Begin animation or sound
+- [ ] Button, that makes a Screenshot of the Highscore to share it with friends
+- [ ] Add light and dark Mode theme
+- [ ] Animation on Pictures if they match 
+- [ ] An other Feature or Bug thats not here listed, but necessary
 
 ## How to contribute 
 
