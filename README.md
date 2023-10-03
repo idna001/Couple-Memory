@@ -16,7 +16,7 @@
 - [ ] Button that makes a Screenshot of the Highscore to share it with friends
 - [ ] An other Feature or Bug PR thats not here listed, but necessary
 
-### How to contribute 
+## How to contribute 
 
 - Fork the Repo (optional)
 - Clone the Repository
@@ -40,7 +40,7 @@
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-## <a name="test"></a> How to test your Change
+### <a name="test"></a> How to test your Change
 - First on localhost while developing
 - Then on the Vercel Link of your PR
     - Vercel will deploy your changes automatically to a new Link
