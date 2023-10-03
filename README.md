@@ -14,27 +14,40 @@
 - [ ] Button that makes a Screenshot of the Highscore to share it with friends
 - [ ] An other Feature or Bug PR thats not here listed, but necessary
 
-### `npm start`
+### How to contribute 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Fork the Repo (optional)
+- Clone the Repository
+- Create a new Branch
+- Make your changes 
+    - Add your Name to the Credits
+    - [Run the App](#run-the-app)
+    - [Test your changes](#test)
+- Push your changes to a PR on this Repo
+- Wait for a Review and merge
+- Celebrate your first PR
+- Repeat ;)
+
+### <a name="run-the-app"></a> How to run the App
+- `npm install`
+    - Will install all dependencies
+- `npm start` 
+  - Runs the app in the development mode.
+- Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-
-## How to test your Change
-
-- First local while developing
-- Create a PR
-- Use the Vercel Link to your Change 
+## <a name="test"></a> How to test your Change
+- First on localhost while developing
+- Then on the Vercel Link of your PR
+    - Vercel will deploy your changes automatically to a new Link
+    - You can find the Link in the PR
 - Test mobile and Desktop Viewport
-- Invite a Contributor to review your Change and merge it
 
 Have fun while celebrating Hacktober
  
 Lets Hack!
-
 
 Feel free to make PR and complete the readme with your changes
 
