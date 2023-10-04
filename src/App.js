@@ -4,12 +4,12 @@ import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
 
 const cardImages = [
-    { "src": "/img/IMG_0816.JPG", matched: false},
-    { "src": "/img/IMG_2256.jpg", matched: false },
-    { "src": "/img/IMG_3493.jpg", matched: false },
-    { "src": "/img/IMG_3946.jpg", matched: false },
-    { "src": "/img/IMG_4808.jpg", matched: false },
-    { "src": "/img/IMG_6324.jpg", matched: false }
+    { "src": "/img/Bild01.png", matched: false},
+    { "src": "/img/Bild02.png", matched: false },
+    { "src": "/img/Bild03.png", matched: false },
+    { "src": "/img/Bild04.png", matched: false },
+    { "src": "/img/Bild05.png", matched: false },
+    { "src": "/img/Bild06.png", matched: false },
 ]
 function App() {
     const [cards, setCards] = useState([])
