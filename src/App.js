@@ -3,7 +3,8 @@ import './App.css'
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
 
-// Function to shuffle an array in-place
+const max_images = 10;
+
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -11,16 +12,13 @@ function shuffleArray(array) {
     }
 }
 
-// Create an array of numbers from 1 to 10 with leading zeros
-const numbers = Array.from({ length: 10 }, (_, index) => {
+const numbers = Array.from({ length: max_images }, (_, index) => {
     const number = index + 1;
     return (number < 10) ? `0${number}` : `${number}`;
 });
 
-// Shuffle the array
 shuffleArray(numbers);
 
-// Take the first 6 numbers from the shuffled array
 const selectedNumbers = numbers.slice(0, 6);
 
 const cardImages = [
