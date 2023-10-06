@@ -9,7 +9,7 @@ on:
 
 jobs:
   List-Issues:
-    name: 🎉 Deploy
+    name: Listing Issues
     runs-on: ubuntu-latest
     steps:
       - name: checkout
