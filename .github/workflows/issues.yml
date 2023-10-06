@@ -8,6 +8,7 @@ on:
       - master
 
 jobs:
+  List-Issues:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
