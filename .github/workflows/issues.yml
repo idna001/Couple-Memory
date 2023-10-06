@@ -17,7 +17,7 @@ jobs:
       - name: rewrite Readme
         uses: seed-of-apricot/issue-list-readme@v1.1.0
         with:
-          GITHUB_TOKEN: '${{ secrets.TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
           pattern: '<!-- issueTable -->'
           labels: 'good first issue'
           state: 'open'
