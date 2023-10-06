@@ -1,4 +1,10 @@
 # setup
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
 steps:
   - name: checkout
     uses: actions/checkout@v2
