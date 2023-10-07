@@ -11,28 +11,29 @@ const numbers = Array.from({ length: max_images }, (_, index) => {
     return (number < 10) ? `0${number}` : `${number}`;
 });
 
-// Würfel das Image komplett durch
+// Gibt das Array numbers in eine zufälligen reinfolge zurück
 function secureShuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(crypto.randomBytes(1)[0] / 256 * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
-    console.log(array[0] + " - " + array[1] + " - " + array[2] + " - " + array[3] + " - " + array[4] + " - "+ array[5]);
+}
+
+// Ordnet den 6 Karten ein Images zu
+function orderCardsToFile(numbers) {
+    cardImages = [
+        { "src": "/img/Bild" + numbers[0] + ".png", matched: false},
+        { "src": "/img/Bild" + numbers[1] + ".png", matched: false },
+        { "src": "/img/Bild" + numbers[2] + ".png", matched: false },
+        { "src": "/img/Bild" + numbers[3] + ".png", matched: false },
+        { "src": "/img/Bild" + numbers[4] + ".png", matched: false },
+        { "src": "/img/Bild" + numbers[5] + ".png", matched: false },
+    ]
 }
 
 secureShuffleArray(numbers);
 orderCardsToFile(numbers.slice(0, 6));
 
-function orderCardsToFile(selectedNumbers) {
-    cardImages = [
-        { "src": "/img/Bild" + selectedNumbers[0] + ".png", matched: false},
-        { "src": "/img/Bild" + selectedNumbers[1] + ".png", matched: false },
-        { "src": "/img/Bild" + selectedNumbers[2] + ".png", matched: false },
-        { "src": "/img/Bild" + selectedNumbers[3] + ".png", matched: false },
-        { "src": "/img/Bild" + selectedNumbers[4] + ".png", matched: false },
-        { "src": "/img/Bild" + selectedNumbers[5] + ".png", matched: false },
-    ]
-}
 function App() {
     const [cards, setCards] = useState([])
     const [turns, setTurns] =useState(0)
