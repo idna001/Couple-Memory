@@ -4,33 +4,35 @@ import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
 
 const crypto = require('crypto');
+let cardImages = [];
 const max_images = 10;
-
-function secureShuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(crypto.randomBytes(1)[0] / 256 * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-    }
-}
-
-
 const numbers = Array.from({ length: max_images }, (_, index) => {
     const number = index + 1;
     return (number < 10) ? `0${number}` : `${number}`;
 });
 
+// Würfel das Image komplett durch
+function secureShuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(crypto.randomBytes(1)[0] / 256 * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    console.log(array[0] + " - " + array[1] + " - " + array[2] + " - " + array[3] + " - " + array[4] + " - "+ array[5]);
+}
+
 secureShuffleArray(numbers);
+orderCardsToFile(numbers.slice(0, 6));
 
-const selectedNumbers = numbers.slice(0, 6);
-
-const cardImages = [
-    { "src": "/img/Bild" + selectedNumbers[0] + ".png", matched: false},
-    { "src": "/img/Bild" + selectedNumbers[1] + ".png", matched: false },
-    { "src": "/img/Bild" + selectedNumbers[2] + ".png", matched: false },
-    { "src": "/img/Bild" + selectedNumbers[3] + ".png", matched: false },
-    { "src": "/img/Bild" + selectedNumbers[4] + ".png", matched: false },
-    { "src": "/img/Bild" + selectedNumbers[5] + ".png", matched: false },
-]
+function orderCardsToFile(selectedNumbers) {
+    cardImages = [
+        { "src": "/img/Bild" + selectedNumbers[0] + ".png", matched: false},
+        { "src": "/img/Bild" + selectedNumbers[1] + ".png", matched: false },
+        { "src": "/img/Bild" + selectedNumbers[2] + ".png", matched: false },
+        { "src": "/img/Bild" + selectedNumbers[3] + ".png", matched: false },
+        { "src": "/img/Bild" + selectedNumbers[4] + ".png", matched: false },
+        { "src": "/img/Bild" + selectedNumbers[5] + ".png", matched: false },
+    ]
+}
 function App() {
     const [cards, setCards] = useState([])
     const [turns, setTurns] =useState(0)
@@ -49,6 +51,8 @@ function App() {
             .sort(() => Math.random() - 0.5)
             .map((card) => ({...card, id: Math.random() }))
 
+        secureShuffleArray(numbers)
+        orderCardsToFile(numbers.slice(0, 6));
         setChoiceOne(null)
         setChoiceTwo(null)
         setCards(shuffledCards)
@@ -131,10 +135,10 @@ function App() {
 
     useEffect(() => {
         shuffledCards()
-        // Load highscore value from localstorage
-        const m_highscore = window.localStorage.getItem("highscore") || 0
-		setHighScore(m_highscore)
-    }, [])
+            // Load highscore value from localstorage
+            const m_highscore = window.localStorage.getItem("highscore") || 0
+            setHighScore(m_highscore)
+        }, [])
 
 return (
     <div className="App">
