@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/site', require('./routes/viewCountRoute'))
 
-const PORT = 5000
+const PORT = 3030
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
