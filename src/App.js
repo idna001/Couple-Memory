@@ -28,7 +28,7 @@ function App() {
         if (!siteview) {
             //create session var
             //send req
-            let time = await fetch(`http://localhost:5000/site/count`)
+            let time = await fetch(`http://localhost:3030/site/count`)
             time = await time.json()
             sessionStorage.setItem('siteview', time.view.counter)
             setViews(time.view.counter)
