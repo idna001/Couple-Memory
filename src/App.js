@@ -1,10 +1,10 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import './App.css'
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
 
 const cardImages = [
-    { "src": "/img/IMG_0816.JPG", matched: false},
+    { "src": "/img/IMG_0816.JPG", matched: false },
     { "src": "/img/IMG_2256.jpg", matched: false },
     { "src": "/img/IMG_3493.jpg", matched: false },
     { "src": "/img/IMG_3946.jpg", matched: false },
@@ -13,7 +13,7 @@ const cardImages = [
 ]
 function App() {
     const [cards, setCards] = useState([])
-    const [turns, setTurns] =useState(0)
+    const [turns, setTurns] = useState(0)
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
     const [disabled, setDisabled] = useState(false)
@@ -22,12 +22,27 @@ function App() {
     const [celebrationStatus, setCelebrationStatus] = useState(false)
     const [elapsedTime, setTime] = useState(undefined)
     const [intervalId, setIntervalId] = useState(undefined)
+    const [views, setViews] = useState(0)
+    useEffect(async () => {
+        let siteview = sessionStorage.getItem('siteview')
+        if (!siteview) {
+            //create session var
+            //send req
+            let time = await fetch(`http://localhost:5000/site/count`)
+            time = await time.json()
+            sessionStorage.setItem('siteview', time.view.counter)
+            setViews(time.view.counter)
+            console.log(views)
+        }
+        else setViews(siteview)
+        // return ()=>{}
+    }, [])
 
     //shuffle
     const shuffledCards = () => {
         const shuffledCards = [...cardImages, ...cardImages]
             .sort(() => Math.random() - 0.5)
-            .map((card) => ({...card, id: Math.random() }))
+            .map((card) => ({ ...card, id: Math.random() }))
 
         setChoiceOne(null)
         setChoiceTwo(null)
@@ -41,16 +56,16 @@ function App() {
 
     const handleChoice = (card) => {
         choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
-        if(elapsedTime === undefined)   handleTime(true)
+        if (elapsedTime === undefined) handleTime(true)
     }
     const handleTime = (start) => {
-        if(start){
+        if (start) {
             setIntervalId(
                 setInterval(async () => {
-                    setTime(elapsedTime => elapsedTime+1 || 0)
+                    setTime(elapsedTime => elapsedTime + 1 || 0)
                 }, 1000)
             )
-        }else{
+        } else {
             clearInterval(intervalId)
         }
     }
@@ -59,26 +74,27 @@ function App() {
         if (choiceOne && choiceTwo) {
             setDisabled(true)
             if (choiceOne.src === choiceTwo.src) {
-                soundEffect.src="audio/match.wav"
+                soundEffect.src = "audio/match.wav"
                 soundEffect.play()
                 setCards(prevCards => {
                     return prevCards.map(card => {
                         if (card.src === choiceOne.src) {
                             return {
-                                ...card, matched: true}
-                            } else {
-                                return card
+                                ...card, matched: true
                             }
+                        } else {
+                            return card
+                        }
                     })
                 })
-             resetTurn()
+                resetTurn()
                 setMatched(prevMatched => prevMatched + 2)
             } else {
                 soundEffect.src = "audio/fail.wav"
                 soundEffect.play()
                 setTimeout(() => resetTurn(), 1000)
             }
-        }else if(choiceOne){
+        } else if (choiceOne) {
             soundEffect.src = "audio/swap.wav"
             soundEffect.play()
         }
@@ -93,12 +109,12 @@ function App() {
     const soundEffect = new Audio();
     soundEffect.autoplay = true;
 
-    useEffect(()=>{
-        if (matched === cards.length && turns){
+    useEffect(() => {
+        if (matched === cards.length && turns) {
             // Game over
             const m_highscore = window.localStorage.getItem("highscore")
             handleTime(false)
-            if (m_highscore === null || turns < Number(m_highscore)){
+            if (m_highscore === null || turns < Number(m_highscore)) {
                 // New highscore
                 window.localStorage.setItem("highscore", turns)
                 soundEffect.src = "audio/celebration.mp3"
@@ -113,33 +129,33 @@ function App() {
         shuffledCards()
         // Load highscore value from localstorage
         const m_highscore = window.localStorage.getItem("highscore") || 0
-		setHighScore(m_highscore)
+        setHighScore(m_highscore)
     }, [])
 
-return (
-    <div className="App">
-        {celebrationStatus && <Celebration highscore={highScore} time={elapsedTime}/>}
-        <h1>A&A Match</h1>
-        <button onClick={shuffledCards}>New Game</button>
+    return (
+        <div className="App">
+            {celebrationStatus && <Celebration highscore={highScore} time={elapsedTime} />}
+            <h1>A&A Match</h1>
+            <button onClick={shuffledCards}>New Game</button>
 
-        <div className="card-grid">
-            {cards.map(card => (
-                <SingleCard
-                    key={card.id}
-                    card={card}
-                    handleChoice={handleChoice}
-                    flipped={card === choiceOne || card === choiceTwo || card.matched}
-                    disabled={disabled}/>
-                    ))}
-                </div>
-        <p>Turns: {turns}</p>
-        <p>HighScore: {highScore}</p>
-        <p>Time Elapsed: {elapsedTime || "Not started"}</p>
+            <div className="card-grid">
+                {cards.map(card => (
+                    <SingleCard
+                        key={card.id}
+                        card={card}
+                        handleChoice={handleChoice}
+                        flipped={card === choiceOne || card === choiceTwo || card.matched}
+                        disabled={disabled} />
+                ))}
+            </div>
+            <p>Turns: {turns}</p>
+            <p>HighScore: {highScore}</p>
+            <p>Time Elapsed: {elapsedTime || "Not started"}</p>
 
-        <div id="views">
-            <p>This memory got <span id="visits"></span> views.</p>
+            <div id="views">
+                <p>This memory got <span id="visits">{views}</span> views.</p>
+            </div>
         </div>
-        </div>
-         );
+    );
 }
 export default App
