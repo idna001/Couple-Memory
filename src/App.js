@@ -3,21 +3,23 @@ import './App.css'
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
 
+const crypto = require('crypto');
 const max_images = 10;
 
-function shuffleArray(array) {
+function secureShuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
+        const j = Math.floor(crypto.randomBytes(1)[0] / 256 * (i + 1));
         [array[i], array[j]] = [array[j], array[i]]; // Swap elements
     }
 }
+
 
 const numbers = Array.from({ length: max_images }, (_, index) => {
     const number = index + 1;
     return (number < 10) ? `0${number}` : `${number}`;
 });
 
-shuffleArray(numbers);
+secureShuffleArray(numbers);
 
 const selectedNumbers = numbers.slice(0, 6);
 
