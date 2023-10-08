@@ -38,7 +38,7 @@ button:hover {
 
 #theme-toggle{
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 1vh;
+  right: 1vw;
   font-size: 0.7em;
 }
