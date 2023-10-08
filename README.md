@@ -63,3 +63,5 @@ Feel free to make PR and complete the readme with your changes
 Sound Effect from
 <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=6826">Pixabay</a>
 <a href="https://mixkit.co">Mixkit</a>
+Toggle Theme (light<->dark) from
+<a heef="https://github.com/Surajit0573">Surajit0573</a>

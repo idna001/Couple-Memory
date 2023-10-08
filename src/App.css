@@ -3,7 +3,6 @@
   margin: 40px auto;
 }
 button {
-  background: none;
   color: var(--text,#fff);
   background: var(--background, #1b1523);
   border: 2px solid;
