@@ -1,24 +1,30 @@
-
-name: Issues
 on:
-  pull_request:
-    types:
-      - closed
-    branches:
-      - master
+  push:
+  issues:
+    types: [opened, edited, deleted]
+
 
 jobs:
-  List-Issues:
-    name: Listing Issues
+  issue-list:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: rewrite Readme
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: update
         uses: seed-of-apricot/issue-list-readme@v1.1.0
         with:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          pattern: '<!-- issueTable -->'
-          labels: 'good first issue'
-          state: 'open'
+      - name: add-and-commit
+        uses: EndBug/add-and-commit@v4
+        with:
+          message: README.md has been re-written
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_TOKEN }}
+      - name: push
+        uses: ad-m/github-push-action@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          branch: ${{ github.head_ref }}
 
