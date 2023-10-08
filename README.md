@@ -17,6 +17,11 @@
 - [ ] Animation on Pictures if they match 
 - [ ] An other Feature or Bug thats not here listed, but necessary
 
+<!-- issueTable -->
+
+<!-- issueTable -->
+
+
 ## How to contribute 
 
 - Fork the Repo (optional)
