@@ -13,9 +13,9 @@
 - [x] Count the time and show it next to the highscore, and in the Higscore Alert from [@needl3](https://github.com/needl3)
 - [ ] Build a Begin animation or sound
 - [ ] Button, that makes a Screenshot of the Highscore to share it with friends
-- [ ] Add light and dark Mode theme
+- [x] Add light and dark Mode theme [@Surajit0573](https://github.com/Surajit0573)
 - [ ] Animation on Pictures if they match 
-- [ ] An other Feature or Bug thats not here listed, but necessary
+- [ ] Another Feature or Bug that's not here listed, but necessary
 
 <!-- issueTable -->
 
@@ -63,5 +63,3 @@ Feel free to make PR and complete the readme with your changes
 Sound Effect from
 <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=6826">Pixabay</a>
 <a href="https://mixkit.co">Mixkit</a>
-Toggle Theme (light<->dark) from
-<a heef="https://github.com/Surajit0573">Surajit0573</a>
