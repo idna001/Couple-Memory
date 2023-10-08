@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import './App.css'
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
-
+import toggleTheme from "./components/toggleTheme";
 const cardImages = [
     { "src": "/img/IMG_0816.JPG", matched: false },
     { "src": "/img/IMG_2256.jpg", matched: false },
