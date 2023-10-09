@@ -24,7 +24,7 @@ export default function Celebration({highscore, time}){
    return (
     <div className="celebration-container" >
         <div className="celebration-notification" >
-            <p ref={highScoreRef}> <h3>A&A Match</h3>Highscore achieved: <span>{highscore}</span><br/>Time Taken: <span>{time}s</span></p>
+            <p ref={highScoreRef}> Highscore achieved: <span>{highscore}</span><br/>Time Taken: <span>{time}s</span></p>
             <div className="button">
                 <button onClick={takeScreenshot}>Take Screenshot</button>
             </div>
