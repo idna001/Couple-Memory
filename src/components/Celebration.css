@@ -1,6 +1,6 @@
 .celebration-notification{
     position: fixed;
-    top: 40%;
+    top: 30%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 250;
@@ -10,9 +10,17 @@
     background-color: #000000CC;
     animation: fade 3s linear;
 }
+
+h3 {
+    text-decoration: underline;
+  }
+  
 .celebration-notification > p > span{
     color: greenyellow;
     font-size: 4rem;
+}
+.button{
+    margin: 2px;
 }
 @keyframes fade {
     0%{
