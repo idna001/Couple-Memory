@@ -135,9 +135,6 @@ return (
         <p>HighScore: {highScore}</p>
         <p>Time Elapsed: {elapsedTime || "Not started"}</p>
 
-        <div id="views">
-            <p>This memory got <span id="visits"></span> views.</p>
-        </div>
         </div>
          );
 }
