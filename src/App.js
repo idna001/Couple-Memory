@@ -1,8 +1,9 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import './App.css'
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
 import toggleTheme from "./components/toggleTheme";
+
 const cardImages = [
     { "src": "/img/IMG_0816.JPG", matched: false},
     { "src": "/img/IMG_2256.jpg", matched: false },
@@ -117,7 +118,9 @@ function App() {
 
 return (
     <div className="App">
-        {celebrationStatus && <Celebration highscore={highScore} time={elapsedTime}/>}
+        {celebrationStatus && <Celebration highscore={highScore}
+                                           time={elapsedTime}
+        />}
         <h1>A&A Match</h1>
         <button onClick={shuffledCards}>New Game</button>
         <button id="theme-toggle" onClick={toggleTheme}>dark</button>
