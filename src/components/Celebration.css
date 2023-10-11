@@ -27,23 +27,22 @@ h3 {
   margin: 2px;
 }
 @keyframes fade {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-=======
-    position: fixed;
-    top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 250;
-    color: aqua;
-    font-size: 3rem;
-    width: 100%;
-    background-color: #000000cc;
-    animation: fade 3s linear;
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 250;
+        color: aqua;
+        font-size: 3rem;
+        width: 100%;
+        background-color: #000000cc;
+        animation: fade 3s linear;
+    }
 }
 
 h3 {
