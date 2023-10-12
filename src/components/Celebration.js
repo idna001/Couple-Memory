@@ -1,6 +1,5 @@
 import "./Celebration.css";
-import React, { useRef, useState } from "react";
-import html2canvas from "html2canvas";
+import React, { useRef } from "react";
 import ShareButton from "./ShareButton";
 export default function Celebration({ highScore, elapsedTime }) {
     const highScoreRef = useRef(null);
