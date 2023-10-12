@@ -118,7 +118,7 @@ function App() {
 
 return (
     <div className="App">
-        {celebrationStatus && <Celebration highscore={highScore} time={elapsedTime}/>}
+        {celebrationStatus && <Celebration highScore={highScore} elapsedTime={elapsedTime}/>}
         {celebrationStatus && <ShowConfetti />}
         <h1>A&A Match</h1>
         <button onClick={shuffledCards}>New Game</button>

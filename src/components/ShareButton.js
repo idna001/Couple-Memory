@@ -18,22 +18,22 @@ export default function ShareButton({ highScore, highScoreRef })  {
             .catch((error) => {
                 console.error("Error capturing screenshot:", error);
             });
-        console.log(navigator.share);
-        console.log(screenshotImage);
-        if (navigator.share && screenshotImage) {
-            navigator.share({
-                    title: "High Score Screenshot",
-                    text: `I achieved a high score of ${highScore} in A&A Match!`,
-                    url: screenshotImage,
-                }).then(() => {
-                    console.log('Thanks for sharing!');
-                })
-                    .catch(console.error);
-            } else {
-                shareDialog.classList.add('is-open');
-            }
+        shareContent();
 
     }
+    const shareContent = async () => {
+        try {
+            await navigator.share({
+                title: "High Score Screenshot",
+                text: `I achieved a high score of ${highScore} in A&A Match!`,
+                url: 'https://aa-memory.vercel.app/',
+                files: [new File(['highScore'], screenshotImage, { type: 'image/jpeg' })],
+            });
+            console.log("Sharing successfully!");
+        } catch (error) {
+            console.error("Error while sharing: ", error);
+        }
+    };
      const closeDialog = () => {
          shareDialog.classList.remove('is-open');
 
