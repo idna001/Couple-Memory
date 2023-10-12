@@ -10,7 +10,7 @@
 - [x] Saving the Highscore in Local Storage [@bijanRegmi](https://github.com/BijanRegmi)
 - [x] Add winning Alert Message with a celebrating sound [@needl3](https://github.com/needl3)
 - [x] Add a sound by finding a match [@needl3](https://github.com/needl3)
-- [ ] Confetti Effect on Celebration 🎉 #45  [@SandeepKrSuman](https://github.com/SandeepKrSuman)
+- [x] Confetti Effect on Celebration 🎉 #45  [@SandeepKrSuman](https://github.com/SandeepKrSuman)
 - [x] Count the time and show it next to the highscore, and in the Higscore Alert from [@needl3](https://github.com/needl3)
 - [ ] Build a Begin animation or sound
 - [ ] Button, that makes a Screenshot of the Highscore to share it with friends [@insane-22](https://github.com/insane-22)
