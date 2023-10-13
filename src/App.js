@@ -44,18 +44,24 @@ function App() {
 
   const handleChoice = (card) => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
-    if (elapsedTime === undefined) handleTime(true);
+    if (!choiceOne) {
+      // Start the timer when the first card is flipped
+      handleTime(true);
+    }
   };
 
   const handleTime = (start, stop) => {
     if (stop) {
       clearInterval(intervalId);
     } else if (start) {
-      setIntervalId(
-        setInterval(async () => {
-          setTime((elapsedTime) => elapsedTime + 1 || 0);
-        }, 1000)
-      );
+      // Start the timer only if it hasn't started already
+      if (elapsedTime === undefined) {
+        setIntervalId(
+          setInterval(async () => {
+            setTime((elapsedTime) => elapsedTime + 1 || 0);
+          }, 1000)
+        );
+      }
     }
   };
 
