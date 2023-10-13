@@ -1,32 +1,32 @@
-.celebration-notification{
+.celebration-notification {
     position: fixed;
-    top: 30%;
+    top: 25%;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 250;
+    z-index: 999;
     color: aqua;
     font-size: 3rem;
     width: 100%;
-    background-color: #000000CC;
+    background-color: #000000cc;
     animation: fade 3s linear;
 }
 
 h3 {
     text-decoration: underline;
-  }
-  
-.celebration-notification > p > span{
+}
+
+.celebration-notification > p > span {
     color: greenyellow;
     font-size: 4rem;
 }
-.button{
+.button {
     margin: 2px;
 }
 @keyframes fade {
-    0%{
+    0% {
         opacity: 0;
-    }100%{
+    }
+    100% {
         opacity: 1;
     }
-    
 }
