@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import html2canvas from "html2canvas";
 export default function ShareButton({ highScore, highScoreRef }) {
   const [screenshotImage, setScreenshotImage] = useState(null);
-
+  
   const shareDialog = document.querySelector(".share-dialog");
   const closeButton = document.querySelector(".close-button");
   const handleScreenshot = () => {
@@ -40,11 +40,10 @@ export default function ShareButton({ highScore, highScoreRef }) {
             console.error("Error while sharing: ", error);
           }
       } else {
-        if (!navigator.share) {
-          alert("Sharing is not supported on this device/browser.");
-        } else {
-          alert("the screenshot image is not available");
-        }
+        shareDialog.classList.add('is-open');
+        closeButton.addEventListener('click', event => {
+          shareDialog.classList.remove('is-open');
+        });
       }
     // try {
     //   await navigator.share({
