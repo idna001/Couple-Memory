@@ -4,94 +4,97 @@ import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
 import toggleTheme from "./components/toggleTheme";
 import ShowConfetti from "./components/Confetti";
+
 const cardImages = [
-    { "src": "/img/IMG_0816.JPG", matched: false},
-    { "src": "/img/IMG_2256.jpg", matched: false },
-    { "src": "/img/IMG_3493.jpg", matched: false },
-    { "src": "/img/IMG_3946.jpg", matched: false },
-    { "src": "/img/IMG_4808.jpg", matched: false },
-    { "src": "/img/IMG_6324.jpg", matched: false }
-]
+  { src: "/img/IMG_0816.JPG", matched: false },
+  { src: "/img/IMG_2256.jpg", matched: false },
+  { src: "/img/IMG_3493.jpg", matched: false },
+  { src: "/img/IMG_3946.jpg", matched: false },
+  { src: "/img/IMG_4808.jpg", matched: false },
+  { src: "/img/IMG_6324.jpg", matched: false },
+];
+
 function App() {
-    const [cards, setCards] = useState([])
-    const [turns, setTurns] =useState(0)
-    const [choiceOne, setChoiceOne] = useState(null)
-    const [choiceTwo, setChoiceTwo] = useState(null)
-    const [disabled, setDisabled] = useState(false)
-    const [highScore, setHighScore] = useState(0)
-    const [matched, setMatched] = useState(0)
-    const [celebrationStatus, setCelebrationStatus] = useState(false)
-    const [elapsedTime, setTime] = useState(undefined)
-    const [intervalId, setIntervalId] = useState(undefined)
-    //shuffle
-    const shuffledCards = () => {
-        const shuffledCards = [...cardImages, ...cardImages]
-            .sort(() => Math.random() - 0.5)
-            .map((card) => ({...card, id: Math.random() }))
+  const [cards, setCards] = useState([]);
+  const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
+  const [highScore, setHighScore] = useState(0);
+  const [matched, setMatched] = useState(0);
+  const [celebrationStatus, setCelebrationStatus] = useState(false);
+  const [elapsedTime, setTime] = useState(undefined);
+  const [intervalId, setIntervalId] = useState(undefined);
 
-        setChoiceOne(null)
-        setChoiceTwo(null)
-        setCards(shuffledCards)
-        setTurns(0)
-        setMatched(0)
-        setCelebrationStatus(false)
-        setTime(undefined)
-        clearInterval(intervalId)
-    }
+  const shuffledCards = () => {
+    const shuffledCards = [...cardImages, ...cardImages]
+      .sort(() => Math.random() - 0.5)
+      .map((card) => ({ ...card, id: Math.random() }));
 
-    const handleChoice = (card) => {
-        choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
-        if(elapsedTime === undefined)   handleTime(true)
-    }
-    const handleTime = (start) => {
-        if(start){
-            setIntervalId(
-                setInterval(async () => {
-                    setTime(elapsedTime => elapsedTime+1 || 0)
-                }, 1000)
-            )
-        }else{
-            clearInterval(intervalId)
-        }
-    }
-    useEffect(() => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setCards(shuffledCards);
+    setTurns(0);
+    setMatched(0);
+    setCelebrationStatus(false);
+    setTime(undefined);
+    clearInterval(intervalId);
+    handleTime(true);
+  };
 
-        if (choiceOne && choiceTwo) {
-            setDisabled(true)
-            if (choiceOne.src === choiceTwo.src) {
-                soundEffect.src="audio/match.wav"
-                soundEffect.play()
-                setCards(prevCards => {
-                    return prevCards.map(card => {
-                        if (card.src === choiceOne.src) {
-                            return {
-                                ...card, matched: true}
-                            } else {
-                                return card
-                            }
-                    })
-                })
-             resetTurn()
-                setMatched(prevMatched => prevMatched + 2)
+  const handleChoice = (card) => {
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+    if (!choiceOne) {
+      // Start the timer when the first card is flipped
+      handleTime(true);
+    }
+  };
+
+  const handleTime = (start, stop) => {
+    if (stop) {
+      clearInterval(intervalId);
+    } else if (start) {
+      // Start the timer only if it hasn't started already
+      if (elapsedTime === undefined) {
+        setIntervalId(
+          setInterval(async () => {
+            setTime((elapsedTime) => elapsedTime + 1 || 0);
+          }, 1000)
+        );
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      setDisabled(true);
+      if (choiceOne.src === choiceTwo.src) {
+        soundEffect.src = "audio/match.wav";
+        soundEffect.play();
+        setCards((prevCards) => {
+          return prevCards.map((card) => {
+            if (card.src === choiceOne.src) {
+              return {
+                ...card,
+                matched: true,
+              };
             } else {
-                soundEffect.src = "audio/fail.wav"
-                soundEffect.play()
-                setTimeout(() => resetTurn(), 1000)
+              return card;
             }
-        }else if(choiceOne){
-            soundEffect.src = "audio/swap.wav"
-            soundEffect.play()
-        }
-    }, [choiceOne, choiceTwo])
-
-    const resetTurn = () => {
-        setChoiceOne(null)
-        setChoiceTwo(null)
-        setTurns(prevTurns => prevTurns + 1)
-        setDisabled(false)
+          });
+        });
+        resetTurn();
+        setMatched((prevMatched) => prevMatched + 2);
+      } else {
+        soundEffect.src = "audio/fail.wav";
+        soundEffect.play();
+        setTimeout(() => resetTurn(), 1000);
+      }
+    } else if (choiceOne) {
+      soundEffect.src = "audio/swap.wav";
+      soundEffect.play();
     }
-    const soundEffect = new Audio();
-    soundEffect.autoplay = true;
+  }, [choiceOne, choiceTwo]);
 
     useEffect(()=>{
         if (matched === cards.length && turns){
@@ -109,37 +112,63 @@ function App() {
              handleTime(false, true);
         }
     }, [matched])
+  const resetTurn = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prevTurns) => prevTurns + 1);
+    setDisabled(false);
+  };
 
-    useEffect(() => {
-        shuffledCards()
-        // Load highscore value from localstorage
-        const m_highscore = window.localStorage.getItem("highscore") || 0
-		setHighScore(m_highscore)
-    }, [])
+  const soundEffect = new Audio();
+  soundEffect.autoplay = true;
 
-return (
+  useEffect(() => {
+    if (matched === cards.length && turns) {
+      const m_highscore = window.localStorage.getItem("highscore");
+      if (m_highscore === null || turns < Number(m_highscore)) {
+        window.localStorage.setItem("highscore", turns);
+        soundEffect.src = "audio/celebration.mp3";
+        soundEffect.play();
+        setCelebrationStatus(true);
+        setHighScore(turns);
+      }
+      handleTime(false, true);
+    }
+  }, [matched]);
 
+  useEffect(() => {
+    shuffledCards();
+    const m_highscore = window.localStorage.getItem("highscore") || 0;
+    setHighScore(m_highscore);
+  }, []);
+
+  return (
     <div className="App">
-        {celebrationStatus && <Celebration highScore={highScore} elapsedTime={elapsedTime}/>}
-        {celebrationStatus && <ShowConfetti />}
-        <h1>A&A Match</h1>
-        <button onClick={shuffledCards}>New Game</button>
-        <button id="theme-toggle" onClick={toggleTheme}>dark</button>
-        <div className="card-grid">
-            {cards.map(card => (
-                <SingleCard
-                    key={card.id}
-                    card={card}
-                    handleChoice={handleChoice}
-                    flipped={card === choiceOne || card === choiceTwo || card.matched}
-                    disabled={disabled}/>
-                    ))}
-                </div>
-        <p>Turns: {turns}</p>
-        <p>HighScore: {highScore}</p>
-        <p>Time Elapsed: {elapsedTime || "Not started"}</p>
-
-        </div>
-         );
+      {celebrationStatus && (
+        <Celebration highscore={highScore} time={elapsedTime} />
+      )}
+      {celebrationStatus && <ShowConfetti />}
+      <h1>A&A Match</h1>
+      <button onClick={shuffledCards}>New Game</button>
+      <button id="theme-toggle" onClick={toggleTheme}>
+        dark
+      </button>
+      <div className="card-grid">
+        {cards.map((card) => (
+          <SingleCard
+            key={card.id}
+            card={card}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
+          />
+        ))}
+      </div>
+      <p>Turns: {turns}</p>
+      <p>HighScore: {highScore}</p>
+      <p>Time Elapsed: {elapsedTime || "Not started"}</p>
+    </div>
+  );
 }
-export default App
+
+export default App;
