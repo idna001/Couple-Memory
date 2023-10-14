@@ -106,6 +106,7 @@ function App() {
                 setCelebrationStatus(true)
                 setHighScore(turns)
             }
+             handleTime(false, true);
         }
     }, [matched])
 
@@ -117,6 +118,7 @@ function App() {
     }, [])
 
 return (
+
     <div className="App">
         {celebrationStatus && <Celebration highScore={highScore} elapsedTime={elapsedTime}/>}
         {celebrationStatus && <ShowConfetti />}
