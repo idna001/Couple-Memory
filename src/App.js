@@ -43,7 +43,14 @@ function pickRandomImages(cardImages, count) {
         console.error("Die Anzahl der ausgewählten Bilder darf nicht größer sein als die Anzahl der verfügbaren Bilder.");
         return [];
     }
-    const shuffledImages = [...cardImages].sort(() => Math.random() - 0.5); // Zufällige Reihenfolge
+    const shuffledImages = [...cardImages].sort((a, b) => {
+        const arrayA = new Uint8Array(1);
+        const arrayB = new Uint8Array(1);
+        window.crypto.getRandomValues(arrayA);
+        window.crypto.getRandomValues(arrayB);
+        return (arrayA[0] / 255) - (arrayB[0] / 255);
+    });
+
     return shuffledImages.slice(0, count);
 }
 
