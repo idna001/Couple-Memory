@@ -11,7 +11,6 @@ const numbers = Array.from({ length: max_images }, (_, index) => {
     return (number < 10) ? `0${number}` : `${number}`;
 });
 
-// Gibt das Array numbers in eine zufälligen reinfolge zurück
 function secureShuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(crypto.randomBytes(1)[0] / 256 * (i + 1));
@@ -19,20 +18,34 @@ function secureShuffleArray(array) {
     }
 }
 
-// Ordnet den 6 Karten ein Images zu
-function orderCardsToFile(numbers) {
-    cardImages = [
-        { "src": "/img/Bild" + numbers[0] + ".png", matched: false},
-        { "src": "/img/Bild" + numbers[1] + ".png", matched: false },
-        { "src": "/img/Bild" + numbers[2] + ".png", matched: false },
-        { "src": "/img/Bild" + numbers[3] + ".png", matched: false },
-        { "src": "/img/Bild" + numbers[4] + ".png", matched: false },
-        { "src": "/img/Bild" + numbers[5] + ".png", matched: false },
-    ]
-}
+cardImages = [
+    { "src": "/img/Bild01.png", matched: false},
+    { "src": "/img/Bild02.png", matched: false },
+    { "src": "/img/Bild03.png", matched: false },
+    { "src": "/img/Bild04.png", matched: false },
+    { "src": "/img/Bild06.png", matched: false },
+    { "src": "/img/IMG_0479.jpeg", matched: false },
+    { "src": "/img/IMG_0503.jpeg", matched: false },
+    { "src": "/img/IMG_0528.jpeg", matched: false },
+    { "src": "/img/IMG_0848.jpeg", matched: false },
+    { "src": "/img/IMG_1131.jpeg", matched: false },
+    { "src": "/img/IMG_1564.jpeg", matched: false },
+    { "src": "/img/IMG_4555.jpeg", matched: false },
+    { "src": "/img/IMG_4623.jpeg", matched: false },
+    { "src": "/img/IMG_9475.jpeg", matched: false },
+    { "src": "/img/IMG_9483.jpeg", matched: false },
+    { "src": "/img/20230218-182954.jpeg", matched: false },
+    { "src": "/img/Bild.png", matched: false },
+];
 
-secureShuffleArray(numbers);
-orderCardsToFile(numbers.slice(0, 6));
+function pickRandomImages(cardImages, count) {
+    if (count > cardImages.length) {
+        console.error("Die Anzahl der ausgewählten Bilder darf nicht größer sein als die Anzahl der verfügbaren Bilder.");
+        return [];
+    }
+    const shuffledImages = [...cardImages].sort(() => Math.random() - 0.5); // Zufällige Reihenfolge
+    return shuffledImages.slice(0, count);
+}
 
 function App() {
     const [cards, setCards] = useState([])
@@ -46,14 +59,14 @@ function App() {
     const [elapsedTime, setTime] = useState(undefined)
     const [intervalId, setIntervalId] = useState(undefined)
 
-    //shuffle
     const shuffledCards = () => {
-        const shuffledCards = [...cardImages, ...cardImages]
+        const selectedImages = pickRandomImages(cardImages, 6);
+        const shuffledCards = [...selectedImages, ...selectedImages]
             .sort(() => Math.random() - 0.5)
             .map((card) => ({...card, id: Math.random() }))
 
         secureShuffleArray(numbers)
-        orderCardsToFile(numbers.slice(0, 6));
+
         setChoiceOne(null)
         setChoiceTwo(null)
         setCards(shuffledCards)
