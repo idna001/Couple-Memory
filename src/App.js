@@ -61,21 +61,29 @@ function App() {
 
     const shuffledCards = () => {
         const selectedImages = pickRandomImages(cardImages, 6);
+
         const shuffledCards = [...selectedImages, ...selectedImages]
-            .sort(() => Math.random() - 0.5)
-            .map((card) => ({...card, id: Math.random() }))
+            .sort((a, b) => {
+                const arrayA = new Uint8Array(1);
+                const arrayB = new Uint8Array(1);
+                window.crypto.getRandomValues(arrayA);
+                window.crypto.getRandomValues(arrayB);
+                return (arrayA[0] / 255) - (arrayB[0] / 255);
+            })
+            .map((card) => ({ ...card, id: (new Date()).getTime() }));
 
-        secureShuffleArray(numbers)
+        secureShuffleArray(numbers);
 
-        setChoiceOne(null)
-        setChoiceTwo(null)
-        setCards(shuffledCards)
-        setTurns(0)
-        setMatched(0)
-        setCelebrationStatus(false)
-        setTime(undefined)
-        clearInterval(intervalId)
-    }
+        setChoiceOne(null);
+        setChoiceTwo(null);
+        setCards(shuffledCards);
+        setTurns(0);
+        setMatched(0);
+        setCelebrationStatus(false);
+        setTime(undefined);
+        clearInterval(intervalId);
+    };
+
 
     const handleChoice = (card) => {
         choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
