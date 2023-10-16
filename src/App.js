@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import './App.css'
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
+import toggleTheme from "./components/toggleTheme";
+import ShowConfetti from "./components/Confetti";
 
 const crypto = require('crypto');
 let cardImages = [];
@@ -55,16 +57,16 @@ function pickRandomImages(cardImages, count) {
 }
 
 function App() {
-    const [cards, setCards] = useState([])
-    const [turns, setTurns] =useState(0)
-    const [choiceOne, setChoiceOne] = useState(null)
-    const [choiceTwo, setChoiceTwo] = useState(null)
-    const [disabled, setDisabled] = useState(false)
-    const [highScore, setHighScore] = useState(0)
-    const [matched, setMatched] = useState(0)
-    const [celebrationStatus, setCelebrationStatus] = useState(false)
-    const [elapsedTime, setTime] = useState(undefined)
-    const [intervalId, setIntervalId] = useState(undefined)
+  const [cards, setCards] = useState([]);
+  const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
+  const [highScore, setHighScore] = useState(0);
+  const [matched, setMatched] = useState(0);
+  const [celebrationStatus, setCelebrationStatus] = useState(false);
+  const [elapsedTime, setTime] = useState(undefined);
+  const [intervalId, setIntervalId] = useState(undefined);
 
     const shuffledCards = () => {
         const selectedImages = pickRandomImages(cardImages, 6);
@@ -169,30 +171,32 @@ function App() {
             setHighScore(m_highscore)
         }, [])
 
-return (
+  return (
     <div className="App">
-        {celebrationStatus && <Celebration highscore={highScore} time={elapsedTime}/>}
-        <h1>A&A Match</h1>
-        <button onClick={shuffledCards}>New Game</button>
-
-        <div className="card-grid">
-            {cards.map(card => (
-                <SingleCard
-                    key={card.id}
-                    card={card}
-                    handleChoice={handleChoice}
-                    flipped={card === choiceOne || card === choiceTwo || card.matched}
-                    disabled={disabled}/>
-                    ))}
-                </div>
-        <p>Turns: {turns}</p>
-        <p>HighScore: {highScore}</p>
-        <p>Time Elapsed: {elapsedTime || "Not started"}</p>
-
-        <div id="views">
-            <p>This memory got <span id="visits"></span> views.</p>
-        </div>
-        </div>
-         );
+      {celebrationStatus && (
+        <Celebration highscore={highScore} time={elapsedTime} />
+      )}
+      {celebrationStatus && <ShowConfetti />}
+      <h1>A&A Match</h1>
+      <button onClick={shuffledCards}>New Game</button>
+      <button id="theme-toggle" onClick={toggleTheme}>
+        dark
+      </button>
+      <div className="card-grid">
+        {cards.map((card) => (
+          <SingleCard
+            key={card.id}
+            card={card}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
+          />
+        ))}
+      </div>
+      <p>Turns: {turns}</p>
+      <p>HighScore: {highScore}</p>
+      <p>Time Elapsed: {elapsedTime || "Not started"}</p>
+    </div>
+  );
 }
 export default App
