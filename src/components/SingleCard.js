@@ -9,7 +9,7 @@ export default function SingleCard({card, handleChoice, flipped, disabled}) {
     }
 
     return (
-        <div className="card">
+        <div className={`card ${flipped && card.matched ? "animation" : ""}`}>
             <div className={flipped ? "flipped" : ""}>
                 <div id='front' className='front' style={{display: "flex"}}>
                     <img className="front-background" src={card.src} alt="card front blur background" width="200" height="200"   />
