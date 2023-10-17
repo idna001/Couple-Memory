@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import './App.css'
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
-import toggleTheme from "./components/toggleTheme";
 import ShowConfetti from "./components/Confetti";
+import toggleTheme from "./components/toggleTheme";
 
 const crypto = require('crypto');
 let cardImages = [];
@@ -56,42 +56,44 @@ function pickRandomImages(cardImages, count) {
     return shuffledImages.slice(0, count);
 }
 
+
+
 function App() {
-  const [cards, setCards] = useState([]);
-  const [turns, setTurns] = useState(0);
-  const [choiceOne, setChoiceOne] = useState(null);
-  const [choiceTwo, setChoiceTwo] = useState(null);
-  const [disabled, setDisabled] = useState(false);
-  const [highScore, setHighScore] = useState(0);
-  const [matched, setMatched] = useState(0);
-  const [celebrationStatus, setCelebrationStatus] = useState(false);
-  const [elapsedTime, setTime] = useState(undefined);
-  const [intervalId, setIntervalId] = useState(undefined);
+    const [cards, setCards] = useState([])
+    const [turns, setTurns] =useState(0)
+    const [choiceOne, setChoiceOne] = useState(null)
+    const [choiceTwo, setChoiceTwo] = useState(null)
+    const [disabled, setDisabled] = useState(false)
+    const [highScore, setHighScore] = useState(0)
+    const [matched, setMatched] = useState(0)
+    const [celebrationStatus, setCelebrationStatus] = useState(false)
+    const [elapsedTime, setTime] = useState(undefined)
+    const [intervalId, setIntervalId] = useState(undefined)
 
     const shuffledCards = () => {
-        const selectedImages = pickRandomImages(cardImages, 6);
+    const selectedImages = pickRandomImages(cardImages, 6);
 
-        const shuffledCards = [...selectedImages, ...selectedImages]
-            .sort((a, b) => {
-                const arrayA = new Uint8Array(1);
-                const arrayB = new Uint8Array(1);
-                window.crypto.getRandomValues(arrayA);
-                window.crypto.getRandomValues(arrayB);
-                return (arrayA[0] / 255) - (arrayB[0] / 255);
-            })
-            .map((card) => ({ ...card, id: (new Date()).getTime() }));
+    const shuffledCards = [...selectedImages, ...selectedImages]
+        .sort((a, b) => {
+            const arrayA = new Uint8Array(1);
+            const arrayB = new Uint8Array(1);
+            window.crypto.getRandomValues(arrayA);
+            window.crypto.getRandomValues(arrayB);
+            return (arrayA[0] / 255) - (arrayB[0] / 255);
+        })
+        .map((card) => ({ ...card, id: (new Date()).getTime() }));
 
-        secureShuffleArray(numbers);
+    secureShuffleArray(numbers);
 
-        setChoiceOne(null);
-        setChoiceTwo(null);
-        setCards(shuffledCards);
-        setTurns(0);
-        setMatched(0);
-        setCelebrationStatus(false);
-        setTime(undefined);
-        clearInterval(intervalId);
-    };
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setCards(shuffledCards);
+    setTurns(0);
+    setMatched(0);
+    setCelebrationStatus(false);
+    setTime(undefined);
+    clearInterval(intervalId);
+};
 
 
     const handleChoice = (card) => {
