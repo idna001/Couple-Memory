@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
 import './App.css'
+import { nanoid } from "nanoid";
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
 import ShowConfetti from "./components/Confetti";
 import toggleTheme from "./components/toggleTheme";
 
-const crypto = require('crypto');
 let cardImages = [];
 const max_images = 10;
 const numbers = Array.from({ length: max_images }, (_, index) => {
@@ -15,7 +15,7 @@ const numbers = Array.from({ length: max_images }, (_, index) => {
 
 function secureShuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(crypto.randomBytes(1)[0] / 256 * (i + 1));
+        const j = Math.floor(nanoid(64) * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
@@ -45,18 +45,14 @@ function pickRandomImages(cardImages, count) {
         console.error("Die Anzahl der ausgewählten Bilder darf nicht größer sein als die Anzahl der verfügbaren Bilder.");
         return [];
     }
-    const shuffledImages = [...cardImages].sort((a, b) => {
-        const arrayA = new Uint8Array(1);
-        const arrayB = new Uint8Array(1);
-        window.crypto.getRandomValues(arrayA);
-        window.crypto.getRandomValues(arrayB);
-        return (arrayA[0] / 255) - (arrayB[0] / 255);
+    const shuffledImages = [...cardImages].sort(() => {
+        const randomA = nanoid(8);
+        const randomB = nanoid(8);
+        return parseInt(randomA, 16) - parseInt(randomB, 16);
     });
 
     return shuffledImages.slice(0, count);
 }
-
-
 
 function App() {
     const [cards, setCards] = useState([])
