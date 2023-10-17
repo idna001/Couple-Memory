@@ -70,16 +70,13 @@ function App() {
     const selectedImages = pickRandomImages(cardImages, 6);
 
     const shuffledCards = [...selectedImages, ...selectedImages]
-        .sort((a, b) => {
-            const arrayA = new Uint8Array(1);
-            const arrayB = new Uint8Array(1);
-            window.crypto.getRandomValues(arrayA);
-            window.crypto.getRandomValues(arrayB);
-            return (arrayA[0] / 255) - (arrayB[0] / 255);
+        .sort(() => {
+            const randomA = nanoid(8);
+            const randomB = nanoid(8);
+            return parseInt(randomA, 16) - parseInt(randomB, 16);
         })
-        .map((card) => ({ ...card, id: (new Date()).getTime() }));
-
-    secureShuffleArray(numbers);
+        .map((card) => ({ ...card, id: Math.random() }));
+        secureShuffleArray(numbers);
 
     setChoiceOne(null);
     setChoiceTwo(null);
