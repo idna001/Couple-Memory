@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import React, {useEffect, useState} from "react";
+import './App.css'
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
 import toggleTheme from "./components/toggleTheme";
@@ -108,9 +108,9 @@ function App() {
 
   useEffect(() => {
     if (matched === cards.length && turns) {
-      const m_highscore = window.localStorage.getItem("highscore");
+      const m_highscore = window.localStorage.getItem("highScore");
       if (m_highscore === null || turns < Number(m_highscore)) {
-        window.localStorage.setItem("highscore", turns);
+        window.localStorage.setItem("highScore", turns);
         soundEffect.src = "audio/celebration.mp3";
         soundEffect.play();
         setCelebrationStatus(true);
@@ -122,7 +122,7 @@ function App() {
 
   useEffect(() => {
     shuffledCards();
-    const m_highscore = window.localStorage.getItem("highscore") || 0;
+    const m_highscore = window.localStorage.getItem("highScore") || 0;
     setHighScore(m_highscore);
   }, []);
 
