@@ -1,130 +1,171 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import {useEffect, useState} from "react";
+import './App.css'
+import { nanoid } from "nanoid";
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
-import toggleTheme from "./components/toggleTheme";
 import ShowConfetti from "./components/Confetti";
+import toggleTheme from "./components/toggleTheme";
 
-const cardImages = [
-  { src: "/img/IMG_0816.JPG", matched: false },
-  { src: "/img/IMG_2256.jpg", matched: false },
-  { src: "/img/IMG_3493.jpg", matched: false },
-  { src: "/img/IMG_3946.jpg", matched: false },
-  { src: "/img/IMG_4808.jpg", matched: false },
-  { src: "/img/IMG_6324.jpg", matched: false },
+let cardImages = [];
+const max_images = 10;
+const numbers = Array.from({ length: max_images }, (_, index) => {
+    const number = index + 1;
+    return (number < 10) ? `0${number}` : `${number}`;
+});
+
+function secureShuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(nanoid(64) * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+cardImages = [
+    { "src": "/img/Bild01.png", matched: false},
+    { "src": "/img/Bild02.png", matched: false },
+    { "src": "/img/Bild03.png", matched: false },
+    { "src": "/img/Bild04.png", matched: false },
+    { "src": "/img/Bild06.png", matched: false },
+    { "src": "/img/IMG_0479.jpeg", matched: false },
+    { "src": "/img/IMG_0503.jpeg", matched: false },
+    { "src": "/img/IMG_0528.jpeg", matched: false },
+    { "src": "/img/IMG_0848.jpeg", matched: false },
+    { "src": "/img/IMG_1131.jpeg", matched: false },
+    { "src": "/img/IMG_1564.jpeg", matched: false },
+    { "src": "/img/IMG_4555.jpeg", matched: false },
+    { "src": "/img/IMG_4623.jpeg", matched: false },
+    { "src": "/img/IMG_9475.jpeg", matched: false },
+    { "src": "/img/IMG_9483.jpeg", matched: false },
+    { "src": "/img/20230218-182954.jpeg", matched: false },
+    { "src": "/img/Bild.png", matched: false },
 ];
 
+function pickRandomImages(cardImages, count) {
+    if (count > cardImages.length) {
+        console.error("Die Anzahl der ausgewählten Bilder darf nicht größer sein als die Anzahl der verfügbaren Bilder.");
+        return [];
+    }
+    const shuffledImages = [...cardImages].sort(() => {
+        const randomA = nanoid(16);
+        const randomB = nanoid(16);
+        return randomA.localeCompare(randomB);
+    });
+    const selectedImages = shuffledImages.slice(0, count);
+
+    return selectedImages;
+}
+
 function App() {
-  const [cards, setCards] = useState([]);
-  const [turns, setTurns] = useState(0);
-  const [choiceOne, setChoiceOne] = useState(null);
-  const [choiceTwo, setChoiceTwo] = useState(null);
-  const [disabled, setDisabled] = useState(false);
-  const [highScore, setHighScore] = useState(0);
-  const [matched, setMatched] = useState(0);
-  const [celebrationStatus, setCelebrationStatus] = useState(false);
-  const [elapsedTime, setTime] = useState(undefined);
-  const [intervalId, setIntervalId] = useState(undefined);
+    const [cards, setCards] = useState([])
+    const [turns, setTurns] =useState(0)
+    const [choiceOne, setChoiceOne] = useState(null)
+    const [choiceTwo, setChoiceTwo] = useState(null)
+    const [disabled, setDisabled] = useState(false)
+    const [highScore, setHighScore] = useState(0)
+    const [matched, setMatched] = useState(0)
+    const [celebrationStatus, setCelebrationStatus] = useState(false)
+    const [elapsedTime, setTime] = useState(undefined)
+    const [intervalId, setIntervalId] = useState(undefined)
+    const shuffledCards = () => {
+        const selectedImages = pickRandomImages(cardImages, 6);
 
-  const shuffledCards = () => {
-    const shuffledCards = [...cardImages, ...cardImages]
-      .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random() }));
+        const shuffledCards = [...selectedImages, ...selectedImages]
+            .sort(() => {
+                const randomA = nanoid(16); // Erhöhe die Zeichenfolgenlänge auf 16
+                const randomB = nanoid(16); // Erhöhe die Zeichenfolgenlänge auf 16
+                return randomA.localeCompare(randomB);
+            })
+            .map((card) => ({ ...card, id: Math.random() }));
+        secureShuffleArray(numbers);
 
-    setChoiceOne(null);
-    setChoiceTwo(null);
-    setCards(shuffledCards);
-    setTurns(0);
-    setMatched(0);
-    setCelebrationStatus(false);
-    setTime(undefined);
-    clearInterval(intervalId);
-    handleTime(true);
-  };
+        setChoiceOne(null);
+        setChoiceTwo(null);
+        setCards(shuffledCards);
+        setTurns(0);
+        setMatched(0);
+        setCelebrationStatus(false);
+        setTime(undefined);
+        clearInterval(intervalId);
+    };
 
-  const handleChoice = (card) => {
-    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
-    if (!choiceOne) {
-      // Start the timer when the first card is flipped
-      handleTime(true);
+
+
+    const handleChoice = (card) => {
+        choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
+        if(elapsedTime === undefined)   handleTime(true)
     }
-  };
-
-  const handleTime = (start, stop) => {
-    if (stop) {
-      clearInterval(intervalId);
-    } else if (start) {
-      // Start the timer only if it hasn't started already
-      if (elapsedTime === undefined) {
-        setIntervalId(
-          setInterval(async () => {
-            setTime((elapsedTime) => elapsedTime + 1 || 0);
-          }, 1000)
-        );
-      }
+    const handleTime = (start) => {
+        if(start){
+            setIntervalId(
+                setInterval(async () => {
+                    setTime(elapsedTime => elapsedTime+1 || 0)
+                }, 1000)
+            )
+        }else{
+            clearInterval(intervalId)
+        }
     }
-  };
+    useEffect(() => {
 
-  useEffect(() => {
-    if (choiceOne && choiceTwo) {
-      setDisabled(true);
-      if (choiceOne.src === choiceTwo.src) {
-        soundEffect.src = "audio/match.wav";
-        soundEffect.play();
-        setCards((prevCards) => {
-          return prevCards.map((card) => {
-            if (card.src === choiceOne.src) {
-              return {
-                ...card,
-                matched: true,
-              };
+        if (choiceOne && choiceTwo) {
+            setDisabled(true)
+            if (choiceOne.src === choiceTwo.src) {
+                soundEffect.src="audio/match.wav"
+                soundEffect.play()
+                setCards(prevCards => {
+                    return prevCards.map(card => {
+                        if (card.src === choiceOne.src) {
+                            return {
+                                ...card, matched: true}
+                            } else {
+                                return card
+                            }
+                    })
+                })
+             resetTurn()
+                setMatched(prevMatched => prevMatched + 2)
             } else {
-              return card;
+                soundEffect.src = "audio/fail.wav"
+                soundEffect.play()
+                setTimeout(() => resetTurn(), 1000)
             }
-          });
-        });
-        resetTurn();
-        setMatched((prevMatched) => prevMatched + 2);
-      } else {
-        soundEffect.src = "audio/fail.wav";
-        soundEffect.play();
-        setTimeout(() => resetTurn(), 1000);
-      }
-    } else if (choiceOne) {
-      soundEffect.src = "audio/swap.wav";
-      soundEffect.play();
+        }else if(choiceOne){
+            soundEffect.src = "audio/swap.wav"
+            soundEffect.play()
+        }
+    }, [choiceOne, choiceTwo])
+
+    const resetTurn = () => {
+        setChoiceOne(null)
+        setChoiceTwo(null)
+        setTurns(prevTurns => prevTurns + 1)
+        setDisabled(false)
     }
-  }, [choiceOne, choiceTwo]);
+    const soundEffect = new Audio();
+    soundEffect.autoplay = true;
 
-  const resetTurn = () => {
-    setChoiceOne(null);
-    setChoiceTwo(null);
-    setTurns((prevTurns) => prevTurns + 1);
-    setDisabled(false);
-  };
+    useEffect(()=>{
+        if (matched === cards.length && turns){
+            // Game over
+            const m_highscore = window.localStorage.getItem("highscore")
+            handleTime(false)
+            if (m_highscore === null || turns < Number(m_highscore)){
+                // New highscore
+                window.localStorage.setItem("highscore", turns)
+                soundEffect.src = "audio/celebration.mp3"
+                soundEffect.play()
+                setCelebrationStatus(true)
+                setHighScore(turns)
+            }
+        }
+    }, [matched])
 
-  const soundEffect = new Audio();
-  soundEffect.autoplay = true;
-
-  useEffect(() => {
-    if (matched === cards.length && turns) {
-      const m_highscore = window.localStorage.getItem("highscore");
-      if (m_highscore === null || turns < Number(m_highscore)) {
-        window.localStorage.setItem("highscore", turns);
-        soundEffect.src = "audio/celebration.mp3";
-        soundEffect.play();
-        setCelebrationStatus(true);
-        setHighScore(turns);
-      }
-      handleTime(false, true);
-    }
-  }, [matched]);
-
-  useEffect(() => {
-    shuffledCards();
-    const m_highscore = window.localStorage.getItem("highscore") || 0;
-    setHighScore(m_highscore);
-  }, []);
+    useEffect(() => {
+        shuffledCards()
+            // Load highscore value from localstorage
+            const m_highscore = window.localStorage.getItem("highscore") || 0
+            setHighScore(m_highscore)
+        }, [])
 
   return (
     <div className="App">
@@ -154,5 +195,4 @@ function App() {
     </div>
   );
 }
-
-export default App;
+export default App
