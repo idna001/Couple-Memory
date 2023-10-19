@@ -46,12 +46,13 @@ function pickRandomImages(cardImages, count) {
         return [];
     }
     const shuffledImages = [...cardImages].sort(() => {
-        const randomA = nanoid(8);
-        const randomB = nanoid(8);
-        return parseInt(randomA, 16) - parseInt(randomB, 16);
+        const randomA = nanoid(16);
+        const randomB = nanoid(16);
+        return randomA.localeCompare(randomB);
     });
+    const selectedImages = shuffledImages.slice(0, count);
 
-    return shuffledImages.slice(0, count);
+    return selectedImages;
 }
 
 function App() {
@@ -65,28 +66,28 @@ function App() {
     const [celebrationStatus, setCelebrationStatus] = useState(false)
     const [elapsedTime, setTime] = useState(undefined)
     const [intervalId, setIntervalId] = useState(undefined)
-
     const shuffledCards = () => {
-    const selectedImages = pickRandomImages(cardImages, 6);
+        const selectedImages = pickRandomImages(cardImages, 6);
 
-    const shuffledCards = [...selectedImages, ...selectedImages]
-        .sort(() => {
-            const randomA = nanoid(8);
-            const randomB = nanoid(8);
-            return parseInt(randomA, 16) - parseInt(randomB, 16);
-        })
-        .map((card) => ({ ...card, id: Math.random() }));
+        const shuffledCards = [...selectedImages, ...selectedImages]
+            .sort(() => {
+                const randomA = nanoid(16); // Erhöhe die Zeichenfolgenlänge auf 16
+                const randomB = nanoid(16); // Erhöhe die Zeichenfolgenlänge auf 16
+                return randomA.localeCompare(randomB);
+            })
+            .map((card) => ({ ...card, id: Math.random() }));
         secureShuffleArray(numbers);
 
-    setChoiceOne(null);
-    setChoiceTwo(null);
-    setCards(shuffledCards);
-    setTurns(0);
-    setMatched(0);
-    setCelebrationStatus(false);
-    setTime(undefined);
-    clearInterval(intervalId);
-};
+        setChoiceOne(null);
+        setChoiceTwo(null);
+        setCards(shuffledCards);
+        setTurns(0);
+        setMatched(0);
+        setCelebrationStatus(false);
+        setTime(undefined);
+        clearInterval(intervalId);
+    };
+
 
 
     const handleChoice = (card) => {
