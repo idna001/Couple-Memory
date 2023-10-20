@@ -148,10 +148,12 @@ function App() {
         if (matched === cards.length && turns){
             // Game over
             const m_highscore = window.localStorage.getItem("highscore")
+            const runtime = window.localStorage.getItem("runtime")
             handleTime(false)
-            if (m_highscore === null || turns < Number(m_highscore)){
+            if (m_highscore === null || turns < Number(m_highscore) || (turns === Number(m_highscore) && elapsedTime < runtime)){
                 // New highscore
                 window.localStorage.setItem("highscore", turns)
+                window.localStorage.setItem("runtime", elapsedTime)
                 soundEffect.src = "audio/celebration.mp3"
                 soundEffect.play()
                 setCelebrationStatus(true)
@@ -190,7 +192,10 @@ function App() {
         ))}
       </div>
       <p>Turns: {turns}</p>
-      <p>HighScore: {highScore}</p>
+      <div className="results-container">
+        <p>HighScore: {highScore}</p>
+        <p>Runtime: {window.localStorage.getItem("runtime") || 0}</p>
+      </div>
       <p>Time Elapsed: {elapsedTime || "Not started"}</p>
     </div>
   );
