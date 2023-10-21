@@ -52,3 +52,29 @@ div.animation {
   30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
   40%, 60% { transform: translate3d(4px, 0, 0); }
 }
+.collapse-animation {
+  animation: collapse 1.2s forwards;
+  -webkit-animation: collapse 1.2s forwards;
+}
+
+@keyframes collapse {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(0.2) rotate(360deg);
+    -webkit-transform: scale(0.2) rotate(360deg);
+    -moz-transform: scale(0.2) rotate(360deg);
+    -ms-transform: scale(0.2) rotate(360deg);
+    -o-transform: scale(0.2) rotate(360deg);
+}
+  100% {
+    transform: scale(1) rotate(720deg);
+    -webkit-transform: scale(1) rotate(720deg);
+    -moz-transform: scale(1) rotate(720deg);
+    -ms-transform: scale(1) rotate(720deg);
+    -o-transform: scale(1) rotate(720deg);
+  }
+}
+
+
