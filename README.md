@@ -12,7 +12,7 @@
 - [x] Add a sound by finding a match [@needl3](https://github.com/needl3)
 - [x] Confetti Effect on Celebration 🎉 #45  [@SandeepKrSuman](https://github.com/SandeepKrSuman)
 - [x] Count the time and show it next to the highscore, and in the Higscore Alert from [@needl3](https://github.com/needl3)
-- [ ] Build a Begin animation or sound
+- [X] Build a Begin animation or sound [@abhisheksharm-3](https://github.com/abhisheksharm-3)
 - [ ] Button, that makes a Screenshot of the Highscore to share it with friends [@insane-22](https://github.com/insane-22)
 - [x] Add light and dark Mode theme [@Surajit0573](https://github.com/Surajit0573)
 - [ ] Animation on Pictures if they match 
