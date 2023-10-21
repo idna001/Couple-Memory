@@ -16,6 +16,7 @@
 - [ ] Button, that makes a Screenshot of the Highscore to share it with friends [@insane-22](https://github.com/insane-22)
 - [x] Add light and dark Mode theme [@Surajit0573](https://github.com/Surajit0573)
 - [ ] Animation on Pictures if they match 
+- [x] Add runtime in Local Storage and show with High score [@barkha-gupta](https://github.com/barkha-gupta)
 - [ ] Another Feature or Bug that's not here listed, but necessary
 
 <!-- issueTable -->
