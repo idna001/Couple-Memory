@@ -8,7 +8,6 @@ function getUserPreference() {
   function saveUserPreference(userPreference) {
     localStorage.setItem('theme', userPreference);
   }
-  
   function getAppliedMode(userPreference) {
     if (userPreference === 'light') {
       return 'light';
