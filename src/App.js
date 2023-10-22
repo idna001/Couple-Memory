@@ -22,6 +22,7 @@ function secureShuffleArray(array) {
 }
 
 cardImages = [
+
   { src: "/img/Bild01.png", matched: false },
   { src: "/img/Bild02.png", matched: false },
   { src: "/img/Bild03.png", matched: false },
