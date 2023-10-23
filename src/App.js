@@ -37,7 +37,6 @@ cardImages = [
     { "src": "/img/IMG_9475.jpeg", matched: false },
     { "src": "/img/IMG_9483.jpeg", matched: false },
     { "src": "/img/20230218-182954.jpeg", matched: false },
-    { "src": "/img/Bild.png", matched: false },
 ];
 
 function pickRandomImages(cardImages, count) {
