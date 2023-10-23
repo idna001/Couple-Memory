@@ -98,6 +98,7 @@ function App() {
     const handleNewGame = () => {
         const audioElement = new Audio("audio/start.mp3");
         audioElement.play();
+        setIntervalId(undefined)
         shuffledCards();
     };
 
@@ -109,15 +110,20 @@ function App() {
     }
     const handleTime = (start) => {
         if (start) {
-            setIntervalId(
-                setInterval(async () => {
-                    setTime(elapsedTime => elapsedTime + 1 || 0)
-                }, 1000)
-            )
+            if (intervalId === undefined) {
+                const newIntervalId = setInterval(() => {
+                    setTime((elapsedTime) => (elapsedTime || 0) + 1);
+                }, 1000);
+                setIntervalId(newIntervalId);
+            }
         } else {
-            clearInterval(intervalId)
+            if (intervalId !== undefined) {
+                clearInterval(intervalId);
+                setIntervalId(undefined);
+            }
         }
-    }
+    };
+    
     useEffect(() => {
 
         if (choiceOne && choiceTwo) {
