@@ -7,6 +7,10 @@
     border-radius: 6px;
 }
 
+.image{
+    background-size: contain;
+}
+
 .card .front-container {
     display: flex;
 }
@@ -41,6 +45,7 @@
     border: none !important;
     filter: blur(2px);
 }
+
 
 .flipped .front {
     transform: rotateY(0deg);
