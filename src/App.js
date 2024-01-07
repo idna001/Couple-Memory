@@ -21,22 +21,22 @@ function secureShuffleArray(array) {
 }
 
 cardImages = [
-    { "src": "/img/Bild01.png", matched: false },
-    { "src": "/img/Bild02.png", matched: false },
-    { "src": "/img/Bild03.png", matched: false },
-    { "src": "/img/Bild04.png", matched: false },
-    { "src": "/img/Bild06.png", matched: false },
-    { "src": "/img/IMG_0479.jpeg", matched: false },
-    { "src": "/img/IMG_0503.jpeg", matched: false },
-    { "src": "/img/IMG_0528.jpeg", matched: false },
-    { "src": "/img/IMG_0848.jpeg", matched: false },
-    { "src": "/img/IMG_1131.jpeg", matched: false },
-    { "src": "/img/IMG_1564.jpeg", matched: false },
-    { "src": "/img/IMG_4555.jpeg", matched: false },
-    { "src": "/img/IMG_4623.jpeg", matched: false },
-    { "src": "/img/IMG_9475.jpeg", matched: false },
+    { "src": "/img/a4-front.jpg", matched: false },
+    { "src": "/img/a4-lights.jpg", matched: false },
+    { "src": "/img/a4-otu.jpg", matched: false },
+    { "src": "/img/bike-outside.jpg", matched: false },
+    { "src": "/img/bike-trip.jpg", matched: false },
+    { "src": "/img/car-glow.jpg", matched: false },
+    { "src": "/img/car-sun.jpg", matched: false },
+    { "src": "/img/front-a4.jpg", matched: false },
+    { "src": "/img/front-glow.jpg", matched: false },
+    { "src": "/img/front-stand.jpg", matched: false },
+    { "src": "/img/painting-bike.jpg", matched: false },
+    { "src": "/img/selfie-bike.jpg", matched: false },
+    { "src": "/img/sitting-front.jpg", matched: false },
+   /* { "src": "/img/IMG_9475.jpeg", matched: false },
     { "src": "/img/IMG_9483.jpeg", matched: false },
-    { "src": "/img/20230218-182954.jpeg", matched: false },
+    { "src": "/img/20230218-182954.jpeg", matched: false },*/
 ];
 
 function pickRandomImages(cardImages, count) {
