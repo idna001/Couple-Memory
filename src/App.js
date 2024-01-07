@@ -34,9 +34,13 @@ cardImages = [
     { "src": "/img/painting-bike.jpg", matched: false },
     { "src": "/img/selfie-bike.jpg", matched: false },
     { "src": "/img/sitting-front.jpg", matched: false },
-   /* { "src": "/img/IMG_9475.jpeg", matched: false },
-    { "src": "/img/IMG_9483.jpeg", matched: false },
-    { "src": "/img/20230218-182954.jpeg", matched: false },*/
+    { "src": "/img/fav-cud.jpg", matched: false },
+    { "src": "/img/stand-ride.jpg", matched: false },
+    { "src": "/img/close-gara.jpg", matched: false },
+    { "src": "/img/close-mod.jpg", matched: false },
+    { "src": "/img/close-gara.jpg", matched: false },
+    { "src": "/img/close-gara.jpg", matched: false },
+
 ];
 
 function pickRandomImages(cardImages, count) {
