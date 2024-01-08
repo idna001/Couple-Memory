@@ -38,9 +38,6 @@ cardImages = [
     { "src": "/img/stand-ride.jpg", matched: false },
     { "src": "/img/close-gara.jpg", matched: false },
     { "src": "/img/close-mod.jpg", matched: false },
-    { "src": "/img/close-gara.jpg", matched: false },
-    { "src": "/img/close-gara.jpg", matched: false },
-
 ];
 
 function pickRandomImages(cardImages, count) {
