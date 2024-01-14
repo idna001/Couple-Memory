@@ -26,7 +26,7 @@ cardImages = [
     { "src": "/img/a4-otu.jpg", matched: false },
     { "src": "/img/bike-outside.jpg", matched: false },
     { "src": "/img/bike-trip.jpg", matched: false },
-    { "src": "/img/car-glow.jpg", matched: false },
+    { "src": "/img/car-glow-in.jpg", matched: false },
     { "src": "/img/car-sun.jpg", matched: false },
     { "src": "/img/front-a4.jpg", matched: false },
     { "src": "/img/front-glow.jpg", matched: false },
