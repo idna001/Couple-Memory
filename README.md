@@ -20,6 +20,7 @@
 - [x] Add light and dark Mode theme [@Surajit0573](https://github.com/Surajit0573)
 - [x] Animation on Pictures if they match #22 [@mohiwalla](https://github.com/mohiwalla)
 - [x] Add runtime in Local Storage and show with High score [@barkha-gupta](https://github.com/barkha-gupta)
+- [ ] See the Issues Task, or open Pull Requests (they may need help or fixxes)
 - [ ] Another Feature or Bug that's not here listed, but necessary
 
 <!-- issueTable -->
