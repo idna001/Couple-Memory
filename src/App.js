@@ -6,6 +6,19 @@ import Celebration from "./components/Celebration";
 import toggleTheme from "./components/toggleTheme";
 import ShowConfetti from "./components/Confetti";
 
+let cardImages = [];
+const max_images = 10;
+const numbers = Array.from({ length: max_images }, (_, index) => {
+    const number = index + 1;
+    return (number < 10) ? `0${number}` : `${number}`;
+});
+
+function secureShuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(nanoid(64) * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
 cardImages = [
     { "src": "/img/a4-front.jpg", matched: false },
     { "src": "/img/a4-lights.jpg", matched: false },
@@ -25,6 +38,21 @@ cardImages = [
     { "src": "/img/close-gara.jpg", matched: false },
     { "src": "/img/close-mod.jpg", matched: false },
 ];
+
+function pickRandomImages(cardImages, count) {
+    if (count > cardImages.length) {
+        console.error("Die Anzahl der ausgewählten Bilder darf nicht größer sein als die Anzahl der verfügbaren Bilder.");
+        return [];
+    }
+    const shuffledImages = [...cardImages].sort(() => {
+        const randomA = nanoid(16);
+        const randomB = nanoid(16);
+        return randomA.localeCompare(randomB);
+    });
+    const selectedImages = shuffledImages.slice(0, count);
+
+    return selectedImages;
+}
 
 function App() {
     const [cards, setCards] = useState([])
@@ -163,7 +191,7 @@ function App() {
     return (
         <div className="App">
             {celebrationStatus && (
-                <Celebration highscore={highScore} time={elapsedTime} />
+                <Celebration highScore={highScore} elapsedTime={elapsedTime} />
             )}
             {celebrationStatus && <ShowConfetti />}
             <h1>A&A Match</h1>
