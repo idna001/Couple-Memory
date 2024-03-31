@@ -12,10 +12,13 @@
 - [x] Add a sound by finding a match [@needl3](https://github.com/needl3)
 - [x] Confetti Effect on Celebration 🎉 #45  [@SandeepKrSuman](https://github.com/SandeepKrSuman)
 - [x] Count the time and show it next to the highscore, and in the Higscore Alert from [@needl3](https://github.com/needl3)
-- [X] Build a Begin animation or sound [@abhisheksharm-3](https://github.com/abhisheksharm-3)
-- [ ] Button, that makes a Screenshot of the Highscore to share it with friends [@insane-22](https://github.com/insane-22)
+- [X] Build a Begin animation or sound #44 [@abhisheksharm-3](https://github.com/abhisheksharm-3)
+- [x] Button, that makes a Screenshot of the Highscore to share it with friends [@insane-22](https://github.com/insane-22)
+    - [ ] Functionality Buttons on default Overlay
+    - [ ] Add API for Safari Share window
+    - [ ] Fix listener preloading, at the moment it needs two clicks for opening
 - [x] Add light and dark Mode theme [@Surajit0573](https://github.com/Surajit0573)
-- [ ] Animation on Pictures if they match 
+- [x] Animation on Pictures if they match #22 [@mohiwalla](https://github.com/mohiwalla)
 - [x] Add runtime in Local Storage and show with High score [@barkha-gupta](https://github.com/barkha-gupta)
 - [ ] Another Feature or Bug that's not here listed, but necessary
 
