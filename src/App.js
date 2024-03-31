@@ -3,8 +3,8 @@ import './App.css'
 import { nanoid } from "nanoid";
 import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
-import ShowConfetti from "./components/Confetti";
 import toggleTheme from "./components/toggleTheme";
+import ShowConfetti from "./components/Confetti";
 
 let cardImages = [];
 const max_images = 10;
@@ -19,7 +19,6 @@ function secureShuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
-
 cardImages = [
     { "src": "/img/a4-front.jpg", matched: false },
     { "src": "/img/a4-lights.jpg", matched: false },
@@ -123,7 +122,7 @@ function App() {
             }
         }
     };
-    
+
     useEffect(() => {
 
         if (choiceOne && choiceTwo) {
@@ -192,7 +191,7 @@ function App() {
     return (
         <div className="App">
             {celebrationStatus && (
-                <Celebration highscore={highScore} time={elapsedTime} />
+                <Celebration highScore={highScore} elapsedTime={elapsedTime} />
             )}
             {celebrationStatus && <ShowConfetti />}
             <h1>A&A Match</h1>

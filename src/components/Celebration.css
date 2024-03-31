@@ -1,32 +1,70 @@
-.celebration-notification{
-    position: fixed;
-    top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 250;
-    color: aqua;
-    font-size: 3rem;
-    width: 100%;
-    background-color: #000000CC;
-    animation: fade 3s linear;
+.celebration-notification {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 250;
+  color: aqua;
+  font-size: 3rem;
+  width: 100%;
+  background-color: #000000cc;
+  animation: fade 3s linear;
+}
+
+h3 {
+  text-decoration: underline;
+  margin-top: 0.4em;
+  margin-bottom: 0.5em;
+}
+
+.celebration-notification > p > span {
+  color: greenyellow;
+  font-size: 4rem;
+  margin-top: 0.4px;
+  /* margin-bottom: 0.4px; */
+}
+.button {
+  margin: 2px;
+}
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 250;
+        color: aqua;
+        font-size: 3rem;
+        width: 100%;
+        background-color: #000000cc;
+        animation: fade 3s linear;
+    }
 }
 
 h3 {
     text-decoration: underline;
-  }
-  
-.celebration-notification > p > span{
+    margin-top: 0.4em;
+    margin-bottom: 0.5em;
+}
+
+.celebration-notification > p > span {
     color: greenyellow;
     font-size: 4rem;
+    margin-top: 0.4px;
+    /* margin-bottom: 0.4px; */
 }
-.button{
+.button {
     margin: 2px;
 }
 @keyframes fade {
-    0%{
+    0% {
         opacity: 0;
-    }100%{
+    }
+    100% {
         opacity: 1;
     }
-    
 }
