@@ -63,7 +63,7 @@ function App() {
     const [highScore, setHighScore] = useState(0)
     const [matched, setMatched] = useState(0)
     const [celebrationStatus, setCelebrationStatus] = useState(false)
-    const [elapsedTime, setTime] = useState(undefined)
+    const [elapsedTime, setElapsedTime] = useState(undefined)
     const [intervalId, setIntervalId] = useState(undefined)
     const [animateCollapse, setAnimateCollapse] = useState(false);
 
@@ -85,7 +85,7 @@ function App() {
         setTurns(0);
         setMatched(0);
         setCelebrationStatus(false);
-        setTime(undefined);
+        setElapsedTime(undefined);
         clearInterval(intervalId);
         setAnimateCollapse(true);
 
@@ -111,15 +111,13 @@ function App() {
         if (start) {
             if (intervalId === undefined) {
                 const newIntervalId = setInterval(() => {
-                    setTime((elapsedTime) => (elapsedTime || 0) + 1);
+                    setElapsedTime((elapsedTime) => (elapsedTime || 0) + 1);
                 }, 1000);
                 setIntervalId(newIntervalId);
             }
-        } else {
-            if (intervalId !== undefined) {
-                clearInterval(intervalId);
-                setIntervalId(undefined);
-            }
+        } else if (!start && intervalId !== undefined) {
+            clearInterval(intervalId);
+            setIntervalId(undefined);
         }
     };
 
