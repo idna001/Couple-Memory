@@ -99,10 +99,10 @@ function App() {
     const handleNewGame = () => {
         const audioElement = new Audio("audio/start.mp3");
         audioElement.play();
-        setIntervalId(undefined)
+        setGameOverMessage(false); // Reset the game over message
+        setIntervalId(undefined);
         shuffledCards();
     };
-
 
 
     const handleChoice = (card) => {
