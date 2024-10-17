@@ -14,8 +14,11 @@ const numbers = Array.from({ length: max_images }, (_, index) => {
 });
 
 function secureShuffleArray(array) {
+    const crypto = window.crypto || window.msCrypto;
     for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(nanoid(64) * (i + 1));
+        const randomArray = new Uint32Array(1);
+        crypto.getRandomValues(randomArray);
+        const j = randomArray[0] % (i + 1);
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
@@ -44,10 +47,13 @@ function pickRandomImages(cardImages, count) {
         console.error("Die Anzahl der ausgewählten Bilder darf nicht größer sein als die Anzahl der verfügbaren Bilder.");
         return [];
     }
+    const crypto = window.crypto || window.msCrypto;
     const shuffledImages = [...cardImages].sort(() => {
-        const randomA = nanoid(16);
-        const randomB = nanoid(16);
-        return randomA.localeCompare(randomB);
+        const randomArrayA = new Uint32Array(1);
+        const randomArrayB = new Uint32Array(1);
+        crypto.getRandomValues(randomArrayA);
+        crypto.getRandomValues(randomArrayB);
+        return randomArrayA[0] - randomArrayB[0];
     });
     const selectedImages = shuffledImages.slice(0, count);
 
@@ -76,7 +82,13 @@ function App() {
                 const randomB = nanoid(16); // Erhöhe die Zeichenfolgenlänge auf 16
                 return randomA.localeCompare(randomB);
             })
-            .map((card) => ({ ...card, id: Math.random() }));
+            .map((card) => {
+                const crypto = window.crypto || window.msCrypto;
+                const randomArray = new Uint32Array(1);
+                crypto.getRandomValues(randomArray);
+                return { ...card, id: randomArray[0] };
+            });
+
         secureShuffleArray(numbers);
 
         setChoiceOne(null);
