@@ -1,6 +1,8 @@
 import "./share.css";
 import React, { useState } from "react";
 import html2canvas from "html2canvas";
+import PropTypes from "prop-types";
+
 export default function ShareButton({ highScore, highScoreRef }) {
   const [screenshotImage, setScreenshotImage] = useState(null);
   
@@ -74,33 +76,33 @@ export default function ShareButton({ highScore, highScoreRef }) {
           </button>
         </header>
         <div className="targets">
-          <a className="button">
+          <button className="button">
             <svg>
               <use href="#facebook"></use>
             </svg>
             <span>Facebook</span>
-          </a>
+          </button>
 
-          <a className="button">
+          <button className="button">
             <svg>
               <use href="#twitter"></use>
             </svg>
             <span>Twitter</span>
-          </a>
+          </button>
 
-          <a className="button">
+          <button className="button">
             <svg>
               <use href="#linkedin"></use>
             </svg>
             <span>LinkedIn</span>
-          </a>
+          </button>
 
-          <a className="button">
+          <button className="button">
             <svg>
               <use href="#email"></use>
             </svg>
             <span>Email</span>
-          </a>
+          </button>
         </div>
         <div className="link">
           <div className="pen-url">https://aa-memory.vercel.app/</div>
@@ -127,9 +129,9 @@ export default function ShareButton({ highScore, highScoreRef }) {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="feather feather-share"
           >
             <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
@@ -142,9 +144,9 @@ export default function ShareButton({ highScore, highScoreRef }) {
             viewBox="0 0 24 24"
             fill="#3b5998"
             stroke="#3b5998"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="feather feather-facebook"
           >
             <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
@@ -155,9 +157,9 @@ export default function ShareButton({ highScore, highScoreRef }) {
             viewBox="0 0 24 24"
             fill="#1da1f2"
             stroke="#1da1f2"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="feather feather-twitter"
           >
             <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
@@ -168,9 +170,9 @@ export default function ShareButton({ highScore, highScoreRef }) {
             viewBox="0 0 24 24"
             fill="#777"
             stroke="#fafafa"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="feather feather-mail"
           >
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -182,9 +184,9 @@ export default function ShareButton({ highScore, highScoreRef }) {
             viewBox="0 0 24 24"
             fill="#0077B5"
             stroke="#0077B5"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="feather feather-linkedin"
           >
             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
@@ -198,9 +200,9 @@ export default function ShareButton({ highScore, highScoreRef }) {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="feather feather-x-square"
           >
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -212,3 +214,11 @@ export default function ShareButton({ highScore, highScoreRef }) {
     </div>
   );
 }
+
+// PropTypes validation
+ShareButton.propTypes = {
+  highScore: PropTypes.number.isRequired,
+  highScoreRef: PropTypes.shape({
+    current: PropTypes.any
+  }).isRequired,
+};
