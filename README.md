@@ -1,4 +1,4 @@
-<h1 style="color: #01b0f2; text-align:center">Hacktoberfest 2023</h1>
+<h1 style="color: #01b0f2; text-align:center">Hacktoberfest 2024</h1>
 
 <h1 style="color: #01b0f2; text-align:center">Improve a Memory in react js</h1>
 
@@ -20,6 +20,10 @@
 - [x] Add light and dark Mode theme [@Surajit0573](https://github.com/Surajit0573)
 - [x] Animation on Pictures if they match #22 [@mohiwalla](https://github.com/mohiwalla)
 - [x] Add runtime in Local Storage and show with High score [@barkha-gupta](https://github.com/barkha-gupta)
+- [ ] Elimnate Sonar Cloud issues #96
+- [ ] Add game history #50
+- [ ] Add a View Counter #21
+- [ ] Make seperate Files optimize code maintability #51
 - [ ] See the Issues Task, or open Pull Requests (they may need help or fixxes)
 - [ ] Another Feature or Bug that's not here listed, but necessary
 
