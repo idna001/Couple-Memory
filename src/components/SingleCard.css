@@ -1,5 +1,7 @@
 .card {
     position: relative;
+    display: grid;
+    place-items: center;
 }
 .card img {
     display: block;
@@ -9,6 +11,8 @@
 
 .card .front-container {
     display: flex;
+    justify-content: center;  /* Center the content horizontally */
+    align-items: center;      /* Center the content vertically */
 }
 
 .card .front {
@@ -17,6 +21,31 @@
     background-color: fff;
     position: absolute;
 }
+
+.front-background {
+    object-fit: cover;
+    width: 200px;
+    border: none !important;
+    filter: blur(2px);
+}
+
+.flipped .front {
+    transform: rotateY(0deg) translateX(0);  /* Keep translateX(0) to avoid horizontal shift */
+    margin: 0 auto;  /* Ensure margins don't cause shifting */
+
+}
+
+.card .back {
+    transition: all ease-in  0.2s;
+    object-fit: cover;
+    transition-delay: 0.2s;
+}
+.flipped .back {
+    transform: rotateY(90deg);
+    transition-delay: 0s;
+}
+
+/*Responsive design*/
 @media screen and (max-width: 800px) {
     .card .front {
         object-fit: unset;
@@ -28,30 +57,14 @@
         filter: unset;
         display: none;
     }
+    .card {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
     .card img {
         display: block;
         border: 2px solid #fff;
         border-radius: 6px;
-        width: 100px;
+        width: 90%;
     }
-}
-.front-background {
-    object-fit: cover;
-    width: 200px;
-    border: none !important;
-    filter: blur(2px);
-}
-
-.flipped .front {
-    transform: rotateY(0deg);
- }
-
-.card .back {
-    transition: all ease-in  0.2s;
-    object-fit: cover;
-    transition-delay: 0.2s;
-}
-.flipped .back {
-    transform: rotateY(90deg);
-    transition-delay: 0s;
 }

@@ -24,16 +24,6 @@ button:hover {
   grid-gap: 20px;
 }
 
-@media screen and (max-width: 600px) {
-  .card-grid {
-    margin-top: 40px;
-    margin-left: 5px;
-    margin-right: 5px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 10px;
-  }
-}
 
 #theme-toggle{
   position: absolute;
@@ -77,4 +67,31 @@ div.animation {
   }
 }
 
+/*Responsive design */
+@media screen and (max-width: 800px) {
+  .card-grid {
+    margin-top: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+  }
+}
 
+@media screen and (max-width: 600px) {
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 5px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .card-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    align-content: center;
+  }
+}
