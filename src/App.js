@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import './App.css'
 import { nanoid } from "nanoid";
 import SingleCard from "./components/SingleCard";
@@ -73,6 +73,12 @@ function App() {
     const [intervalId, setIntervalId] = useState(undefined)
     const [animateCollapse, setAnimateCollapse] = useState(false);
 
+    const soundEffect = useMemo(() => {
+        const audio = new Audio();
+        audio.autoplay = true;
+        return audio;
+    }, []);
+
     const shuffledCards = () => {
         const selectedImages = pickRandomImages(cardImages, 6);
 
@@ -107,13 +113,10 @@ function App() {
     };
 
     const handleNewGame = () => {
-        const audioElement = new Audio("audio/start.mp3");
-        audioElement.play();
-        setIntervalId(undefined)
+        playSound("audio/start.mp3");
+        setIntervalId(undefined);
         shuffledCards();
     };
-
-
 
     const handleChoice = (card) => {
         choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
@@ -133,13 +136,19 @@ function App() {
         }
     };
 
+    const playSound = (src) => {
+        soundEffect.src = src;
+        soundEffect.load();
+        soundEffect.play().catch(error => {
+            console.error("Error playing sound:", error);
+        });
+    };
     useEffect(() => {
 
         if (choiceOne && choiceTwo) {
             setDisabled(true)
             if (choiceOne.src === choiceTwo.src) {
-                soundEffect.src = "audio/match.wav"
-                soundEffect.play()
+                playSound("/audio/match.wav");
                 setCards(prevCards => {
                     return prevCards.map(card => {
                         if (card.src === choiceOne.src) {
@@ -154,15 +163,13 @@ function App() {
                 resetTurn()
                 setMatched(prevMatched => prevMatched + 2)
             } else {
-                soundEffect.src = "audio/fail.wav"
-                soundEffect.play()
-                setTimeout(() => resetTurn(), 1000)
+                playSound("/audio/fail.wav");
+                setTimeout(() => resetTurn(), 1000);
             }
         } else if (choiceOne) {
-            soundEffect.src = "audio/swap.wav"
-            soundEffect.play()
+            playSound("/audio/swap.wav");
         }
-    }, [choiceOne, choiceTwo])
+    }, [choiceOne, choiceTwo, soundEffect])
 
     const resetTurn = () => {
         setChoiceOne(null)
@@ -170,8 +177,6 @@ function App() {
         setTurns(prevTurns => prevTurns + 1)
         setDisabled(false)
     }
-    const soundEffect = new Audio();
-    soundEffect.autoplay = true;
 
     useEffect(() => {
         if (matched === cards.length && turns) {
