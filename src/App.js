@@ -5,6 +5,7 @@ import SingleCard from "./components/SingleCard";
 import Celebration from "./components/Celebration";
 import toggleTheme from "./components/toggleTheme";
 import ShowConfetti from "./components/Confetti";
+import GameOver from "./components/GameOver";
 
 let cardImages = [];
 const max_images = 10;
@@ -72,6 +73,7 @@ function App() {
     const [elapsedTime, setElapsedTime] = useState(undefined)
     const [intervalId, setIntervalId] = useState(undefined)
     const [animateCollapse, setAnimateCollapse] = useState(false);
+    const [gameOverMessage, setGameOverMessage] = useState(false);
 
     const soundEffect = useMemo(() => {
         const audio = new Audio();
@@ -178,23 +180,33 @@ function App() {
         setDisabled(false)
     }
 
+
     useEffect(() => {
         if (matched === cards.length && turns) {
             // Game over
-            const m_highscore = window.localStorage.getItem("highscore")
-            const runtime = window.localStorage.getItem("runtime")
-            handleTime(false)
-            if (m_highscore === null || turns < Number(m_highscore) || (turns === Number(m_highscore) && elapsedTime < runtime)) {
+            const m_highscore = window.localStorage.getItem("highscore");
+            const runtime = window.localStorage.getItem("runtime");
+            handleTime(false);
+            
+            if (
+                m_highscore === null ||
+                turns < Number(m_highscore) ||
+                (turns === Number(m_highscore) && elapsedTime < runtime)
+            ) {
                 // New highscore
-                window.localStorage.setItem("highscore", turns)
-                window.localStorage.setItem("runtime", elapsedTime)
-                soundEffect.src = "audio/celebration.mp3"
-                soundEffect.play()
-                setCelebrationStatus(true)
-                setHighScore(turns)
+                window.localStorage.setItem("highscore", turns);
+                window.localStorage.setItem("runtime", elapsedTime);
+                soundEffect.src = "audio/celebration.mp3";
+                soundEffect.play();
+                setCelebrationStatus(true);
+                setHighScore(turns);
+                setGameOverMessage(false); // Reset game over message
+            } else {
+                // No new high score
+                setGameOverMessage(true); // Set game over message to true
             }
         }
-    }, [matched])
+    }, [matched]);
 
     useEffect(() => {
         shuffledCards()
@@ -231,6 +243,8 @@ function App() {
                 <p>Runtime: {window.localStorage.getItem("runtime") || 0}</p>
             </div>
             <p>Time Elapsed: {elapsedTime || "Not started"}</p>
+            {gameOverMessage && <GameOver score={turns} elapsedTime={elapsedTime} />}
+
         </div>
     );
 }
