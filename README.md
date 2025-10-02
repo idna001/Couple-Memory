@@ -1,4 +1,16 @@
-<h1 style="color: #01b0f2; text-align:center">Hacktoberfest 2024</h1>
+<h2 align="center">
+  <img alt="Demo" width="200" src="./public/img/readme/logo.png" /><br/>
+  <a href="https://github.com/idna001" target="_blank">Andreas V</a>
+</h2>
+<div align="center">
+  <img alt="Demo" width="600" src="./public/img/readme/readme-img.png" />
+</div>
+
+<br/>
+
+[![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) &nbsp;
+
+<h1 style="color: #01b0f2; text-align:center">Hacktoberfest 2025</h1>
 
 <h1 style="color: #01b0f2; text-align:center">Improve a Memory in react js</h1>
 
