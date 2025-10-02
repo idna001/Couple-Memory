@@ -1,11 +1,11 @@
 import { useEffect, useState, useMemo } from "react";
 import './App.css'
 import { nanoid } from "nanoid";
-import SingleCard from "./components/SingleCard";
-import Celebration from "./components/Celebration";
-import toggleTheme from "./components/toggleTheme";
-import ShowConfetti from "./components/Confetti";
-import GameOver from "./components/GameOver";
+import SingleCard from "./components/singlecard/SingleCard";
+import Celebration from "./components/celebration/Celebration";
+import toggleTheme from "./components/toggleTheme/toggleTheme";
+import ShowConfetti from "./components/confetti/Confetti";
+import GameOver from "./components/gameover/GameOver";
 
 let cardImages = [];
 const max_images = 10;

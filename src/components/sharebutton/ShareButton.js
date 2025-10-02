@@ -1,4 +1,4 @@
-import "./share.css";
+import "./sharebutton.css";
 import React, { useState } from "react";
 import html2canvas from "html2canvas";
 import PropTypes from "prop-types";
