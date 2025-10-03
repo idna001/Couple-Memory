@@ -1,6 +1,6 @@
 import "./Celebration.css";
 import React, { useRef } from "react";
-import ShareButton from "./ShareButton";
+import ShareButton from "./../sharebutton/ShareButton";
 import PropTypes from "prop-types";
 
 export default function Celebration({ highScore, elapsedTime }) {

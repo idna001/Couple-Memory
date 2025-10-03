@@ -1,4 +1,4 @@
-import "./Celebration.css";
+import "./../celebration/Celebration.css";
 import React from "react";
 import PropTypes from "prop-types";
 
