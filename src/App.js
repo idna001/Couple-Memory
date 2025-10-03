@@ -1,83 +1,75 @@
-import { useEffect, useState, useMemo } from "react";
-import './App.css'
+// src/App.js
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { nanoid } from "nanoid";
+import "./App.css";
 import SingleCard from "./components/singlecard/SingleCard";
 import Celebration from "./components/celebration/Celebration";
 import toggleTheme from "./components/toggleTheme/toggleTheme";
 import ShowConfetti from "./components/confetti/Confetti";
 import GameOver from "./components/gameover/GameOver";
 
-let cardImages = [];
-const max_images = 10;
-const numbers = Array.from({ length: max_images }, (_, index) => {
-    const number = index + 1;
-    return (number < 10) ? `0${number}` : `${number}`;
-});
+const cardImages = [
+    { src: "/img/memory/a4-front.jpg", matched: false },
+    { src: "/img/memory/a4-lights.jpg", matched: false },
+    { src: "/img/memory/a4-otu.jpg", matched: false },
+    { src: "/img/memory/bike-outside.jpg", matched: false },
+    { src: "/img/memory/bike-trip.jpg", matched: false },
+    { src: "/img/memory/car-glow-in.jpg", matched: false },
+    { src: "/img/memory/car-sun.jpg", matched: false },
+    { src: "/img/memory/front-a4.jpg", matched: false },
+    { src: "/img/memory/front-glow.jpg", matched: false },
+    { src: "/img/memory/front-stand.jpg", matched: false },
+    { src: "/img/memory/painting-bike.jpg", matched: false },
+    { src: "/img/memory/selfie-bike.jpg", matched: false },
+    { src: "/img/memory/sitting-front.jpg", matched: false },
+    { src: "/img/memory/fav-cud.jpg", matched: false },
+    { src: "/img/memory/stand-ride.jpg", matched: false },
+    { src: "/img/memory/close-gara.jpg", matched: false },
+    { src: "/img/memory/moto-farming.jpg", matched: false },
+    { src: "/img/memory/couple-paint-honda.jpg", matched: false },
+    { src: "/img/memory/couple-moto-paint.jpg", matched: false },
+    { src: "/img/memory/couple-moto.jpg", matched: false },
+    { src: "/img/memory/couple-honda.jpg", matched: false },
+    { src: "/img/memory/couple-church.jpg", matched: false },
+    { src: "/img/memory/a4-close-couple.jpg", matched: false }
+];
+
+const numbers = Array.from({ length: 10 }, (_, i) => (i + 1 < 10 ? `0${i + 1}` : `${i + 1}`));
 
 function secureShuffleArray(array) {
     const crypto = window.crypto || window.msCrypto;
     for (let i = array.length - 1; i > 0; i--) {
-        const randomArray = new Uint32Array(1);
-        crypto.getRandomValues(randomArray);
-        const j = randomArray[0] % (i + 1);
+        const r = new Uint32Array(1);
+        crypto.getRandomValues(r);
+        const j = r[0] % (i + 1);
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
-cardImages = [
-    { "src": "/img/memory/a4-front.jpg", matched: false },
-    { "src": "/img/memory/a4-lights.jpg", matched: false },
-    { "src": "/img/memory/a4-otu.jpg", matched: false },
-    { "src": "/img/memory/bike-outside.jpg", matched: false },
-    { "src": "/img/memory/bike-trip.jpg", matched: false },
-    { "src": "/img/memory/car-glow-in.jpg", matched: false },
-    { "src": "/img/memory/car-sun.jpg", matched: false },
-    { "src": "/img/memory/front-a4.jpg", matched: false },
-    { "src": "/img/memory/front-glow.jpg", matched: false },
-    { "src": "/img/memory/front-stand.jpg", matched: false },
-    { "src": "/img/memory/painting-bike.jpg", matched: false },
-    { "src": "/img/memory/selfie-bike.jpg", matched: false },
-    { "src": "/img/memory/sitting-front.jpg", matched: false },
-    { "src": "/img/memory/fav-cud.jpg", matched: false },
-    { "src": "/img/memory/stand-ride.jpg", matched: false },
-    { "src": "/img/memory/close-gara.jpg", matched: false },
-    { "src": "/img/memory/moto-farming.jpg", matched: false },
-    { "src": "/img/memory/couple-paint-honda.jpg", matched: false },
-    { "src": "/img/memory/couple-moto-paint.jpg", matched: false },
-    { "src": "/img/memory/couple-moto.jpg", matched: false },
-    { "src": "/img/memory/couple-honda.jpg", matched: false },
-    { "src": "/img/memory/couple-church.jpg", matched: false },
-    { "src": "/img/memory/a4-close-couple.jpg", matched: false }
-];
 
-function pickRandomImages(cardImages, count) {
-    if (count > cardImages.length) {
-        console.error("Die Anzahl der ausgewählten Bilder darf nicht größer sein als die Anzahl der verfügbaren Bilder.");
-        return [];
-    }
+function pickRandomImages(arr, count) {
+    if (count > arr.length) return [];
     const crypto = window.crypto || window.msCrypto;
-    const shuffledImages = [...cardImages].sort(() => {
-        const randomArrayA = new Uint32Array(1);
-        const randomArrayB = new Uint32Array(1);
-        crypto.getRandomValues(randomArrayA);
-        crypto.getRandomValues(randomArrayB);
-        return randomArrayA[0] - randomArrayB[0];
+    const shuffled = [...arr].sort(() => {
+        const a = new Uint32Array(1);
+        const b = new Uint32Array(1);
+        crypto.getRandomValues(a);
+        crypto.getRandomValues(b);
+        return a[0] - b[0];
     });
-    const selectedImages = shuffledImages.slice(0, count);
-
-    return selectedImages;
+    return shuffled.slice(0, count);
 }
 
 function App() {
-    const [cards, setCards] = useState([])
-    const [turns, setTurns] = useState(0)
-    const [choiceOne, setChoiceOne] = useState(null)
-    const [choiceTwo, setChoiceTwo] = useState(null)
-    const [disabled, setDisabled] = useState(false)
-    const [highScore, setHighScore] = useState(0)
-    const [matched, setMatched] = useState(0)
-    const [celebrationStatus, setCelebrationStatus] = useState(false)
-    const [elapsedTime, setElapsedTime] = useState(undefined)
-    const [intervalId, setIntervalId] = useState(undefined)
+    const [cards, setCards] = useState([]);
+    const [turns, setTurns] = useState(0);
+    const [choiceOne, setChoiceOne] = useState(null);
+    const [choiceTwo, setChoiceTwo] = useState(null);
+    const [disabled, setDisabled] = useState(false);
+    const [highScore, setHighScore] = useState(0);
+    const [matched, setMatched] = useState(0);
+    const [celebrationStatus, setCelebrationStatus] = useState(false);
+    const [elapsedTime, setElapsedTime] = useState(undefined);
+    const intervalRef = useRef(null);
     const [animateCollapse, setAnimateCollapse] = useState(false);
     const [gameOverMessage, setGameOverMessage] = useState(false);
 
@@ -87,139 +79,130 @@ function App() {
         return audio;
     }, []);
 
-    const shuffledCards = () => {
-        const selectedImages = pickRandomImages(cardImages, 6);
+    const playSound = useCallback(
+        (src) => {
+            soundEffect.src = src;
+            soundEffect.load();
+            soundEffect.play().catch(() => {});
+        },
+        [soundEffect]
+    );
 
-        const shuffledCards = [...selectedImages, ...selectedImages]
-            .sort(() => {
-                const randomA = nanoid(16); // Erhöhe die Zeichenfolgenlänge auf 16
-                const randomB = nanoid(16); // Erhöhe die Zeichenfolgenlänge auf 16
-                return randomA.localeCompare(randomB);
-            })
+    const resetTurn = useCallback(() => {
+        setChoiceOne(null);
+        setChoiceTwo(null);
+        setTurns((prev) => prev + 1);
+        setDisabled(false);
+    }, []);
+
+    const handleTime = useCallback((start) => {
+        if (start) {
+            if (!intervalRef.current) {
+                intervalRef.current = setInterval(() => {
+                    setElapsedTime((prev) => (prev || 0) + 1);
+                }, 1000);
+            }
+        } else if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+    }, []);
+
+    const clearTimer = useCallback(() => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+    }, []);
+
+    const shuffledCards = useCallback(() => {
+        const selected = pickRandomImages(cardImages, 6);
+        const dup = [...selected, ...selected]
+            .sort(() => nanoid(16).localeCompare(nanoid(16)))
             .map((card) => {
                 const crypto = window.crypto || window.msCrypto;
-                const randomArray = new Uint32Array(1);
-                crypto.getRandomValues(randomArray);
-                return { ...card, id: randomArray[0] };
+                const rand = new Uint32Array(1);
+                crypto.getRandomValues(rand);
+                return { ...card, id: rand[0], matched: false };
             });
 
         secureShuffleArray(numbers);
-
         setChoiceOne(null);
         setChoiceTwo(null);
-        setCards(shuffledCards);
+        setCards(dup);
         setTurns(0);
         setMatched(0);
         setCelebrationStatus(false);
         setElapsedTime(undefined);
-        clearInterval(intervalId);
+        clearTimer();
         setAnimateCollapse(true);
+        setTimeout(() => setAnimateCollapse(false), 1200);
+        setGameOverMessage(false);
+    }, [clearTimer]);
 
-        setTimeout(() => {
-            setAnimateCollapse(false);
-        }, 1200);
-    };
-
-    const handleNewGame = () => {
+    const handleNewGame = useCallback(() => {
         playSound("audio/start.mp3");
-        setIntervalId(undefined);
         shuffledCards();
-    };
+    }, [playSound, shuffledCards]);
 
-    const handleChoice = (card) => {
-        choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
-        if (elapsedTime === undefined) handleTime(true)
-    }
-    const handleTime = (start) => {
-        if (start) {
-            if (intervalId === undefined) {
-                const newIntervalId = setInterval(() => {
-                    setElapsedTime((elapsedTime) => (elapsedTime || 0) + 1);
-                }, 1000);
-                setIntervalId(newIntervalId);
-            }
-        } else if (!start && intervalId !== undefined) {
-            clearInterval(intervalId);
-            setIntervalId(undefined);
-        }
-    };
+    const handleChoice = useCallback(
+        (card) => {
+            if (disabled) return;
+            choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+            if (elapsedTime === undefined) handleTime(true);
+        },
+        [choiceOne, disabled, elapsedTime, handleTime]
+    );
 
-    const playSound = (src) => {
-        soundEffect.src = src;
-        soundEffect.load();
-        soundEffect.play().catch(error => {
-            console.error("Error playing sound:", error);
-        });
-    };
     useEffect(() => {
-
         if (choiceOne && choiceTwo) {
-            setDisabled(true)
+            setDisabled(true);
             if (choiceOne.src === choiceTwo.src) {
                 playSound("/audio/match.wav");
-                setCards(prevCards => {
-                    return prevCards.map(card => {
-                        if (card.src === choiceOne.src) {
-                            return {
-                                ...card, matched: true
-                            }
-                        } else {
-                            return card
-                        }
-                    })
-                })
-                resetTurn()
-                setMatched(prevMatched => prevMatched + 2)
+                setCards((prev) =>
+                    prev.map((c) => (c.src === choiceOne.src ? { ...c, matched: true } : c))
+                );
+                setMatched((prev) => prev + 2);
+                resetTurn();
             } else {
                 playSound("/audio/fail.wav");
-                setTimeout(() => resetTurn(), 1000);
+                const t = setTimeout(() => resetTurn(), 1000);
+                return () => clearTimeout(t);
             }
         } else if (choiceOne) {
             playSound("/audio/swap.wav");
         }
-    }, [choiceOne, choiceTwo, soundEffect])
-
-    const resetTurn = () => {
-        setChoiceOne(null)
-        setChoiceTwo(null)
-        setTurns(prevTurns => prevTurns + 1)
-        setDisabled(false)
-    }
-
+    }, [choiceOne, choiceTwo, resetTurn, playSound]);
 
     useEffect(() => {
         if (matched === cards.length && turns) {
-            // Game over
-            const m_highscore = window.localStorage.getItem("highscore");
-            const runtime = window.localStorage.getItem("runtime");
             handleTime(false);
-            
-            if (
-                m_highscore === null ||
-                turns < Number(m_highscore) ||
-                (turns === Number(m_highscore) && elapsedTime < runtime)
-            ) {
-                // New highscore
+            const storedHigh = window.localStorage.getItem("highscore");
+            const storedRun = window.localStorage.getItem("runtime");
+            const better =
+                storedHigh === null ||
+                turns < Number(storedHigh) ||
+                (turns === Number(storedHigh) && elapsedTime < Number(storedRun));
+
+            if (better) {
                 window.localStorage.setItem("highscore", turns);
                 window.localStorage.setItem("runtime", elapsedTime);
-                soundEffect.src = "audio/celebration.mp3";
-                soundEffect.play();
+                playSound("audio/celebration.mp3");
                 setCelebrationStatus(true);
                 setHighScore(turns);
-                setGameOverMessage(false); // Reset game over message
+                setGameOverMessage(false);
             } else {
-                // No new high score
-                setGameOverMessage(true); // Set game over message to true
+                setGameOverMessage(true);
             }
         }
-    }, [matched]);
+    }, [matched, cards.length, turns, elapsedTime, handleTime, playSound]);
 
     useEffect(() => {
-        shuffledCards()
-        // Load highscore value from localstorage
-        const m_highscore = window.localStorage.getItem("highscore") || 0
-        setHighScore(m_highscore)
-    }, [])
+        shuffledCards();
+        const hs = Number(window.localStorage.getItem("highscore") || 0);
+        setHighScore(hs);
+        return () => clearTimer();
+    }, [shuffledCards, clearTimer]);
 
     return (
         <div className="App">
@@ -227,12 +210,13 @@ function App() {
                 <Celebration highScore={highScore} elapsedTime={elapsedTime} />
             )}
             {celebrationStatus && <ShowConfetti />}
-            <h1>A&A Match</h1>
+            <img src="/img/logo.png" alt="A&A Match" style={{ height: "60px" }} />
+            <br />
             <button onClick={handleNewGame}>New Game</button>
             <button id="theme-toggle" onClick={toggleTheme}>
                 dark
             </button>
-            <div className={`card-grid ${animateCollapse ? 'collapse-animation' : ''}`}>
+            <div className={`card-grid ${animateCollapse ? "collapse-animation" : ""}`}>
                 {cards.map((card) => (
                     <SingleCard
                         key={card.id}
@@ -250,8 +234,8 @@ function App() {
             </div>
             <p>Time Elapsed: {elapsedTime || "Not started"}</p>
             {gameOverMessage && <GameOver score={turns} elapsedTime={elapsedTime} />}
-
         </div>
     );
 }
-export default App
+
+export default App;
