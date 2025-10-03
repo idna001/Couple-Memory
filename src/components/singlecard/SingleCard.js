@@ -28,7 +28,7 @@ export default function SingleCard({ card, handleChoice, flipped, disabled }) {
                     style={{ background: 'none', border: 'none', padding: 0 }}
                 >
                     <img
-                        src="/img/cover.png"
+                        src="/img/memory/cover.png"
                         alt="card back"
                         width="200"
                         height="198"

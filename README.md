@@ -1,6 +1,5 @@
 <h2 align="center">
-  <img alt="Demo" width="200" src="./public/img/readme/logo.png" /><br/>
-  <a href="https://github.com/idna001" target="_blank">Andreas V</a>
+  <img alt="Demo" width="200" src="./public/img/logo.png" /><br/>
 </h2>
 <div align="center">
   <img alt="Demo" width="600" src="./public/img/readme/readme-img.png" />
