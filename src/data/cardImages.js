@@ -1,0 +1,26 @@
+// src/data/cardImages.js
+export const cardImages = [
+    { src: "/img/memory/a4-front.jpg", matched: false },
+    { src: "/img/memory/a4-lights.jpg", matched: false },
+    { src: "/img/memory/a4-otu.jpg", matched: false },
+    { src: "/img/memory/bike-outside.jpg", matched: false },
+    { src: "/img/memory/bike-trip.jpg", matched: false },
+    { src: "/img/memory/car-glow-in.jpg", matched: false },
+    { src: "/img/memory/car-sun.jpg", matched: false },
+    { src: "/img/memory/front-a4.jpg", matched: false },
+    { src: "/img/memory/front-glow.jpg", matched: false },
+    { src: "/img/memory/front-stand.jpg", matched: false },
+    { src: "/img/memory/painting-bike.jpg", matched: false },
+    { src: "/img/memory/selfie-bike.jpg", matched: false },
+    { src: "/img/memory/sitting-front.jpg", matched: false },
+    { src: "/img/memory/fav-cud.jpg", matched: false },
+    { src: "/img/memory/stand-ride.jpg", matched: false },
+    { src: "/img/memory/close-gara.jpg", matched: false },
+    { src: "/img/memory/moto-farming.jpg", matched: false },
+    { src: "/img/memory/couple-paint-honda.jpg", matched: false },
+    { src: "/img/memory/couple-moto-paint.jpg", matched: false },
+    { src: "/img/memory/couple-moto.jpg", matched: false },
+    { src: "/img/memory/couple-honda.jpg", matched: false },
+    { src: "/img/memory/couple-church.jpg", matched: false },
+    { src: "/img/memory/a4-close-couple.jpg", matched: false }
+];
