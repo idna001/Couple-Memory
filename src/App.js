@@ -207,7 +207,7 @@ function App() {
     return (
         <div className="App">
             {celebrationStatus && (
-                <Celebration highScore={highScore} elapsedTime={elapsedTime} />
+                <Celebration highScore={highScore} elapsedTime={elapsedTime} handleRestartGame={handleNewGame}/>
             )}
             {celebrationStatus && <ShowConfetti />}
             <img src="/img/logo.png" alt="A&A Match" style={{ height: "60px" }} />
@@ -233,7 +233,8 @@ function App() {
                 <p>Runtime: {window.localStorage.getItem("runtime") || 0}</p>
             </div>
             <p>Time Elapsed: {elapsedTime || "Not started"}</p>
-            {gameOverMessage && <GameOver score={turns} elapsedTime={elapsedTime} />}
+            {gameOverMessage && <GameOver score={turns} elapsedTime={elapsedTime} handleRestartGame={handleNewGame}/>}
+
         </div>
     );
 }
