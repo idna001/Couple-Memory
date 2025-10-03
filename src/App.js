@@ -59,6 +59,9 @@ function pickRandomImages(arr, count) {
     });
     return shuffled.slice(0, count);
 }
+import { cardImages } from "./data/cardImages";
+import { numbers } from "./constants/numbers";
+import { secureShuffleArray, pickRandomImages } from "./utils/logic";
 
 function App() {
     const [cards, setCards] = useState([]);
