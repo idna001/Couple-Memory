@@ -40,18 +40,36 @@ function getUserPreference() {
     // for invalid values, just in case
     return 'system';
   }
+
+  function watchSystemTheme(){
+    const mediaQuery =window.matchMedia("(prefers-color-scheme:light)");
+
+    function updateTheme(e){
+      const userPref = getUserPreference();
+      if(userPref==="system"){
+        setAppliedMode(e.matches?"light":"dark");
+      }
+    }
+    updateTheme(mediaQuery);
+
+    mediaQuery.addEventListener("change", updateTheme);
+  }
   
   const themeToggler = document.getElementById('theme-toggle');
   
   let userPreference = getUserPreference();
   setAppliedMode(getAppliedMode(userPreference));
-  themeToggler.innerText = userPreference;
+  themeToggler.innerText = rotatePreferences(userPreference);
   
+  watchSystemTheme()
+
   themeToggler.onclick = () => {
     const newUserPref = rotatePreferences(userPreference);
     userPreference = newUserPref;
     saveUserPreference(newUserPref);
-   themeToggler.innerText = newUserPref;
+
+   themeToggler.innerText = rotatePreferences(userPreference);
+
     setAppliedMode(getAppliedMode(newUserPref));
   }
 
