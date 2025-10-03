@@ -40,7 +40,13 @@ cardImages = [
     { "src": "/img/fav-cud.jpg", matched: false },
     { "src": "/img/stand-ride.jpg", matched: false },
     { "src": "/img/close-gara.jpg", matched: false },
-    { "src": "/img/close-mod.jpg", matched: false },
+    { "src": "/img/moto-farming.jpg", matched: false },
+    { "src": "/img/couple-paint-honda.jpg", matched: false },
+    { "src": "/img/couple-moto-paint.jpg", matched: false },
+    { "src": "/img/couple-moto.jpg", matched: false },
+    { "src": "/img/couple-honda.jpg", matched: false },
+    { "src": "/img/couple-church.jpg", matched: false },
+    { "src": "/img/a4-close-couple.jpg", matched: false }
 ];
 
 function pickRandomImages(cardImages, count) {
