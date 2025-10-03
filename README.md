@@ -28,7 +28,7 @@
     - [ ] Functionality Buttons on default Overlay
     - [ ] Add API for Safari Share window
     - [ ] Fix listener preloading, at the moment it needs two clicks for opening
-- [x] Add light and dark Mode theme [@Surajit0573](https://github.com/Surajit0573)
+- [x] Add light ,dark and system Mode theme [@Surajit0573](https://github.com/Surajit0573) [@kad-link](https://github.com/kad-link)
 - [x] Animation on Pictures if they match #22 [@mohiwalla](https://github.com/mohiwalla)
 - [x] Add runtime in Local Storage and show with High score [@barkha-gupta](https://github.com/barkha-gupta)
 - [ ] Elimnate Sonar Cloud issues #96
