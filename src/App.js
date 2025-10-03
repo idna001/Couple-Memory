@@ -218,7 +218,7 @@ function App() {
     return (
         <div className="App">
             {celebrationStatus && (
-                <Celebration highScore={highScore} elapsedTime={elapsedTime} />
+                <Celebration highScore={highScore} elapsedTime={elapsedTime} handleRestartGame={handleNewGame}/>
             )}
             {celebrationStatus && <ShowConfetti />}
             <h1>A&A Match</h1>
@@ -243,7 +243,7 @@ function App() {
                 <p>Runtime: {window.localStorage.getItem("runtime") || 0}</p>
             </div>
             <p>Time Elapsed: {elapsedTime || "Not started"}</p>
-            {gameOverMessage && <GameOver score={turns} elapsedTime={elapsedTime} />}
+            {gameOverMessage && <GameOver score={turns} elapsedTime={elapsedTime} handleRestartGame={handleNewGame}/>}
 
         </div>
     );
