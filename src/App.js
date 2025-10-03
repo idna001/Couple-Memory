@@ -227,7 +227,8 @@ function App() {
                 <Celebration highScore={highScore} elapsedTime={elapsedTime} />
             )}
             {celebrationStatus && <ShowConfetti />}
-            <h1>A&A Match</h1>
+            <img src="/img/logo.png" alt="A&A Match" style={{height: "60px"}}/>
+            <br />
             <button onClick={handleNewGame}>New Game</button>
             <button id="theme-toggle" onClick={toggleTheme}>
                 dark
