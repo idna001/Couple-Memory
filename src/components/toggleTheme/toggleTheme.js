@@ -1,58 +1,88 @@
-import './toggleTheme.css'
+import { useEffect, useState } from "react";
+import "./toggleTheme.css";
 
+const THEME_STORAGE_KEY = "theme";
 
-export default function toggleTheme() {
-function getUserPreference() {
-    return localStorage.getItem('theme') || 'system';
-  }
-  function saveUserPreference(userPreference) {
-    localStorage.setItem('theme', userPreference);
-  }
-  
+export default function ToggleTheme() {
+  const [preference, setPreference] = useState(
+    localStorage.getItem(THEME_STORAGE_KEY) || "system"
+  );
+
   function getAppliedMode(userPreference) {
-    if (userPreference === 'light') {
-      return 'light';
+    if (userPreference === "light") {
+      return "light";
     }
-    if (userPreference === 'dark') {
-      return 'dark';
+
+    if (userPreference === "dark") {
+      return "dark";
     }
+
     // system
-    if (matchMedia('(prefers-color-scheme: light)').matches) {
-      return 'light';
+    if (matchMedia("(prefers-color-scheme: light)").matches) {
+      return "light";
     }
-    return 'dark';
+
+    return "dark";
   }
-  
+
   function setAppliedMode(mode) {
     document.documentElement.dataset.appliedMode = mode;
   }
-  
-  function rotatePreferences(userPreference) {
-    if (userPreference === 'system') {
-      return 'light'
+
+  useEffect(() => {
+    if (preference === "system") {
+      const monitorSystemColorScheme = () => {
+        const appliedMode = getAppliedMode(preference);
+        if (appliedMode !== document.documentElement.dataset.appliedMode) {
+          setAppliedMode(appliedMode);
+        }
+      };
+
+      monitorSystemColorScheme();
+
+      window
+        .matchMedia("(prefers-color-scheme: light)")
+        .addEventListener("change", monitorSystemColorScheme);
+
+      return () => {
+        window
+          .matchMedia("(prefers-color-scheme: light)")
+          .removeEventListener("change", monitorSystemColorScheme);
+      };
     }
-    if (userPreference === 'light') {
-      return 'dark';
-    }
-    if (userPreference === 'dark') {
-      return 'system';
-    }
-    // for invalid values, just in case
-    return 'system';
-  }
-  
-  const themeToggler = document.getElementById('theme-toggle');
-  
-  let userPreference = getUserPreference();
-  setAppliedMode(getAppliedMode(userPreference));
-  themeToggler.innerText = userPreference;
-  
-  themeToggler.onclick = () => {
-    const newUserPref = rotatePreferences(userPreference);
-    userPreference = newUserPref;
-    saveUserPreference(newUserPref);
-   themeToggler.innerText = newUserPref;
-    setAppliedMode(getAppliedMode(newUserPref));
+  }, [preference]);
+
+  function saveUserPreference(userPreference) {
+    localStorage.setItem("theme", userPreference);
   }
 
+  useEffect(() => {
+    setAppliedMode(getAppliedMode(preference));
+    saveUserPreference(preference);
+  }, [preference]);
+
+  function rotatePreferences(userPreference) {
+    if (userPreference === "system") {
+      return "light";
+    }
+    if (userPreference === "light") {
+      return "dark";
+    }
+    if (userPreference === "dark") {
+      return "system";
+    }
+    // for invalid values, just in case
+    return "system";
+  }
+
+  const handleClick = () => {
+    const newPreference = rotatePreferences(preference);
+    setPreference(newPreference);
+  };
+
+  return (
+    <button id="theme-toggle" onClick={handleClick}>
+      {preference}
+    </button>
+  );
 }
