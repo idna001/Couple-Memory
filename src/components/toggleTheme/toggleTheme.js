@@ -18,7 +18,7 @@ export default function ToggleTheme() {
     }
 
     // system
-    if (matchMedia("(prefers-color-scheme: light)").matches) {
+    if (window.matchMedia("(prefers-color-scheme: light)").matches) {
       return "light";
     }
 
