@@ -53,7 +53,7 @@ export default function ToggleTheme() {
   }, [preference]);
 
   function saveUserPreference(userPreference) {
-    localStorage.setItem("theme", userPreference);
+    localStorage.setItem(THEME_STORAGE_KEY, userPreference);
   }
 
   useEffect(() => {
