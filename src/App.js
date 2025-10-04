@@ -7,6 +7,8 @@ import Celebration from "./components/celebration/Celebration";
 import toggleTheme from "./components/toggleTheme/toggleTheme";
 import ShowConfetti from "./components/confetti/Confetti";
 import GameOver from "./components/gameover/GameOver";
+import CustomCursor from "./components/CustomCursor/CustomCursor";
+
 import { cardImages } from "./data/cardImages";
 import { numbers } from "./constants/numbers";
 import { secureShuffleArray, pickRandomImages } from "./utils/logic";
@@ -35,7 +37,7 @@ function App() {
         (src) => {
             soundEffect.src = src;
             soundEffect.load();
-            soundEffect.play().catch(() => {});
+            soundEffect.play().catch(() => { });
         },
         [soundEffect]
     );
@@ -157,35 +159,36 @@ function App() {
     }, [shuffledCards, clearTimer]);
 
     return (
-        <div className="App">
-            {celebrationStatus && (
-                <Celebration highScore={highScore} elapsedTime={elapsedTime} handleRestartGame={handleNewGame}/>
-            )}
-            {celebrationStatus && <ShowConfetti />}
-            <img src="/img/logo.png" alt="A&A Match" style={{ height: "60px" }} />
-            <br />
-            <button onClick={handleNewGame}>New Game</button>
-            <button id="theme-toggle" onClick={toggleTheme}>
-                dark
-            </button>
-            <div className={`card-grid ${animateCollapse ? "collapse-animation" : ""}`}>
-                {cards.map((card) => (
-                    <SingleCard
-                        key={card.id}
-                        card={card}
-                        handleChoice={handleChoice}
-                        flipped={card === choiceOne || card === choiceTwo || card.matched}
-                        disabled={disabled}
-                    />
-                ))}
-            </div>
-            <p>Turns: {turns}</p>
-            <div className="results-container">
-                <p>HighScore: {highScore}</p>
-                <p>Runtime: {window.localStorage.getItem("runtime") || 0}</p>
-            </div>
-            <p>Time Elapsed: {elapsedTime || "Not started"}</p>
-            {gameOverMessage && <GameOver score={turns} elapsedTime={elapsedTime} handleRestartGame={handleNewGame}/>}
+            <div className="App">
+                <CustomCursor />
+                {celebrationStatus && (
+                    <Celebration highScore={highScore} elapsedTime={elapsedTime} handleRestartGame={handleNewGame} />
+                )}
+                {celebrationStatus && <ShowConfetti />}
+                <img src="/img/logo.png" alt="A&A Match" style={{ height: "60px" }} />
+                <br />
+                <button onClick={handleNewGame}>New Game</button>
+                <button id="theme-toggle" onClick={toggleTheme}>
+                    dark
+                </button>
+                <div className={`card-grid ${animateCollapse ? "collapse-animation" : ""}`}>
+                    {cards.map((card) => (
+                        <SingleCard
+                            key={card.id}
+                            card={card}
+                            handleChoice={handleChoice}
+                            flipped={card === choiceOne || card === choiceTwo || card.matched}
+                            disabled={disabled}
+                        />
+                    ))}
+                </div>
+                <p>Turns: {turns}</p>
+                <div className="results-container">
+                    <p>HighScore: {highScore}</p>
+                    <p>Runtime: {window.localStorage.getItem("runtime") || 0}</p>
+                </div>
+                <p>Time Elapsed: {elapsedTime || "Not started"}</p>
+                {gameOverMessage && <GameOver score={turns} elapsedTime={elapsedTime} handleRestartGame={handleNewGame} />}
 
         </div>
     );

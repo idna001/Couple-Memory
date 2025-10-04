@@ -9,7 +9,6 @@ button {
   padding: 6px 12px;
   border-radius: 4px;
   font-weight: bold;
-  cursor: pointer;
   font-size: 1em;
 }
 button:hover {
