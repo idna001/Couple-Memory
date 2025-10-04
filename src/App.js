@@ -159,9 +159,8 @@ function App() {
     }, [shuffledCards, clearTimer]);
 
     return (
-        <div>
-            <CustomCursor />
             <div className="App">
+                <CustomCursor />
                 {celebrationStatus && (
                     <Celebration highScore={highScore} elapsedTime={elapsedTime} handleRestartGame={handleNewGame} />
                 )}
@@ -191,7 +190,6 @@ function App() {
                 <p>Time Elapsed: {elapsedTime || "Not started"}</p>
                 {gameOverMessage && <GameOver score={turns} elapsedTime={elapsedTime} handleRestartGame={handleNewGame} />}
 
-            </div>
         </div>
     );
 }
