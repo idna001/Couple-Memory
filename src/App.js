@@ -9,56 +9,6 @@ import ShowConfetti from "./components/confetti/Confetti";
 import GameOver from "./components/gameover/GameOver";
 import CustomCursor from "./components/CustomCursor/CustomCursor";
 
-const cardImages = [
-    { src: "/img/memory/a4-front.jpg", matched: false },
-    { src: "/img/memory/a4-lights.jpg", matched: false },
-    { src: "/img/memory/a4-otu.jpg", matched: false },
-    { src: "/img/memory/bike-outside.jpg", matched: false },
-    { src: "/img/memory/bike-trip.jpg", matched: false },
-    { src: "/img/memory/car-glow-in.jpg", matched: false },
-    { src: "/img/memory/car-sun.jpg", matched: false },
-    { src: "/img/memory/front-a4.jpg", matched: false },
-    { src: "/img/memory/front-glow.jpg", matched: false },
-    { src: "/img/memory/front-stand.jpg", matched: false },
-    { src: "/img/memory/painting-bike.jpg", matched: false },
-    { src: "/img/memory/selfie-bike.jpg", matched: false },
-    { src: "/img/memory/sitting-front.jpg", matched: false },
-    { src: "/img/memory/fav-cud.jpg", matched: false },
-    { src: "/img/memory/stand-ride.jpg", matched: false },
-    { src: "/img/memory/close-gara.jpg", matched: false },
-    { src: "/img/memory/moto-farming.jpg", matched: false },
-    { src: "/img/memory/couple-paint-honda.jpg", matched: false },
-    { src: "/img/memory/couple-moto-paint.jpg", matched: false },
-    { src: "/img/memory/couple-moto.jpg", matched: false },
-    { src: "/img/memory/couple-honda.jpg", matched: false },
-    { src: "/img/memory/couple-church.jpg", matched: false },
-    { src: "/img/memory/a4-close-couple.jpg", matched: false }
-];
-
-const numbers = Array.from({ length: 10 }, (_, i) => (i + 1 < 10 ? `0${i + 1}` : `${i + 1}`));
-
-function secureShuffleArray(array) {
-    const crypto = window.crypto || window.msCrypto;
-    for (let i = array.length - 1; i > 0; i--) {
-        const r = new Uint32Array(1);
-        crypto.getRandomValues(r);
-        const j = r[0] % (i + 1);
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
-function pickRandomImages(arr, count) {
-    if (count > arr.length) return [];
-    const crypto = window.crypto || window.msCrypto;
-    const shuffled = [...arr].sort(() => {
-        const a = new Uint32Array(1);
-        const b = new Uint32Array(1);
-        crypto.getRandomValues(a);
-        crypto.getRandomValues(b);
-        return a[0] - b[0];
-    });
-    return shuffled.slice(0, count);
-}
 import { cardImages } from "./data/cardImages";
 import { numbers } from "./constants/numbers";
 import { secureShuffleArray, pickRandomImages } from "./utils/logic";
