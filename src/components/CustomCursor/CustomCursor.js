@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import './CustomCursor.css';
+import React, { useEffect, useState } from "react";
+import "./CustomCursor.css";
 
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -10,8 +10,8 @@ const CustomCursor = () => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
 
-    window.addEventListener('mousemove', moveHandler);
-    return () => window.removeEventListener('mousemove', moveHandler);
+    globalThis.addEventListener("mousemove", moveHandler);
+    return () => globalThis.removeEventListener("mousemove", moveHandler);
   }, []);
 
   return (
