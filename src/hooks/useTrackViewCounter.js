@@ -27,7 +27,12 @@ const useTrackViewCounter = () => {
       .then((result) => {
         setCounter(result.data.up_count);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(
+          `Failed to increment counter (up) for COUNTER_ID: ${COUNTER_ID}`,
+          err
+        );
+      });
   }, []);
 
   return counter;
