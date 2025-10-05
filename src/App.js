@@ -141,7 +141,7 @@ function App() {
     setDisabled(true);
     setChoiceOne(cardA);
     setChoiceTwo(cardB);
-    setTurns(turns + 1)
+    setTurns(turns + 1);
 
     if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
     hintTimeoutRef.current = setTimeout(() => {
