@@ -76,7 +76,7 @@ function App() {
     const dup = [...selected, ...selected]
       .sort(() => nanoid(16).localeCompare(nanoid(16)))
       .map((card) => {
-        const crypto = window.crypto || window.msCrypto;
+        const crypto = globalThis.crypto || globalThis.msCrypto;
         const rand = new Uint32Array(1);
         crypto.getRandomValues(rand);
         return { ...card, id: rand[0], matched: false };
@@ -135,16 +135,16 @@ function App() {
   useEffect(() => {
     if (matched === cards.length && turns) {
       handleTime(false);
-      const storedHigh = window.localStorage.getItem("highscore");
-      const storedRun = window.localStorage.getItem("runtime");
+      const storedHigh = globalThis.localStorage.getItem("highscore");
+      const storedRun = globalThis.localStorage.getItem("runtime");
       const better =
         storedHigh === null ||
         turns < Number(storedHigh) ||
         (turns === Number(storedHigh) && elapsedTime < Number(storedRun));
 
       if (better) {
-        window.localStorage.setItem("highscore", turns);
-        window.localStorage.setItem("runtime", elapsedTime);
+        globalThis.localStorage.setItem("highscore", turns);
+        globalThis.localStorage.setItem("runtime", elapsedTime);
         playSound("audio/celebration.mp3");
         setCelebrationStatus(true);
         setHighScore(turns);
@@ -157,7 +157,7 @@ function App() {
 
   useEffect(() => {
     shuffledCards();
-    const hs = Number(window.localStorage.getItem("highscore") || 0);
+    const hs = Number(globalThis.localStorage.getItem("highscore") || 0);
     setHighScore(hs);
     return () => clearTimer();
   }, [shuffledCards, clearTimer]);
@@ -195,7 +195,7 @@ function App() {
       <p>Turns: {turns}</p>
       <div className="results-container">
         <p>HighScore: {highScore}</p>
-        <p>Runtime: {window.localStorage.getItem("runtime") || 0}</p>
+        <p>Runtime: {globalThis.localStorage.getItem("runtime") || 0}</p>
       </div>
       <p>Time Elapsed: {elapsedTime || "Not started"}</p>
       {viewCounter !== null && <p>This memory got {viewCounter} views</p>}

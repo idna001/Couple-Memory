@@ -27,4 +27,5 @@ export default function GameOver({ score, elapsedTime, handleRestartGame }) {
 GameOver.propTypes = {
   score: PropTypes.number.isRequired,
   elapsedTime: PropTypes.number.isRequired,
+  handleRestartGame: PropTypes.func.isRequired,
 };

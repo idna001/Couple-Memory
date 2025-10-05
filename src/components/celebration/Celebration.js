@@ -3,7 +3,11 @@ import React, { useRef } from "react";
 import ShareButton from "./../sharebutton/ShareButton";
 import PropTypes from "prop-types";
 
-export default function Celebration({ highScore, elapsedTime, handleRestartGame }) {
+export default function Celebration({
+  highScore,
+  elapsedTime,
+  handleRestartGame,
+}) {
   const highScoreRef = useRef(null);
   return (
     <div className="celebration-container">
@@ -20,7 +24,9 @@ export default function Celebration({ highScore, elapsedTime, handleRestartGame 
         <div className="button">
           <ShareButton highScore={highScore} highScoreRef={highScoreRef} />
         </div>
-        <button onClick={handleRestartGame} className="restart-btn">Restart Game</button>
+        <button onClick={handleRestartGame} className="restart-btn">
+          Restart Game
+        </button>
       </div>
     </div>
   );
@@ -30,4 +36,5 @@ export default function Celebration({ highScore, elapsedTime, handleRestartGame 
 Celebration.propTypes = {
   highScore: PropTypes.number.isRequired,
   elapsedTime: PropTypes.number.isRequired,
+  handleRestartGame: PropTypes.func.isRequired,
 };
