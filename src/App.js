@@ -129,8 +129,9 @@ function App() {
       return;
     }
 
-    const idxA = Math.floor(Math.random() * available.length);
-    let idxB = Math.floor(Math.random() * (available.length - 1));
+    const idxA = crypto.getRandomValues(new Uint32Array(1))[0] % available.length;
+
+    let idxB = crypto.getRandomValues(new Uint32Array(1))[0] % (available.length - 1);
     if (idxB >= idxA) idxB += 1;
 
     const cardA = available[idxA].c;
