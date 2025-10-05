@@ -179,7 +179,7 @@ function App() {
 
   const handleNewGame = useCallback(() => {
     setHintCount(3)
-    setHintCooldown(0)
+    setHintCooldown(0);
     playSound("audio/start.mp3");
     shuffledCards();
   }, [playSound, shuffledCards]);
