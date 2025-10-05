@@ -8,6 +8,7 @@ import toggleTheme from "./components/toggleTheme/toggleTheme";
 import ShowConfetti from "./components/confetti/Confetti";
 import GameOver from "./components/gameover/GameOver";
 import CustomCursor from "./components/CustomCursor/CustomCursor";
+import SettingsMenu from "./components/settings/SettingsMenu";
 
 import { cardImages } from "./data/cardImages";
 import { numbers } from "./constants/numbers";
@@ -159,7 +160,10 @@ function App() {
     setHighScore(hs);
     return () => clearTimer();
   }, [shuffledCards, clearTimer]);
-
+  const handleResetHistory = () => {
+    setHighScore(0);
+    shuffledCards();
+  };
   return (
     <div className="App">
       <CustomCursor />
@@ -171,12 +175,15 @@ function App() {
         />
       )}
       {celebrationStatus && <ShowConfetti />}
-      <img src="/img/logo.png" alt="A&A Match" style={{ height: "60px" }} />
-      <br />
-      <button onClick={handleNewGame}>New Game</button>
-      <button id="theme-toggle" onClick={toggleTheme}>
-        dark
-      </button>
+      <header className="flex justify-between items-center mb-6">
+        <img src="/img/logo.png" alt="A&A Match" style={{ height: "60px" }} />
+        <div className="inline-flex items-center gap-3">
+          <button  onClick={handleNewGame} className="btn btn-primary">
+            New Game
+          </button>
+          <SettingsMenu onReset={handleResetHistory} />
+        </div>
+      </header>
       <div
         className={`card-grid ${animateCollapse ? "collapse-animation" : ""}`}
       >
