@@ -8,7 +8,14 @@ const useTrackViewCounter = () => {
   const [counter, setCounter] = useState(null);
 
   useEffect(() => {
-    if (!WORKSPACE_ID || !COUNTER_ID) return;
+    if (!WORKSPACE_ID || !COUNTER_ID) {
+      console.warn(
+        `useTrackViewCounter: Missing environment variable(s):` +
+        (!WORKSPACE_ID ? " REACT_APP_COUNTER_API_WORKSPACE_SLUG" : "") +
+        (!COUNTER_ID ? " REACT_APP_COUNTER_API_PAGE_VIEW_COUNTER_SLUG" : "")
+      );
+      return;
+    }
 
     const counter = new Counter({
       workspace: WORKSPACE_ID,
@@ -20,7 +27,12 @@ const useTrackViewCounter = () => {
       .then((result) => {
         setCounter(result.data.up_count);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(
+          `Failed to increment counter (up) for COUNTER_ID: ${COUNTER_ID}`,
+          err
+        );
+      });
   }, []);
 
   return counter;
