@@ -18,7 +18,7 @@ export default function ToggleTheme() {
     }
 
     // system
-    if (matchMedia("(prefers-color-scheme: light)").matches) {
+    if (window.matchMedia("(prefers-color-scheme: light)").matches) {
       return "light";
     }
 
@@ -53,7 +53,7 @@ export default function ToggleTheme() {
   }, [preference]);
 
   function saveUserPreference(userPreference) {
-    localStorage.setItem("theme", userPreference);
+    localStorage.setItem(THEME_STORAGE_KEY, userPreference);
   }
 
   useEffect(() => {
