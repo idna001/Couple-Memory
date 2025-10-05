@@ -282,7 +282,7 @@ function App() {
       >
         {hintCooldown > 0 ? `Hint (ready in ${hintCooldown}s)` : "Hint"}
       </button>
-      <p className="hint-count">Hint Remaining:{" "}{hintCount}</p>
+      <p className="hint-count">{hintCount === 1 ? "Hint Remaining: " : "Hints Remaining: "}{hintCount}</p>
       </div>
       </div>
       <button id="theme-toggle" onClick={toggleTheme}>
