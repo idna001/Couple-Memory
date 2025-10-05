@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 export default function ShareButton({ highScore, highScoreRef }) {
   const [screenshotImage, setScreenshotImage] = useState(null);
-  
+
   const shareDialog = document.querySelector(".share-dialog");
   const closeButton = document.querySelector(".close-button");
   const handleScreenshot = () => {
@@ -28,38 +28,25 @@ export default function ShareButton({ highScore, highScoreRef }) {
   };
   const shareContent = async () => {
     if (navigator.share && screenshotImage) {
-        try {
-            await navigator.share({
-              title: "High Score Screenshot",
-              text: `I achieved a high score of ${highScore} in A&A Match!`,
-              url: "https://aa-memory.vercel.app/",
-              files: [
-                new File(["highScore"], screenshotImage, { type: "image/jpeg" }),
-              ],
-            });
-            console.log("Sharing successfully!");
-          } catch (error) {
-            console.error("Error while sharing: ", error);
-          }
-      } else {
-        shareDialog.classList.add('is-open');
-        closeButton.addEventListener('click', event => {
-          shareDialog.classList.remove('is-open');
+      try {
+        await navigator.share({
+          title: "High Score Screenshot",
+          text: `I achieved a high score of ${highScore} in A&A Match!`,
+          url: "https://aa-memory.vercel.app/",
+          files: [
+            new File(["highScore"], screenshotImage, { type: "image/jpeg" }),
+          ],
         });
+        console.log("Sharing successfully!");
+      } catch (error) {
+        console.error("Error while sharing: ", error);
       }
-    // try {
-    //   await navigator.share({
-    //     title: "High Score Screenshot",
-    //     text: `I achieved a high score of ${highScore} in A&A Match!`,
-    //     url: "https://aa-memory.vercel.app/",
-    //     files: [
-    //       new File(["highScore"], screenshotImage, { type: "image/jpeg" }),
-    //     ],
-    //   });
-    //   console.log("Sharing successfully!");
-    // } catch (error) {
-    //   console.error("Error while sharing: ", error);
-    // }
+    } else {
+      shareDialog.classList.add("is-open");
+      closeButton.addEventListener("click", (event) => {
+        shareDialog.classList.remove("is-open");
+      });
+    }
   };
   const closeDialog = () => {
     shareDialog.classList.remove("is-open");
@@ -219,6 +206,6 @@ export default function ShareButton({ highScore, highScoreRef }) {
 ShareButton.propTypes = {
   highScore: PropTypes.number.isRequired,
   highScoreRef: PropTypes.shape({
-    current: PropTypes.any
+    current: PropTypes.any,
   }).isRequired,
 };
