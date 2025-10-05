@@ -74,11 +74,7 @@ function App() {
     const dup = [...selected, ...selected]
       .sort(() => nanoid(16).localeCompare(nanoid(16)))
       .map((card) => {
-<<<<<<< HEAD
-        const crypto = window.crypto || window.msCrypto;
-=======
         const crypto = globalThis.crypto || globalThis.msCrypto;
->>>>>>> master
         const rand = new Uint32Array(1);
         crypto.getRandomValues(rand);
         return { ...card, id: rand[0], matched: false };
@@ -137,26 +133,16 @@ function App() {
   useEffect(() => {
     if (matched === cards.length && turns) {
       handleTime(false);
-<<<<<<< HEAD
-      const storedHigh = window.localStorage.getItem("highscore");
-      const storedRun = window.localStorage.getItem("runtime");
-=======
       const storedHigh = globalThis.localStorage.getItem("highscore");
       const storedRun = globalThis.localStorage.getItem("runtime");
->>>>>>> master
       const better =
         storedHigh === null ||
         turns < Number(storedHigh) ||
         (turns === Number(storedHigh) && elapsedTime < Number(storedRun));
 
       if (better) {
-<<<<<<< HEAD
-        window.localStorage.setItem("highscore", turns);
-        window.localStorage.setItem("runtime", elapsedTime);
-=======
         globalThis.localStorage.setItem("highscore", turns);
         globalThis.localStorage.setItem("runtime", elapsedTime);
->>>>>>> master
         playSound("audio/celebration.mp3");
         setCelebrationStatus(true);
         setHighScore(turns);
