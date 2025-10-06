@@ -23,3 +23,40 @@ body, html {
 * {
   cursor: none;
 }
+
+.button-box{
+  display: flex;
+  margin-top: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.hint{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.hint:hover{
+  background-color: yellow;
+  color: black;
+
+}
+
+.hint-box{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.hint-count{
+  font-size: 15px;
+  color: var(--text,#fff);
+}
+
+@media (max-width: 600px) {
+  .button-box{
+    flex-direction: column;
+    gap: 20px;
+  }
+}
