@@ -24,8 +24,16 @@ function App() {
   const [celebrationStatus, setCelebrationStatus] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(undefined);
   const intervalRef = useRef(null);
+  const hintTimeoutRef = useRef(null);
+  const hintIntervalRef = useRef(null);
+  const hintLockedRef = useRef(false);
+  const [hintCount, setHintCount] = useState(3);
+  const [hintCooldown, setHintCooldown] = useState(0);
+  const [hintActive, setHintActive] = useState(false);
   const [animateCollapse, setAnimateCollapse] = useState(false);
   const [gameOverMessage, setGameOverMessage] = useState(false);
+  const REVEAL_DURATION = 2000;
+  const HINT_COOLDOWN = 5000; 
 
   const soundEffect = useMemo(() => {
     const audio = new Audio();
@@ -69,6 +77,81 @@ function App() {
     }
   }, []);
 
+  const hintCards = useCallback(() => {
+    if (hintActive || hintLockedRef.current) return;
+
+    if (!cards || cards.length === 0) return;
+    if (hintCount === 0) return;
+
+    setHintCount((c) => c - 1);
+    hintLockedRef.current = true;
+    if (elapsedTime === undefined) handleTime(true);
+    const seconds = Math.floor(HINT_COOLDOWN / 1000);
+    setHintCooldown(seconds);
+    if (hintIntervalRef.current) clearInterval(hintIntervalRef.current);
+    hintIntervalRef.current = setInterval(() => {
+      setHintCooldown((s) => {
+        if (s <= 1) {
+          clearInterval(hintIntervalRef.current);
+          hintIntervalRef.current = null;
+          hintLockedRef.current = false;
+          return 0;
+        }
+        return s - 1;
+      });
+    }, 1000);
+
+    const available = cards.map((c, i) => ({ c, i })).filter(({ c }) => !c.matched);
+    if (available.length === 0) {
+      if (hintIntervalRef.current) {
+        clearInterval(hintIntervalRef.current);
+        hintIntervalRef.current = null;
+      }
+      setHintCooldown(0);
+      hintLockedRef.current = false;
+      return;
+    }
+
+    if (available.length === 1) {
+      setHintActive(true);
+      setDisabled(true);
+      setChoiceOne(available[0].c);
+      setChoiceTwo(null);
+
+      if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
+      hintTimeoutRef.current = setTimeout(() => {
+        setChoiceOne(null);
+        setChoiceTwo(null);
+        setHintActive(false);
+        setDisabled(false);
+      }, REVEAL_DURATION);
+
+      return;
+    }
+
+    const idxA = crypto.getRandomValues(new Uint32Array(1))[0] % available.length;
+
+    let idxB = crypto.getRandomValues(new Uint32Array(1))[0] % (available.length - 1);
+    if (idxB >= idxA) idxB += 1;
+
+    const cardA = available[idxA].c;
+    const cardB = available[idxB].c;
+
+    setHintActive(true);
+    setDisabled(true);
+    setChoiceOne(cardA);
+    setChoiceTwo(cardB);
+    setTurns(turns + 1);
+
+    if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
+    hintTimeoutRef.current = setTimeout(() => {
+      setChoiceOne(null);
+      setChoiceTwo(null);
+      setHintActive(false);
+      setDisabled(false);
+    }, REVEAL_DURATION);
+  }, [cards, hintCount, hintActive]);
+
   const shuffledCards = useCallback(() => {
     const selected = pickRandomImages(cardImages, 6);
     const dup = [...selected, ...selected]
@@ -95,6 +178,8 @@ function App() {
   }, [clearTimer]);
 
   const handleNewGame = useCallback(() => {
+    setHintCount(3)
+    setHintCooldown(0);
     playSound("audio/start.mp3");
     shuffledCards();
   }, [playSound, shuffledCards]);
@@ -109,6 +194,8 @@ function App() {
   );
 
   useEffect(() => {
+    if (hintActive) return;
+
     if (choiceOne && choiceTwo) {
       setDisabled(true);
       if (choiceOne.src === choiceTwo.src) {
@@ -157,7 +244,19 @@ function App() {
     shuffledCards();
     const hs = Number(globalThis.localStorage.getItem("highscore") || 0);
     setHighScore(hs);
-    return () => clearTimer();
+    return () => {
+      clearTimer();
+      if (hintTimeoutRef.current) {
+        clearTimeout(hintTimeoutRef.current);
+        hintTimeoutRef.current = null;
+      }
+      if (hintIntervalRef.current) {
+        clearInterval(hintIntervalRef.current);
+        hintIntervalRef.current = null;
+      }
+      hintLockedRef.current = false;
+      setHintCooldown(0);
+    };
   }, [shuffledCards, clearTimer]);
 
   return (
@@ -173,7 +272,19 @@ function App() {
       {celebrationStatus && <ShowConfetti />}
       <img src="/img/logo.png" alt="A&A Match" style={{ height: "60px" }} />
       <br />
+      <div className="button-box">
       <button onClick={handleNewGame}>New Game</button>
+      <div className="hint-box">
+      <button
+        className="hint"
+        onClick={hintCards}
+        disabled={hintCooldown > 0 || hintCount <= 0 || hintActive}
+      >
+        {hintCooldown > 0 ? `Hint (ready in ${hintCooldown}s)` : "Hint"}
+      </button>
+      <p className="hint-count">{hintCount === 1 ? "Hint Remaining: " : "Hints Remaining: "}{hintCount}</p>
+      </div>
+      </div>
       <button id="theme-toggle" onClick={toggleTheme}>
         dark
       </button>
