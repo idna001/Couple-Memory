@@ -13,8 +13,21 @@ export default function SingleCard({ card, handleChoice, flipped, disabled }) {
         <div className={`card ${flipped && card.matched ? "animation" : ""}`}>
             <div className={flipped ? "flipped" : ""}>
                 <div id='front' className='front' style={{ display: "flex" }}>
-                    <img className="front-background" src={flipped && card.src} alt="card front blur background" width="200" height="200" />
-                    <img className="front" src={flipped && card.src} alt="card front" width="200" height="200" />
+                   <img
+  className="front-background"
+  src={flipped ? card.src : undefined}
+  alt="card front blur background"
+  width="200"
+  height="200"
+/>
+<img
+  className="front"
+  src={flipped ? card.src : undefined}
+  alt="card front"
+  width="200"
+  height="200"
+/>
+
                 </div>
                 <button
                     className="back"
