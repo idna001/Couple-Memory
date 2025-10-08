@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import "./App.css";
 import SingleCard from "./components/singlecard/SingleCard";
 import Celebration from "./components/celebration/Celebration";
-import toggleTheme from "./components/toggleTheme/toggleTheme";
+import ToggleTheme from "./components/toggleTheme/toggleTheme";
 import ShowConfetti from "./components/confetti/Confetti";
 import GameOver from "./components/gameover/GameOver";
 import CustomCursor from "./components/CustomCursor/CustomCursor";
@@ -287,9 +287,7 @@ function App() {
       <p className="hint-count">{hintCount === 1 ? "Hint Remaining: " : "Hints Remaining: "}{hintCount}</p>
       </div>
       </div>
-      <button id="theme-toggle" onClick={toggleTheme}>
-        dark
-      </button>
+      <ToggleTheme />
       <div
         className={`card-grid ${animateCollapse ? "collapse-animation" : ""}`}
       >
