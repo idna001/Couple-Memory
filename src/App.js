@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import "./App.css";
 import SingleCard from "./components/singlecard/SingleCard";
 import Celebration from "./components/celebration/Celebration";
-import toggleTheme from "./components/toggleTheme/toggleTheme";
+import ToggleTheme from "./components/toggleTheme/toggleTheme";
 import ShowConfetti from "./components/confetti/Confetti";
 import GameOver from "./components/gameover/GameOver";
 import CustomCursor from "./components/CustomCursor/CustomCursor";
@@ -14,6 +14,7 @@ import { secureShuffleArray, pickRandomImages } from "./utils/logic";
 import { useHint } from "./utils/useHint";
 
 const crypto = globalThis.crypto || globalThis.msCrypto;
+import useTrackViewCounter from "./hooks/useTrackViewCounter";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -28,6 +29,9 @@ function App() {
   const intervalRef = useRef(null);
   const [animateCollapse, setAnimateCollapse] = useState(false);
   const [gameOverMessage, setGameOverMessage] = useState(false);
+  const viewCounter = useTrackViewCounter();
+  const REVEAL_DURATION = 2000;
+  const HINT_COOLDOWN = 5000; 
 
   const soundEffect = useMemo(() => {
     const audio = new Audio();
@@ -232,6 +236,7 @@ function App() {
         <p>Runtime: {globalThis.localStorage.getItem("runtime") || 0}</p>
       </div>
       <p>Time Elapsed: {elapsedTime || "Not started"}</p>
+      {viewCounter !== null && <p>This memory got {viewCounter} views</p>}
       {gameOverMessage && (
         <GameOver
           score={turns}
