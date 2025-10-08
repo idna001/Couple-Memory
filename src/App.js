@@ -12,6 +12,7 @@ import CustomCursor from "./components/CustomCursor/CustomCursor";
 import { cardImages } from "./data/cardImages";
 import { numbers } from "./constants/numbers";
 import { secureShuffleArray, pickRandomImages } from "./utils/logic";
+import useTrackViewCounter from "./hooks/useTrackViewCounter";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -32,6 +33,7 @@ function App() {
   const [hintActive, setHintActive] = useState(false);
   const [animateCollapse, setAnimateCollapse] = useState(false);
   const [gameOverMessage, setGameOverMessage] = useState(false);
+  const viewCounter = useTrackViewCounter();
   const REVEAL_DURATION = 2000;
   const HINT_COOLDOWN = 5000; 
 
@@ -305,6 +307,7 @@ function App() {
         <p>Runtime: {globalThis.localStorage.getItem("runtime") || 0}</p>
       </div>
       <p>Time Elapsed: {elapsedTime || "Not started"}</p>
+      {viewCounter !== null && <p>This memory got {viewCounter} views</p>}
       {gameOverMessage && (
         <GameOver
           score={turns}
