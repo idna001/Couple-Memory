@@ -46,7 +46,7 @@ export function useHint({
       });
     }, 1000);
 
-    const available = cards.map((c) => ({ c })).filter(({ c }) => !c.matched);
+    const available = cards.filter(c => !c.matched);
     if (available.length === 0) {
       clearInterval(hintIntervalRef.current);
       hintLockedRef.current = false;

@@ -13,6 +13,8 @@ import { numbers } from "./constants/numbers";
 import { secureShuffleArray, pickRandomImages } from "./utils/logic";
 import { useHint } from "./utils/useHint";
 
+const crypto = globalThis.crypto || globalThis.msCrypto;
+
 function App() {
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
@@ -89,7 +91,7 @@ function App() {
     const dup = [...selected, ...selected]
       .sort(() => nanoid(16).localeCompare(nanoid(16)))
       .map((card) => {
-        const crypto = globalThis.crypto || globalThis.msCrypto;
+        // const crypto = globalThis.crypto || globalThis.msCrypto;
         const rand = new Uint32Array(1);
         crypto.getRandomValues(rand);
         return { ...card, id: rand[0], matched: false };
