@@ -216,9 +216,7 @@ function App() {
           </p>
         </div>
       </div>
-      <button id="theme-toggle" onClick={toggleTheme}>
-        dark
-      </button>
+      <ToggleTheme />
       <div className={`card-grid ${animateCollapse ? "collapse-animation" : ""}`}>
         {cards.map((card) => (
           <SingleCard
