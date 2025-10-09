@@ -1,4 +1,3 @@
-  
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800&display=swap');
 
 /* base styles */
@@ -7,16 +6,17 @@ body {
   margin: 0;
   font-size: 1.5em;
   text-align: center;
-  color: var(--text,#fff);
+  color: var(--text, #fff);
   background: var(--background, #1b1523);
 }
-.results-container{
+.results-container {
   display: flex;
   justify-content: center;
   column-gap: 1rem;
 }
 
-body, html {
+body,
+html {
   cursor: none;
 }
 
@@ -24,7 +24,7 @@ body, html {
   cursor: none;
 }
 
-.button-box{
+.button-box {
   display: flex;
   margin-top: 10px;
   flex-direction: row;
@@ -32,30 +32,29 @@ body, html {
   justify-content: center;
 }
 
-.hint{
+.hint {
   margin-left: 10px;
   margin-right: 10px;
 }
 
-.hint:hover{
+.hint:hover {
   background-color: yellow;
   color: black;
-
 }
 
-.hint-box{
+.hint-box {
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
 
-.hint-count{
+.hint-count {
   font-size: 15px;
-  color: var(--text,#fff);
+  color: var(--text, #fff);
 }
 
 @media (max-width: 600px) {
-  .button-box{
+  .button-box {
     flex-direction: column;
     gap: 20px;
   }

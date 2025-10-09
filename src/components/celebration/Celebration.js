@@ -1,7 +1,7 @@
-import "./Celebration.css";
-import React, { useRef } from "react";
-import ShareButton from "./../sharebutton/ShareButton";
-import PropTypes from "prop-types";
+import './Celebration.css';
+import React, { useRef } from 'react';
+import ShareButton from './../sharebutton/ShareButton';
+import PropTypes from 'prop-types';
 
 export default function Celebration({
   highScore,
@@ -10,8 +10,8 @@ export default function Celebration({
 }) {
   const highScoreRef = useRef(null);
   return (
-    <div className="celebration-container">
-      <div className="celebration-notification">
+    <div className='celebration-container'>
+      <div className='celebration-notification'>
         <p ref={highScoreRef}>
           Highscore achieved: <span>{highScore}</span>
           <br />
@@ -21,10 +21,10 @@ export default function Celebration({
             <span>{elapsedTime}s</span>
           </p>
         }
-        <div className="button">
+        <div className='button'>
           <ShareButton highScore={highScore} highScoreRef={highScoreRef} />
         </div>
-        <button onClick={handleRestartGame} className="restart-btn">
+        <button onClick={handleRestartGame} className='restart-btn'>
           Restart Game
         </button>
       </div>

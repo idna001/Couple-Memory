@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import "./CustomCursor.css";
+import React, { useEffect, useState } from 'react';
+import './CustomCursor.css';
 
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   // Update cursor position on mouse move
   useEffect(() => {
-    const moveHandler = (e) => {
+    const moveHandler = e => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
 
-    globalThis.addEventListener("mousemove", moveHandler);
-    return () => globalThis.removeEventListener("mousemove", moveHandler);
+    globalThis.addEventListener('mousemove', moveHandler);
+    return () => globalThis.removeEventListener('mousemove', moveHandler);
   }, []);
 
   return (
     <div
-      className="custom-cursor"
+      className='custom-cursor'
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
