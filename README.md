@@ -8,6 +8,7 @@
 <br/>
 
 [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) &nbsp;
+![Code Formatting](https://github.com/KartikeyaNainkhwal/Couple-Memory/workflows/Prettier%20Code%20Formatting%20Check/badge.svg)
 
 <h1 style="color: #01b0f2; text-align:center">Hacktoberfest 2025</h1>
 
@@ -81,6 +82,28 @@ Have fun while celebrating Hacktober
 Lets Hack!
 
 Feel free to make PR and complete the readme with your changes
+
+## 🧹 Code Formatting
+
+This project uses [Prettier](https://prettier.io/) to maintain consistent code formatting. All pull requests are automatically checked for proper formatting.
+
+### Local Development
+
+Before submitting a PR, make sure your code is properly formatted:
+
+```bash
+# Check formatting
+npm run format:check
+
+# Auto-fix formatting issues
+npm run format
+```
+
+### Automatic Checks
+
+- ✅ Every PR automatically runs Prettier checks via GitHub Actions
+- ❌ PRs with formatting issues will fail the check
+- 💡 The action will provide instructions on how to fix formatting issues
 
 ## Credits
 Sound Effect from

@@ -1,0 +1,66 @@
+name: Prettier Code Formatting Check
+
+on:
+  pull_request:
+    branches: [master, main]
+  push:
+    branches: [master, main]
+
+jobs:
+  prettier-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history for better context
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Prettier
+        run: npm install --save-dev --save-exact prettier
+
+      - name: Check Prettier formatting
+        run: |
+          echo "Checking code formatting with Prettier..."
+          npx prettier --check "src/**/*.{js,jsx,ts,tsx,css,scss,json,md}" || {
+            echo "❌ Code formatting issues found!"
+            echo "Run 'npx prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss,json,md}\"' to fix formatting issues."
+            exit 1
+          }
+          echo "✅ All files are properly formatted!"
+
+      - name: Comment PR with formatting issues (if any)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🧹 Code Formatting Issues Detected
+              
+              This PR has code formatting issues that need to be fixed. 
+              
+              **To fix these issues locally:**
+              \`\`\`bash
+              npx prettier --write "src/**/*.{js,jsx,ts,tsx,css,scss,json,md}"
+              \`\`\`
+              
+              **Or run this command to check formatting:**
+              \`\`\`bash
+              npx prettier --check "src/**/*.{js,jsx,ts,tsx,css,scss,json,md}"
+              \`\`\`
+              
+              Please fix the formatting and push your changes. ✨`
+            })
