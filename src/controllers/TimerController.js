@@ -1,15 +1,15 @@
 // src/controllers/TimerController.js
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef } from 'react';
 
 export const useTimerController = () => {
   const [elapsedTime, setElapsedTime] = useState(undefined);
   const intervalRef = useRef(null);
 
-  const handleTime = useCallback((start) => {
+  const handleTime = useCallback(start => {
     if (start) {
       if (!intervalRef.current) {
         intervalRef.current = setInterval(() => {
-          setElapsedTime((prev) => (prev || 0) + 1);
+          setElapsedTime(prev => (prev || 0) + 1);
         }, 1000);
       }
     } else if (intervalRef.current) {

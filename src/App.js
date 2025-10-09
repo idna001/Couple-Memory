@@ -1,12 +1,12 @@
 // src/App.js
-import { useEffect, useCallback } from "react";
-import "./App.css";
-import SingleCard from "./components/singlecard/SingleCard";
-import Celebration from "./components/celebration/Celebration";
-import ToggleTheme from "./components/toggleTheme/toggleTheme";
-import ShowConfetti from "./components/confetti/Confetti";
-import GameOver from "./components/gameover/GameOver";
-import CustomCursor from "./components/CustomCursor/CustomCursor";
+import { useEffect, useCallback } from 'react';
+import './App.css';
+import SingleCard from './components/singlecard/SingleCard';
+import Celebration from './components/celebration/Celebration';
+import ToggleTheme from './components/toggleTheme/toggleTheme';
+import ShowConfetti from './components/confetti/Confetti';
+import GameOver from './components/gameover/GameOver';
+import CustomCursor from './components/CustomCursor/CustomCursor';
 
 // Import controllers
 import {
@@ -15,8 +15,8 @@ import {
   useAudioController,
   useScoreController,
   useHintController,
-} from "./controllers";
-import useTrackViewCounter from "./hooks/useTrackViewCounter";
+} from './controllers';
+import useTrackViewCounter from './hooks/useTrackViewCounter';
 
 function App() {
   // Initialize controllers
@@ -25,7 +25,7 @@ function App() {
   const audioController = useAudioController();
   const scoreController = useScoreController();
   const hintController = useHintController();
-  const viewCounter = useTrackViewCounter(); 
+  const viewCounter = useTrackViewCounter();
 
   // Destructure controller methods and state
   const {
@@ -75,7 +75,15 @@ function App() {
       gameController.setTurns,
       handleTime
     );
-  }, [cards, turns, elapsedTime, hintCards, setDisabled, handleTime, gameController]);
+  }, [
+    cards,
+    turns,
+    elapsedTime,
+    hintCards,
+    setDisabled,
+    handleTime,
+    gameController,
+  ]);
 
   const handleNewGame = useCallback(() => {
     resetHints();
@@ -86,7 +94,7 @@ function App() {
   }, [resetHints, resetGameState, resetTimer, playSounds, initializeGame]);
 
   const handleChoice = useCallback(
-    (card) => {
+    card => {
       if (elapsedTime === undefined && !gameStarted) {
         handleTime(true);
       }
@@ -112,14 +120,36 @@ function App() {
     } else if (choiceOne) {
       playSounds.swap();
     }
-  }, [choiceOne, choiceTwo, hintActive, setDisabled, playSounds, updateMatchedCards, resetTurn]);
+  }, [
+    choiceOne,
+    choiceTwo,
+    hintActive,
+    setDisabled,
+    playSounds,
+    updateMatchedCards,
+    resetTurn,
+  ]);
 
   useEffect(() => {
     if (matched === cards.length && turns) {
       handleTime(false);
-      checkGameCompletion(matched, cards.length, turns, elapsedTime, playSounds.celebration);
+      checkGameCompletion(
+        matched,
+        cards.length,
+        turns,
+        elapsedTime,
+        playSounds.celebration
+      );
     }
-  }, [matched, cards.length, turns, elapsedTime, handleTime, checkGameCompletion, playSounds.celebration]);
+  }, [
+    matched,
+    cards.length,
+    turns,
+    elapsedTime,
+    handleTime,
+    checkGameCompletion,
+    playSounds.celebration,
+  ]);
 
   useEffect(() => {
     initializeGame();
@@ -130,7 +160,7 @@ function App() {
   }, [initializeGame, clearTimer, cleanupHints]);
 
   return (
-    <div className="App">
+    <div className='App'>
       <CustomCursor />
       {celebrationStatus && (
         <Celebration
@@ -140,26 +170,29 @@ function App() {
         />
       )}
       {celebrationStatus && <ShowConfetti />}
-      <img src="/img/logo.png" alt="A&A Match" style={{ height: "60px" }} />
+      <img src='/img/logo.png' alt='A&A Match' style={{ height: '60px' }} />
       <br />
-      <div className="button-box">
-      <button onClick={handleNewGame}>New Game</button>
-      <div className="hint-box">
-      <button
-        className="hint"
-        onClick={handleHintClick}
-        disabled={hintCooldown > 0 || hintCount <= 0 || hintActive}
-      >
-        {hintCooldown > 0 ? `Hint (ready in ${hintCooldown}s)` : "Hint"}
-      </button>
-      <p className="hint-count">{hintCount === 1 ? "Hint Remaining: " : "Hints Remaining: "}{hintCount}</p>
-      </div>
+      <div className='button-box'>
+        <button onClick={handleNewGame}>New Game</button>
+        <div className='hint-box'>
+          <button
+            className='hint'
+            onClick={handleHintClick}
+            disabled={hintCooldown > 0 || hintCount <= 0 || hintActive}
+          >
+            {hintCooldown > 0 ? `Hint (ready in ${hintCooldown}s)` : 'Hint'}
+          </button>
+          <p className='hint-count'>
+            {hintCount === 1 ? 'Hint Remaining: ' : 'Hints Remaining: '}
+            {hintCount}
+          </p>
+        </div>
       </div>
       <ToggleTheme />
       <div
-        className={`card-grid ${animateCollapse ? "collapse-animation" : ""}`}
+        className={`card-grid ${animateCollapse ? 'collapse-animation' : ''}`}
       >
-        {cards.map((card) => (
+        {cards.map(card => (
           <SingleCard
             key={card.id}
             card={card}
@@ -170,11 +203,11 @@ function App() {
         ))}
       </div>
       <p>Turns: {turns}</p>
-      <div className="results-container">
+      <div className='results-container'>
         <p>HighScore: {highScore}</p>
-        <p>Runtime: {globalThis.localStorage.getItem("runtime") || 0}</p>
+        <p>Runtime: {globalThis.localStorage.getItem('runtime') || 0}</p>
       </div>
-      <p>Time Elapsed: {elapsedTime || "Not started"}</p>
+      <p>Time Elapsed: {elapsedTime || 'Not started'}</p>
       {viewCounter !== null && <p>This memory got {viewCounter} views</p>}
       {gameOverMessage && (
         <GameOver

@@ -1,9 +1,9 @@
 // src/controllers/GameController.js
-import { useState, useCallback } from "react";
-import { nanoid } from "nanoid";
-import { cardImages } from "../data/cardImages";
-import { numbers } from "../constants/numbers";
-import { secureShuffleArray, pickRandomImages } from "../utils/logic";
+import { useState, useCallback } from 'react';
+import { nanoid } from 'nanoid';
+import { cardImages } from '../data/cardImages';
+import { numbers } from '../constants/numbers';
+import { secureShuffleArray, pickRandomImages } from '../utils/logic';
 
 export const useGameController = () => {
   const [cards, setCards] = useState([]);
@@ -18,7 +18,7 @@ export const useGameController = () => {
   const resetTurn = useCallback(() => {
     setChoiceOne(null);
     setChoiceTwo(null);
-    setTurns((prev) => prev + 1);
+    setTurns(prev => prev + 1);
     setDisabled(false);
   }, []);
 
@@ -26,7 +26,7 @@ export const useGameController = () => {
     const selected = pickRandomImages(cardImages, 6);
     const dup = [...selected, ...selected]
       .sort(() => nanoid(16).localeCompare(nanoid(16)))
-      .map((card) => {
+      .map(card => {
         const crypto = globalThis.crypto || globalThis.msCrypto;
         const rand = new Uint32Array(1);
         crypto.getRandomValues(rand);
@@ -50,13 +50,13 @@ export const useGameController = () => {
   }, []);
 
   const handleChoice = useCallback(
-    (card) => {
+    card => {
       if (disabled) return;
-      
+
       if (!gameStarted) {
         setGameStarted(true);
       }
-      
+
       if (choiceOne) {
         setChoiceTwo(card);
       } else {
@@ -66,13 +66,11 @@ export const useGameController = () => {
     [choiceOne, disabled, gameStarted]
   );
 
-  const updateMatchedCards = useCallback((src) => {
-    setCards((prev) =>
-      prev.map((c) =>
-        c.src === src ? { ...c, matched: true } : c
-      )
+  const updateMatchedCards = useCallback(src => {
+    setCards(prev =>
+      prev.map(c => (c.src === src ? { ...c, matched: true } : c))
     );
-    setMatched((prev) => prev + 2);
+    setMatched(prev => prev + 2);
   }, []);
 
   return {

@@ -1,5 +1,5 @@
 // src/controllers/AudioController.js
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback } from 'react';
 
 export const useAudioController = () => {
   const soundEffect = useMemo(() => {
@@ -9,7 +9,7 @@ export const useAudioController = () => {
   }, []);
 
   const playSound = useCallback(
-    (src) => {
+    src => {
       soundEffect.src = src;
       soundEffect.load();
       soundEffect.play().catch(() => {});
@@ -18,11 +18,11 @@ export const useAudioController = () => {
   );
 
   const playSounds = {
-    match: () => playSound("/audio/match.wav"),
-    fail: () => playSound("/audio/fail.wav"),
-    swap: () => playSound("/audio/swap.wav"),
-    celebration: () => playSound("audio/celebration.mp3"),
-    start: () => playSound("audio/start.mp3"),
+    match: () => playSound('/audio/match.wav'),
+    fail: () => playSound('/audio/fail.wav'),
+    swap: () => playSound('/audio/swap.wav'),
+    celebration: () => playSound('audio/celebration.mp3'),
+    start: () => playSound('audio/start.mp3'),
   };
 
   return {

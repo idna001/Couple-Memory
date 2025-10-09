@@ -1,5 +1,5 @@
 // src/controllers/ErrorController.js
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
 export const useErrorController = () => {
   const [error, setError] = useState(null);
