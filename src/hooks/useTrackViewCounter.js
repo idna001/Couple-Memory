@@ -1,5 +1,5 @@
-import { Counter } from "counterapi";
-import { useState, useEffect } from "react";
+import { Counter } from 'counterapi';
+import { useState, useEffect } from 'react';
 
 const WORKSPACE_ID = process.env.REACT_APP_COUNTER_API_WORKSPACE_SLUG;
 const COUNTER_ID = process.env.REACT_APP_COUNTER_API_PAGE_VIEW_COUNTER_SLUG;
@@ -11,8 +11,8 @@ const useTrackViewCounter = () => {
     if (!WORKSPACE_ID || !COUNTER_ID) {
       console.warn(
         `useTrackViewCounter: Missing environment variable(s):` +
-        (!WORKSPACE_ID ? " REACT_APP_COUNTER_API_WORKSPACE_SLUG" : "") +
-        (!COUNTER_ID ? " REACT_APP_COUNTER_API_PAGE_VIEW_COUNTER_SLUG" : "")
+          (!WORKSPACE_ID ? ' REACT_APP_COUNTER_API_WORKSPACE_SLUG' : '') +
+          (!COUNTER_ID ? ' REACT_APP_COUNTER_API_PAGE_VIEW_COUNTER_SLUG' : '')
       );
       return;
     }
@@ -24,10 +24,10 @@ const useTrackViewCounter = () => {
     });
     counter
       .up(COUNTER_ID)
-      .then((result) => {
+      .then(result => {
         setCounter(result.data.up_count);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(
           `Failed to increment counter (up) for COUNTER_ID: ${COUNTER_ID}`,
           err

@@ -1,11 +1,11 @@
-import "./../celebration/Celebration.css";
-import React from "react";
-import PropTypes from "prop-types";
+import './../celebration/Celebration.css';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function GameOver({ score, elapsedTime, handleRestartGame }) {
   return (
-    <div className="celebration-container">
-      <div className="celebration-notification">
+    <div className='celebration-container'>
+      <div className='celebration-notification'>
         <p>
           Game Over! Your Score: <span>{score}</span>
           <br />
@@ -15,7 +15,7 @@ export default function GameOver({ score, elapsedTime, handleRestartGame }) {
             <span>{elapsedTime}s</span>
           </p>
         }
-        <button onClick={handleRestartGame} className="restart-btn-gameover">
+        <button onClick={handleRestartGame} className='restart-btn-gameover'>
           Restart Game
         </button>
       </div>
