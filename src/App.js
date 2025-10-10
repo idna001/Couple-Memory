@@ -8,7 +8,7 @@ import ToggleTheme from './components/toggleTheme/toggleTheme';
 import ShowConfetti from './components/confetti/Confetti';
 import GameOver from './components/gameover/GameOver';
 import CustomCursor from './components/CustomCursor/CustomCursor';
-
+import SettingsMenu from './components/settingsMenu/settingsMenu';
 import { cardImages } from './data/cardImages';
 import { numbers } from './constants/numbers';
 import { secureShuffleArray, pickRandomImages } from './utils/logic';
@@ -78,6 +78,29 @@ function App() {
       intervalRef.current = null;
     }
   }, []);
+  const handleResetHistory = () => {
+    localStorage.clear();
+    setHighScore(0);
+    setCards(prevCards => {
+        const reshuffled = [...prevCards].sort(() => Math.random() - 0.5);
+        return reshuffled.map(card => ({ ...card, matched: false }));
+    });
+    setTurns(0);
+    setMatched(0);
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setDisabled(false);
+    setCelebrationStatus(false);
+    setGameOverMessage(false);
+    clearTimer();
+    setElapsedTime(undefined);
+    setHintCount(3);
+    setHintCooldown(0);
+    if (hintIntervalRef.current) {
+      clearInterval(hintIntervalRef.current);
+      hintIntervalRef.current = null;
+    }
+  };
 
   const hintCards = useCallback(() => {
     if (hintActive || hintLockedRef.current) return;
@@ -292,7 +315,8 @@ function App() {
           </p>
         </div>
       </div>
-      <ToggleTheme />
+      <br/>
+      <SettingsMenu onReset={handleResetHistory} />
       <div
         className={`card-grid ${animateCollapse ? 'collapse-animation' : ''}`}
       >
