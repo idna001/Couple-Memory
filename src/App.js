@@ -82,10 +82,10 @@ function App() {
     localStorage.clear();
     setHighScore(0);
     setCards(prevCards => {
-        // Create a copy to avoid mutating state, then use the secure shuffle utility.
-        const reshuffled = [...prevCards];
-        secureShuffleArray(reshuffled); 
-        return reshuffled.map(card => ({ ...card, matched: false }));
+      // Create a copy to avoid mutating state, then use the secure shuffle utility.
+      const reshuffled = [...prevCards];
+      secureShuffleArray(reshuffled);
+      return reshuffled.map(card => ({ ...card, matched: false }));
     });
     setTurns(0);
     setMatched(0);
@@ -317,7 +317,7 @@ function App() {
           </p>
         </div>
       </div>
-      <br/>
+      <br />
       <SettingsMenu onReset={handleResetHistory} />
       <div
         className={`card-grid ${animateCollapse ? 'collapse-animation' : ''}`}

@@ -1,4 +1,4 @@
-import './toggleTheme.css'
+import './toggleTheme.css';
 
 export default function toggleTheme() {
   function getUserPreference() {
