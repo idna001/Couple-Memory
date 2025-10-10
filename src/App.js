@@ -82,7 +82,9 @@ function App() {
     localStorage.clear();
     setHighScore(0);
     setCards(prevCards => {
-        const reshuffled = [...prevCards].sort(() => Math.random() - 0.5);
+        // Create a copy to avoid mutating state, then use the secure shuffle utility.
+        const reshuffled = [...prevCards];
+        secureShuffleArray(reshuffled); 
         return reshuffled.map(card => ({ ...card, matched: false }));
     });
     setTurns(0);
