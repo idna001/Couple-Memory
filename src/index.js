@@ -1,15 +1,13 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client'; // <-- make sure this is 'react-dom/client'
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 
 const container = document.getElementById('root');
-const root = createRoot(container); // <-- create root
+const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+
