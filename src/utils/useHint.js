@@ -61,7 +61,10 @@ export function useHint({
       return;
     }
 
-       const randomSrc = unmatchedSrcs[Math.floor(Math.random() * unmatchedSrcs.length)];
+    const rand = new Uint32Array(1);
+    crypto.getRandomValues(rand);
+    const randomIndex = rand[0] % unmatchedSrcs.length;
+    const randomSrc = unmatchedSrcs[randomIndex];
     const pair = cards.filter(c => c.src === randomSrc && !c.matched);
 
     setHintActive(true);
