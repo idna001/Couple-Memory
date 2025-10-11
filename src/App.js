@@ -1,4 +1,21 @@
-// src/App.js
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import { nanoid } from "nanoid";
+import "./App.css";
+import SingleCard from "./components/singlecard/SingleCard";
+import Celebration from "./components/celebration/Celebration";
+import ToggleTheme from "./components/toggleTheme/toggleTheme";
+import ShowConfetti from "./components/confetti/Confetti";
+import GameOver from "./components/gameover/GameOver";
+import CustomCursor from "./components/CustomCursor/CustomCursor";
+
+import { cardImages } from "./data/cardImages";
+import { numbers } from "./constants/numbers";
+import { secureShuffleArray, pickRandomImages } from "./utils/logic";
+import { useHint } from "./utils/useHint";
+
+const crypto = globalThis.crypto || globalThis.msCrypto;
+import useTrackViewCounter from "./hooks/useTrackViewCounter";
+
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { nanoid } from 'nanoid';
 import './App.css';
@@ -25,12 +42,6 @@ function App() {
   const [celebrationStatus, setCelebrationStatus] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(undefined);
   const intervalRef = useRef(null);
-  const hintTimeoutRef = useRef(null);
-  const hintIntervalRef = useRef(null);
-  const hintLockedRef = useRef(false);
-  const [hintCount, setHintCount] = useState(3);
-  const [hintCooldown, setHintCooldown] = useState(0);
-  const [hintActive, setHintActive] = useState(false);
   const [animateCollapse, setAnimateCollapse] = useState(false);
   const [gameOverMessage, setGameOverMessage] = useState(false);
   const viewCounter = useTrackViewCounter();
@@ -71,6 +82,21 @@ function App() {
       intervalRef.current = null;
     }
   }, []);
+
+  const {
+    hintCount,
+    hintCooldown,
+    hintActive,
+    hintCards,
+    resetHints,
+  } = useHint({
+    cards,
+    handleTime,
+    setChoiceOne,
+    setChoiceTwo,
+    setTurns,
+    setDisabled,
+  });
 
   const clearTimer = useCallback(() => {
     if (intervalRef.current) {
@@ -162,8 +188,12 @@ function App() {
     const selected = pickRandomImages(cardImages, 6);
     const dup = [...selected, ...selected]
       .sort(() => nanoid(16).localeCompare(nanoid(16)))
+      .map((card) => {
+        // const crypto = globalThis.crypto || globalThis.msCrypto;
+
       .map(card => {
         const crypto = globalThis.crypto || globalThis.msCrypto;
+
         const rand = new Uint32Array(1);
         crypto.getRandomValues(rand);
         return { ...card, id: rand[0], matched: false };
@@ -177,18 +207,20 @@ function App() {
     setMatched(0);
     setCelebrationStatus(false);
     setElapsedTime(undefined);
-    clearTimer();
+
     setAnimateCollapse(true);
     setTimeout(() => setAnimateCollapse(false), 1200);
     setGameOverMessage(false);
-  }, [clearTimer]);
+  }, []);
 
   const handleNewGame = useCallback(() => {
+    resetHints();
+    playSound("audio/start.mp3");
     setHintCount(3);
     setHintCooldown(0);
     playSound('audio/start.mp3');
     shuffledCards();
-  }, [playSound, shuffledCards]);
+  }, [playSound, shuffledCards, resetHints]);
 
   const handleChoice = useCallback(
     card => {
@@ -219,7 +251,7 @@ function App() {
     } else if (choiceOne) {
       playSound('/audio/swap.wav');
     }
-  }, [choiceOne, choiceTwo, resetTurn, playSound]);
+  }, [choiceOne, choiceTwo, resetTurn, playSound, hintActive]);
 
   useEffect(() => {
     if (matched === cards.length && turns) {
@@ -250,18 +282,9 @@ function App() {
     setHighScore(hs);
     return () => {
       clearTimer();
-      if (hintTimeoutRef.current) {
-        clearTimeout(hintTimeoutRef.current);
-        hintTimeoutRef.current = null;
-      }
-      if (hintIntervalRef.current) {
-        clearInterval(hintIntervalRef.current);
-        hintIntervalRef.current = null;
-      }
-      hintLockedRef.current = false;
-      setHintCooldown(0);
+      resetHints();
     };
-  }, [shuffledCards, clearTimer]);
+  }, [shuffledCards, clearTimer, resetHints]);
 
   return (
     <div className='App'>
@@ -276,6 +299,18 @@ function App() {
       {celebrationStatus && <ShowConfetti />}
       <img src='/img/logo.png' alt='A&A Match' style={{ height: '60px' }} />
       <br />
+      <div className="button-box">
+        <button onClick={handleNewGame}>New Game</button>
+        <div className="hint-box">
+          <button
+            className="hint"
+            onClick={hintCards}
+            disabled={hintCooldown > 0 || hintCount <= 0 || hintActive}
+          >
+            {hintCooldown > 0 ? `Hint (ready in ${hintCooldown}s)` : "Hint"}
+          </button>
+          <p className="hint-count">
+            {hintCount === 1 ? "Hint Remaining: " : "Hints Remaining: "}
       <div className='button-box'>
         <button onClick={handleNewGame}>New Game</button>
         <div className='hint-box'>
@@ -293,6 +328,8 @@ function App() {
         </div>
       </div>
       <ToggleTheme />
+      <div className={`card-grid ${animateCollapse ? "collapse-animation" : ""}`}>
+        {cards.map((card) => (
       <div
         className={`card-grid ${animateCollapse ? 'collapse-animation' : ''}`}
       >
