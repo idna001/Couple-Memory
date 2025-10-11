@@ -32,7 +32,6 @@ export function useHint({
 
     const seconds = Math.floor(HINT_COOLDOWN / 1000);
     setHintCooldown(seconds);
-
     if (hintIntervalRef.current) clearInterval(hintIntervalRef.current);
     hintIntervalRef.current = setInterval(() => {
       setHintCooldown((s) => {
@@ -46,6 +45,14 @@ export function useHint({
       });
     }, 1000);
 
+      const unmatchedSrcs = [...new Set(cards.filter(c => !c.matched).map(c => c.src))];
+    if (unmatchedSrcs.length === 0) {
+      clearInterval(hintIntervalRef.current);
+      hintLockedRef.current = false;
+      setHintCooldown(0);
+      return;
+    }
+
     const available = cards.filter(c => !c.matched);
     if (available.length === 0) {
       clearInterval(hintIntervalRef.current);
@@ -54,19 +61,13 @@ export function useHint({
       return;
     }
 
-    const cryptoObj = globalThis.crypto || globalThis.msCrypto;
-
-    const idxA = cryptoObj.getRandomValues(new Uint32Array(1))[0] % available.length;
-    let idxB = cryptoObj.getRandomValues(new Uint32Array(1))[0] % (available.length - 1);
-    if (idxB >= idxA) idxB += 1;
-
-    const cardA = available[idxA].c;
-    const cardB = available[idxB].c;
+       const randomSrc = unmatchedSrcs[Math.floor(Math.random() * unmatchedSrcs.length)];
+    const pair = cards.filter(c => c.src === randomSrc && !c.matched);
 
     setHintActive(true);
     setDisabled(true);
-    setChoiceOne(cardA);
-    setChoiceTwo(cardB);
+    setChoiceOne(pair[0]);
+    setChoiceTwo(pair[1]);
     setTurns((t) => t + 1);
 
     if (hintTimeoutRef.current) clearTimeout(hintTimeoutRef.current);
