@@ -9,10 +9,12 @@ import GameOver from "./components/gameover/GameOver";
 import CustomCursor from "./components/CustomCursor/CustomCursor";
 
 import { cardImages } from "./data/cardImages";
-import { numbers } from "./constants/numbers";
-import { secureShuffleArray, pickRandomImages } from "./utils/logic";
 import { useHint } from "./utils/useHint";
 
+const pickRandomImages = (arr, num) => {
+  const shuffled = [...arr].sort(() => 0.5 - Math.random());
+   return shuffled.slice(0, num);
+};
 function App() {
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
