@@ -33,6 +33,9 @@ export default function ShareButton({ highScore, highScoreRef }) {
           title: 'High Score Screenshot',
           text: `I achieved a high score of ${highScore} in A&A Match!`,
           url: 'https://aa-memory.vercel.app/',
+          files: [
+            new File(['highScore'], screenshotImage, { type: 'image/jpeg' }),
+          ],
         });
         console.log('Shared successfully!');
       } catch (error) {
@@ -144,15 +147,7 @@ export default function ShareButton({ highScore, highScoreRef }) {
       </button>
 
       {/* Inline Tailwind animation definition */}
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out forwards;
-        }
-      `}</style>
+      <div className='fixed inset-0 z-40 flex items-center justify-center bg-black/50 animate-fadeIn'></div>
     </div>
   );
 }
