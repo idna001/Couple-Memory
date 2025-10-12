@@ -1,13 +1,11 @@
-import './sharebutton.css';
 import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
 import PropTypes from 'prop-types';
 
 export default function ShareButton({ highScore, highScoreRef }) {
   const [screenshotImage, setScreenshotImage] = useState(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const shareDialog = document.querySelector('.share-dialog');
-  const closeButton = document.querySelector('.close-button');
   const handleScreenshot = () => {
     html2canvas(highScoreRef.current, {
       useCORS: true,
@@ -24,8 +22,10 @@ export default function ShareButton({ highScore, highScoreRef }) {
       .catch(error => {
         console.error('Error capturing screenshot:', error);
       });
+
     shareContent();
   };
+
   const shareContent = async () => {
     if (navigator.share && screenshotImage) {
       try {
@@ -37,172 +37,121 @@ export default function ShareButton({ highScore, highScoreRef }) {
             new File(['highScore'], screenshotImage, { type: 'image/jpeg' }),
           ],
         });
-        console.log('Sharing successfully!');
+        console.log('Shared successfully!');
       } catch (error) {
-        console.error('Error while sharing: ', error);
+        console.error('Error while sharing:', error);
       }
     } else {
-      shareDialog.classList.add('is-open');
-      closeButton.addEventListener('click', event => {
-        shareDialog.classList.remove('is-open');
-      });
+      setIsDialogOpen(true);
     }
   };
-  const closeDialog = () => {
-    shareDialog.classList.remove('is-open');
-  };
+
+  const closeDialog = () => setIsDialogOpen(false);
+
   return (
-    <div className='card'>
-      <div className='share-dialog'>
-        <header>
-          <h3 className='dialog-title'>Share this pen</h3>
-          <button className='close-button'>
-            <svg>
-              <use href='#close'></use>
-            </svg>
-          </button>
-        </header>
-        <div className='targets'>
-          <button className='button'>
-            <svg>
-              <use href='#facebook'></use>
-            </svg>
-            <span>Facebook</span>
-          </button>
+    <div className='relative'>
+      {/* Overlay and Dialog */}
+      {isDialogOpen && (
+        <div className='fixed inset-0 z-40 flex items-center justify-center bg-black/50 animate-fadeIn'>
+          <div className='bg-white rounded-xl shadow-xl border border-gray-300 p-6 w-[90vw] max-w-md transform transition-all duration-300 scale-100'>
+            <header className='flex justify-between items-center mb-4'>
+              <h3 className='text-lg font-semibold text-gray-800'>
+                Share this game
+              </h3>
+              <button
+                onClick={closeDialog}
+                className='text-gray-500 hover:text-gray-700'
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='w-6 h-6'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M6 18L18 6M6 6l12 12'
+                  />
+                </svg>
+              </button>
+            </header>
 
-          <button className='button'>
-            <svg>
-              <use href='#twitter'></use>
-            </svg>
-            <span>Twitter</span>
-          </button>
+            {/* Share Buttons */}
+            <div className='grid grid-cols-2 gap-4 mb-5'>
+              {[
+                { name: 'Facebook', color: '#3b5998' },
+                { name: 'Twitter', color: '#1da1f2' },
+                { name: 'LinkedIn', color: '#0077B5' },
+                { name: 'Email', color: '#777' },
+              ].map(platform => (
+                <button
+                  key={platform.name}
+                  className='flex items-center justify-center gap-2 border border-gray-300 text-gray-600 font-medium text-sm py-2 rounded-md hover:border-gray-400 hover:scale-[1.02] transition-transform'
+                >
+                  <svg
+                    className='w-5 h-5'
+                    fill={platform.color}
+                    stroke={platform.color}
+                    viewBox='0 0 24 24'
+                  >
+                    <circle cx='12' cy='12' r='10' />
+                  </svg>
+                  <span>{platform.name}</span>
+                </button>
+              ))}
+            </div>
 
-          <button className='button'>
-            <svg>
-              <use href='#linkedin'></use>
-            </svg>
-            <span>LinkedIn</span>
-          </button>
-
-          <button className='button'>
-            <svg>
-              <use href='#email'></use>
-            </svg>
-            <span>Email</span>
-          </button>
+            {/* Link Row */}
+            <div className='flex items-center justify-between bg-gray-100 rounded-md px-3 py-2'>
+              <span className='truncate text-sm text-gray-700'>
+                https://aa-memory.vercel.app/
+              </span>
+              <button
+                onClick={() =>
+                  navigator.clipboard.writeText('https://aa-memory.vercel.app/')
+                }
+                className='text-sm text-gray-600 hover:text-gray-800 font-medium'
+              >
+                Copy
+              </button>
+            </div>
+          </div>
         </div>
-        <div className='link'>
-          <div className='pen-url'>https://aa-memory.vercel.app/</div>
-          <button className='copy-link'>Copy Link</button>
-        </div>
-      </div>
+      )}
 
+      {/* Main Share Button */}
       <button
-        className='share-button'
+        className='inline-flex items-center justify-center gap-2 border border-gray-300 text-gray-600 hover:text-gray-800 hover:border-gray-400 px-6 py-2 rounded-md font-medium text-sm tracking-wide transition-colors duration-200'
         onClick={handleScreenshot}
         type='button'
         title='Share this article'
       >
-        <svg>
-          <use href='#share-icon'></use>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          className='w-5 h-5'
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth='2'
+            d='M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8m-6-6l-4 4m0 0l4 4m-4-4h12'
+          />
         </svg>
         <span>Share</span>
       </button>
 
-      <svg className='hidden'>
-        <defs>
-          <symbol
-            id='share-icon'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='feather feather-share'
-          >
-            <path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8'></path>
-            <polyline points='16 6 12 2 8 6'></polyline>
-            <line x1='12' y1='2' x2='12' y2='15'></line>
-          </symbol>
-
-          <symbol
-            id='facebook'
-            viewBox='0 0 24 24'
-            fill='#3b5998'
-            stroke='#3b5998'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='feather feather-facebook'
-          >
-            <path d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'></path>
-          </symbol>
-
-          <symbol
-            id='twitter'
-            viewBox='0 0 24 24'
-            fill='#1da1f2'
-            stroke='#1da1f2'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='feather feather-twitter'
-          >
-            <path d='M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z'></path>
-          </symbol>
-
-          <symbol
-            id='email'
-            viewBox='0 0 24 24'
-            fill='#777'
-            stroke='#fafafa'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='feather feather-mail'
-          >
-            <path d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'></path>
-            <polyline points='22,6 12,13 2,6'></polyline>
-          </symbol>
-
-          <symbol
-            id='linkedin'
-            viewBox='0 0 24 24'
-            fill='#0077B5'
-            stroke='#0077B5'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='feather feather-linkedin'
-          >
-            <path d='M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z'></path>
-            <rect x='2' y='9' width='4' height='12'></rect>
-            <circle cx='4' cy='4' r='2'></circle>
-          </symbol>
-
-          <symbol
-            onClick={closeDialog}
-            id='close'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='feather feather-x-square'
-          >
-            <rect x='3' y='3' width='18' height='18' rx='2' ry='2'></rect>
-            <line x1='9' y1='9' x2='15' y2='15'></line>
-            <line x1='15' y1='9' x2='9' y2='15'></line>
-          </symbol>
-        </defs>
-      </svg>
+      {/* Inline Tailwind animation definition */}
+      <div className='fixed inset-0 z-40 flex items-center justify-center bg-black/50 animate-fadeIn'></div>
     </div>
   );
 }
 
-// PropTypes validation
 ShareButton.propTypes = {
   highScore: PropTypes.number.isRequired,
   highScoreRef: PropTypes.shape({
