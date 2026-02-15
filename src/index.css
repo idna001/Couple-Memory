@@ -1,61 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800&display=swap');
 
-/* base styles */
-body {
-  font-family: Raleway, sans-serif;
-  margin: 0;
-  font-size: 1.5em;
-  text-align: center;
-  color: var(--text, #fff);
-  background: var(--background, #1b1523);
-}
-.results-container {
-  display: flex;
-  justify-content: center;
-  column-gap: 1rem;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body,
-html {
-  cursor: none;
-}
+@layer base {
+  :root[data-applied-mode='light'] {
+    color-scheme: light;
+    --text: #1b1523;
+    --background: white;
+  }
 
-* {
-  cursor: none;
-}
+  :root[data-applied-mode='dark'] {
+    color-scheme: dark;
+    --text: white;
+    --background: #1b1523;
+  }
 
-.button-box {
-  display: flex;
-  margin-top: 10px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
+  html {
+    @apply bg-background min-h-screen;
+    background-color: var(--background) !important;
+  }
 
-.hint {
-  margin-left: 10px;
-  margin-right: 10px;
-}
+  body {
+    @apply font-[Raleway] m-0 text-center text-[1.5em] text-text bg-background cursor-none min-h-screen;
+    background-color: var(--background) !important;
+  }
 
-.hint:hover {
-  background-color: yellow;
-  color: black;
-}
-
-.hint-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.hint-count {
-  font-size: 15px;
-  color: var(--text, #fff);
-}
-
-@media (max-width: 600px) {
-  .button-box {
-    flex-direction: column;
-    gap: 20px;
+  html,
+  * {
+    @apply cursor-none;
   }
 }

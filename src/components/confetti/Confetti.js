@@ -10,7 +10,7 @@ export default function ShowConfetti() {
       width={width - 20}
       height={height}
       recycle={false}
-      style={{ zIndex: 999 }}
+      className="z-[999]"
     />
   );
 }

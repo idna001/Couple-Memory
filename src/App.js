@@ -1,7 +1,7 @@
 // src/App.js
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { nanoid } from 'nanoid';
-import './App.css';
+// import './App.css'; 
 import SingleCard from './components/singlecard/SingleCard';
 import Celebration from './components/celebration/Celebration';
 import ToggleTheme from './components/toggleTheme/toggleTheme';
@@ -47,7 +47,7 @@ function App() {
     src => {
       soundEffect.src = src;
       soundEffect.load();
-      soundEffect.play().catch(() => {});
+      soundEffect.play().catch(() => { });
     },
     [soundEffect]
   );
@@ -264,7 +264,7 @@ function App() {
   }, [shuffledCards, clearTimer]);
 
   return (
-    <div className='App'>
+    <div className='max-w-[860px] mx-auto py-10'>
       <CustomCursor />
       {celebrationStatus && (
         <Celebration
@@ -276,17 +276,22 @@ function App() {
       {celebrationStatus && <ShowConfetti />}
       <img src='/img/logo.png' alt='A&A Match' style={{ height: '60px' }} />
       <br />
-      <div className='button-box'>
-        <button onClick={handleNewGame}>New Game</button>
-        <div className='hint-box'>
+      <div className='flex mt-2.5 flex-row items-center justify-center max-[600px]:flex-col max-[600px]:gap-5'>
+        <button
+          className='text-text bg-background border-2 border-current px-3 py-1.5 rounded font-bold text-base hover:bg-[green] hover:text-white'
+          onClick={handleNewGame}
+        >
+          New Game
+        </button>
+        <div className='flex items-center justify-around'>
           <button
-            className='hint'
+            className='mx-2.5 text-text bg-background border-2 border-current px-3 py-1.5 rounded font-bold text-base hover:bg-yellow-300 hover:text-black'
             onClick={hintCards}
             disabled={hintCooldown > 0 || hintCount <= 0 || hintActive}
           >
             {hintCooldown > 0 ? `Hint (ready in ${hintCooldown}s)` : 'Hint'}
           </button>
-          <p className='hint-count'>
+          <p className='text-[15px] text-text'>
             {hintCount === 1 ? 'Hint Remaining: ' : 'Hints Remaining: '}
             {hintCount}
           </p>
@@ -294,7 +299,7 @@ function App() {
       </div>
       <ToggleTheme />
       <div
-        className={`card-grid ${animateCollapse ? 'collapse-animation' : ''}`}
+        className={`mt-10 grid grid-cols-4 gap-5 max-[800px]:grid-cols-3 max-[800px]:mx-[5px] max-[800px]:gap-[10px] max-[600px]:grid-cols-2 max-[600px]:gap-[5px] max-[390px]:grid-cols-1 max-[390px]:content-center ${animateCollapse ? 'animate-collapse' : ''}`}
       >
         {cards.map(card => (
           <SingleCard
@@ -307,7 +312,7 @@ function App() {
         ))}
       </div>
       <p>Turns: {turns}</p>
-      <div className='results-container'>
+      <div className='flex justify-center gap-4'>
         <p>HighScore: {highScore}</p>
         <p>Runtime: {globalThis.localStorage.getItem('runtime') || 0}</p>
       </div>

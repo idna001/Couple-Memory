@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import './toggleTheme.css';
 
 const THEME_STORAGE_KEY = 'theme';
 
@@ -27,6 +26,7 @@ export default function ToggleTheme() {
 
   function setAppliedMode(mode) {
     document.documentElement.dataset.appliedMode = mode;
+    document.documentElement.dataset.theme = mode;
   }
 
   useEffect(() => {
@@ -81,7 +81,10 @@ export default function ToggleTheme() {
   };
 
   return (
-    <button id='theme-toggle' onClick={handleClick}>
+    <button
+      onClick={handleClick}
+      className='absolute top-[1vh] right-[1vw] text-[0.7em] text-text bg-background border-2 border-current px-3 py-1.5 rounded font-bold hover:bg-[green] hover:text-white'
+    >
       {preference}
     </button>
   );
