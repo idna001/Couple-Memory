@@ -63,66 +63,71 @@ export default function ShareButton({ highScore, highScoreRef }) {
     if (shareDialog) shareDialog.classList.remove('is-open');
   };
 
-  const buttonStyle = "inline-flex items-center justify-center h-auto py-[8px] text-[#777] text-center text-[14px] font-medium leading-[1.1] tracking-[2px] capitalize no-underline whitespace-nowrap rounded border border-[#ddd] hover:border-[#cdd]";
+  const buttonStyle =
+    'inline-flex items-center justify-center h-auto py-[8px] text-[#777] text-center text-[14px] font-medium leading-[1.1] tracking-[2px] capitalize no-underline whitespace-nowrap rounded border border-[#ddd] hover:border-[#cdd]';
 
   return (
-    <div className='relative grid place-items-center'> {/* Replaced 'card' with its styles: relative grid place-items-center */}
+    <div className='relative grid place-items-center'>
+      {' '}
+      {/* Replaced 'card' with its styles: relative grid place-items-center */}
       <div className='share-dialog absolute top-1/2 left-1/2 -translate-x-[107%] -translate-y-1/2 hidden max-w-[500px] shadow-[0_8px_16px_rgba(0,0,0,0.15)] z-[-1] border border-[#ddd] p-[20px] rounded bg-white [&.is-open]:block [&.is-open]:z-[2]'>
-        <header className="flex justify-between mb-[20px]">
+        <header className='flex justify-between mb-[20px]'>
           <h3 className='dialog-title font-bold'>Share this pen</h3>
           <button className='close-button bg-transparent border-none p-0'>
-            <svg className="w-[20px] h-[20px] mr-0 text-black">
+            <svg className='w-[20px] h-[20px] mr-0 text-black'>
               <use href='#close'></use>
             </svg>
           </button>
         </header>
         <div className='targets grid grid-rows-2 grid-cols-2 gap-[20px] mb-[20px]'>
           <button className={`button ${buttonStyle}`}>
-            <svg className="w-[20px] h-[20px] mr-[7px]">
+            <svg className='w-[20px] h-[20px] mr-[7px]'>
               <use href='#facebook'></use>
             </svg>
             <span>Facebook</span>
           </button>
 
           <button className={`button ${buttonStyle}`}>
-            <svg className="w-[20px] h-[20px] mr-[7px]">
+            <svg className='w-[20px] h-[20px] mr-[7px]'>
               <use href='#twitter'></use>
             </svg>
             <span>Twitter</span>
           </button>
 
           <button className={`button ${buttonStyle}`}>
-            <svg className="w-[20px] h-[20px] mr-[7px]">
+            <svg className='w-[20px] h-[20px] mr-[7px]'>
               <use href='#linkedin'></use>
             </svg>
             <span>LinkedIn</span>
           </button>
 
           <button className={`button ${buttonStyle}`}>
-            <svg className="w-[20px] h-[20px] mr-[7px]">
+            <svg className='w-[20px] h-[20px] mr-[7px]'>
               <use href='#email'></use>
             </svg>
             <span>Email</span>
           </button>
         </div>
         <div className='link flex justify-center items-center p-[10px] rounded bg-[#eee]'>
-          <div className='pen-url mr-[15px] overflow-hidden text-ellipsis whitespace-nowrap text-black'>https://aa-memory.vercel.app/</div>
-          <button className={`copy-link ${buttonStyle} px-[30px]`}>Copy Link</button>
+          <div className='pen-url mr-[15px] overflow-hidden text-ellipsis whitespace-nowrap text-black'>
+            https://aa-memory.vercel.app/
+          </div>
+          <button className={`copy-link ${buttonStyle} px-[30px]`}>
+            Copy Link
+          </button>
         </div>
       </div>
-
       <button
         className='share-button absolute top-1/2 left-1/2 -translate-x-[107%] -translate-y-1/2 px-[30px] inline-flex items-center justify-center py-[8px] text-[#777] text-center text-[14px] font-medium leading-[1.1] tracking-[2px] capitalize no-underline whitespace-nowrap rounded border border-[#ddd] hover:border-[#cdd] bg-white' /* Added bg-white to match assumed default */
         onClick={handleScreenshot}
         type='button'
         title='Share this article'
       >
-        <svg className="w-[20px] h-[20px] mr-[7px]">
+        <svg className='w-[20px] h-[20px] mr-[7px]'>
           <use href='#share-icon'></use>
         </svg>
         <span>Share</span>
       </button>
-
       <svg className='hidden'>
         <defs>
           <symbol

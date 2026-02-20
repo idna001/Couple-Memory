@@ -8,18 +8,23 @@ export default function SingleCard({ card, handleChoice, flipped, disabled }) {
   };
 
   // Base styles shared between the div and img. Not including the variable rotation.
-  const commonFrontStyle = "absolute object-scale-down bg-white max-[800px]:static max-[800px]:object-none";
+  const commonFrontStyle =
+    'absolute object-scale-down bg-white max-[800px]:static max-[800px]:object-none';
 
   // Conditionally apply the correct rotation class.
   // When flipped: rotateY(0deg), translate-x-0, mx-auto.
   // When NOT flipped: rotateY(90deg).
-  const rotationClass = flipped ? "[transform:rotateY(0deg)] translate-x-0 mx-auto" : "[transform:rotateY(90deg)]";
+  const rotationClass = flipped
+    ? '[transform:rotateY(0deg)] translate-x-0 mx-auto'
+    : '[transform:rotateY(90deg)]';
 
   const divFrontClass = `flex justify-center items-center ${commonFrontStyle} ${rotationClass}`;
   const imgFrontClass = `${commonFrontStyle} ${rotationClass}`;
 
   return (
-    <div className={`relative grid place-items-center max-[800px]:py-2.5 ${flipped && card.matched ? 'animate-shake' : ''}`}>
+    <div
+      className={`relative grid place-items-center max-[800px]:py-2.5 ${flipped && card.matched ? 'animate-shake' : ''}`}
+    >
       <div className={flipped ? 'flipped' : ''}>
         <div id='front' className={divFrontClass}>
           <img
@@ -48,7 +53,7 @@ export default function SingleCard({ card, handleChoice, flipped, disabled }) {
           aria-label='card back'
         >
           <img
-            className="block border-2 border-white rounded-md max-[800px]:w-[90%]"
+            className='block border-2 border-white rounded-md max-[800px]:w-[90%]'
             src='/img/memory/cover.png'
             alt='card back'
             width='200'
