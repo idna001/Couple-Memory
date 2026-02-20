@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './CustomCursor.css';
 
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -16,7 +15,7 @@ const CustomCursor = () => {
 
   return (
     <div
-      className='custom-cursor'
+      className='fixed w-5 h-5 bg-[#6f6f6e]/80 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 transition-transform duration-100 ease-out z-[9999]'
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
