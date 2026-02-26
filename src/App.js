@@ -8,6 +8,7 @@ import ToggleTheme from './components/toggleTheme/toggleTheme';
 import ShowConfetti from './components/confetti/Confetti';
 import GameOver from './components/gameover/GameOver';
 import CustomCursor from './components/CustomCursor/CustomCursor';
+import History from './components/history/History';
 
 import { cardImages } from './data/cardImages';
 import { numbers } from './constants/numbers';
@@ -33,6 +34,8 @@ function App() {
   const [hintActive, setHintActive] = useState(false);
   const [animateCollapse, setAnimateCollapse] = useState(false);
   const [gameOverMessage, setGameOverMessage] = useState(false);
+  const [historyItems, setHistoryItems] = useState([]);
+  const hasSavedResult = useRef(false);
   const viewCounter = useTrackViewCounter();
   const REVEAL_DURATION = 2000;
   const HINT_COOLDOWN = 5000;
@@ -181,6 +184,7 @@ function App() {
     setAnimateCollapse(true);
     setTimeout(() => setAnimateCollapse(false), 1200);
     setGameOverMessage(false);
+    hasSavedResult.current = false;
   }, [clearTimer]);
 
   const handleNewGame = useCallback(() => {
@@ -222,14 +226,31 @@ function App() {
   }, [choiceOne, choiceTwo, resetTurn, playSound]);
 
   useEffect(() => {
-    if (matched === cards.length && turns) {
+    if (matched === cards.length && turns && !hasSavedResult.current) {
       handleTime(false);
+      hasSavedResult.current = true;
       const storedHigh = globalThis.localStorage.getItem('highscore');
       const storedRun = globalThis.localStorage.getItem('runtime');
       const better =
         storedHigh === null ||
         turns < Number(storedHigh) ||
         (turns === Number(storedHigh) && elapsedTime < Number(storedRun));
+
+      // Save history
+      try {
+        const currentHistory = JSON.parse(globalThis.localStorage.getItem('gameHistory') || '[]');
+        const newGameResult = {
+          moves: turns,
+          time: elapsedTime,
+          timestamp: new Date().toISOString(),
+          id: nanoid()
+        };
+        const updatedHistory = [newGameResult, ...currentHistory].slice(0, 50); // Keep last 50
+        globalThis.localStorage.setItem('gameHistory', JSON.stringify(updatedHistory));
+        setHistoryItems(updatedHistory);
+      } catch (e) {
+        console.error("Failed to save history", e);
+      }
 
       if (better) {
         globalThis.localStorage.setItem('highscore', turns);
@@ -248,6 +269,8 @@ function App() {
     shuffledCards();
     const hs = Number(globalThis.localStorage.getItem('highscore') || 0);
     setHighScore(hs);
+    const initialHistory = JSON.parse(globalThis.localStorage.getItem('gameHistory') || '[]');
+    setHistoryItems(initialHistory);
     return () => {
       clearTimer();
       if (hintTimeoutRef.current) {
@@ -325,6 +348,7 @@ function App() {
           handleRestartGame={handleNewGame}
         />
       )}
+      <History historyData={historyItems} />
     </div>
   );
 }
