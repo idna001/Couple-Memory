@@ -1,7 +1,7 @@
 // src/App.js
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { nanoid } from 'nanoid';
-// import './App.css'; 
+// import './App.css';
 import SingleCard from './components/singlecard/SingleCard';
 import Celebration from './components/celebration/Celebration';
 import ToggleTheme from './components/toggleTheme/toggleTheme';
@@ -50,7 +50,7 @@ function App() {
     src => {
       soundEffect.src = src;
       soundEffect.load();
-      soundEffect.play().catch(() => { });
+      soundEffect.play().catch(() => {});
     },
     [soundEffect]
   );

@@ -10,7 +10,7 @@ export default function ShowConfetti() {
       width={width - 20}
       height={height}
       recycle={false}
-      className="z-[999]"
+      className='z-[999]'
     />
   );
 }
