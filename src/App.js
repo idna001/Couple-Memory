@@ -238,18 +238,23 @@ function App() {
 
       // Save history
       try {
-        const currentHistory = JSON.parse(globalThis.localStorage.getItem('gameHistory') || '[]');
+        const currentHistory = JSON.parse(
+          globalThis.localStorage.getItem('gameHistory') || '[]'
+        );
         const newGameResult = {
           moves: turns,
           time: elapsedTime,
           timestamp: new Date().toISOString(),
-          id: nanoid()
+          id: nanoid(),
         };
         const updatedHistory = [newGameResult, ...currentHistory].slice(0, 50); // Keep last 50
-        globalThis.localStorage.setItem('gameHistory', JSON.stringify(updatedHistory));
+        globalThis.localStorage.setItem(
+          'gameHistory',
+          JSON.stringify(updatedHistory)
+        );
         setHistoryItems(updatedHistory);
       } catch (e) {
-        console.error("Failed to save history", e);
+        console.error('Failed to save history', e);
       }
 
       if (better) {
@@ -269,7 +274,9 @@ function App() {
     shuffledCards();
     const hs = Number(globalThis.localStorage.getItem('highscore') || 0);
     setHighScore(hs);
-    const initialHistory = JSON.parse(globalThis.localStorage.getItem('gameHistory') || '[]');
+    const initialHistory = JSON.parse(
+      globalThis.localStorage.getItem('gameHistory') || '[]'
+    );
     setHistoryItems(initialHistory);
     return () => {
       clearTimer();
